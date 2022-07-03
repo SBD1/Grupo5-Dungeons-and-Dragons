@@ -2,7 +2,7 @@
 
   |Data|Versão|Alteração|Autor| 
   |----|------|---------|-----|
-  |29/07/2022|0.1|Primeira versão do diagrama lógico |[Ian Rocha](https://github.com/IanPSRocha),[Pedro Lucas](https://github.com/PedroLSF), [João Batista](https://github.com/jvBatista), [Filipe Machado](https://github.com/fmaachadoo)|
+  |03/07/2022|0.1|Primeira versão do diagrama lógico |[Ian Rocha](https://github.com/IanPSRocha),[Pedro Lucas](https://github.com/PedroLSF), [João Batista](https://github.com/jvBatista), [Filipe Machado](https://github.com/fmaachadoo)|
  
 ## Introdução
 

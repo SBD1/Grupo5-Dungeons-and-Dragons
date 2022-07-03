@@ -4,7 +4,7 @@
   |----|------|---------|-----|
   |29/06/2022|0.1|Primeira versão da modelagem DER |[Pedro Lucas](https://github.com/PedroLSF)|
   |01/07/2022|0.2|Segunda versão da modelagem DER |[Ian Rocha](https://github.com/IanPSRocha)|
-  |03/07/2022|0.3|Primeira versão do diagrama lógico |[Ian Rocha](https://github.com/IanPSRocha),[Pedro Lucas](https://github.com/PedroLSF), [João Batista](https://github.com/jvBatista), [Filipe Machado](https://github.com/fmaachadoo)|
+  |03/07/2022|0.3|Terceira versão da modelagem DER |[Ian Rocha](https://github.com/IanPSRocha),[Pedro Lucas](https://github.com/PedroLSF), [João Batista](https://github.com/jvBatista), [Filipe Machado](https://github.com/fmaachadoo)|
  
  
 ## Introdução

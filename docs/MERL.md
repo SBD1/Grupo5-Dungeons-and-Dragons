@@ -11,7 +11,7 @@
 
 Este documento irá conter as imagens da primeira parte do projeto, que consiste em transformar o diagrama Entidade-Relacional em um sistema lógico envolvendo os atributos presentes.
 
-## Modelo Entidade-Relacionamento Lógico (MERL)
+## Modelo de Relacionamento Lógico (MERL)
 
   Esta é uma versão inacabada do Modelo de  Lógico, é a versão final para a entrega 1.
   

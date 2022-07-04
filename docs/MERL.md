@@ -21,7 +21,6 @@ Este documento irá conter as imagens da primeira parte do projeto, que consiste
 ![0.2](https://user-images.githubusercontent.com/85000470/177202614-1be50f91-e2e9-45ca-930b-6ee67d2979e4.png)
 
 
-
 ## Versões Anteriores
 
 <details>

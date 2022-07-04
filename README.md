@@ -1,5 +1,9 @@
 # Dungeons-and-Dragons
 
+<p align="center">
+  <img width="150" src="images/d20.png">
+</p>
+
  ##  💻 Visão Geral
  
 Este repositório será para aprofundarmos e trabalharmos os conhecimentos com relação a matéria Sisteam de Banco de Dados 1 da faculdade do Gama (FGA).

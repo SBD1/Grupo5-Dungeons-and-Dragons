@@ -70,7 +70,7 @@
 - Um aventureiro pode receber *nenhuma* missão ou *várias* **(0,n)**. Uma missão pode ser recebida por *nenhum* aventureiro ou *vários* **(0,n)**.
 
 **Inventário *guarda* Instancia_Item**
- - Um inventário pode guardar *nenhum* item ou *vários* **(0,n)**. Uma Instancia_Item pode ser guardada por *nenhum* inventário ou *vários* **(0,n)**.
+ - Um inventário pode guardar *nenhum* item ou *vários* **(0,n)**. Uma Instancia_Item pode ser guardada por *nenhum* inventário ou *um* **(0,1)**.
 
 **Instancia_Item *referencia* Item**
  - Uma instancia_item pode referencia somente *um* item **(1,1)**. Um item pode ser referenciado por *nenhuma* instancia_item ou *várias* **(0,n)**.

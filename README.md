@@ -19,3 +19,9 @@ Este repositório será para aprofundarmos e trabalharmos os conhecimentos com r
     <td align="center"><a href="https://github.com/fmaachadoo"><img src="https://avatars.githubusercontent.com/u/40258400?v=4" width="100px;" alt=""/><br /><sub><b>Fillipe Machado</b></sub></a><br /><a href="https://github.com/fmaachadoo"></a></td>
 	</tr>
 </table>
+
+## Apresentações
+
+  |Conteúdo|Vídeo| 
+  |----|------|
+  |Módulo 1|https://youtu.be/IVTCS4QZujE|

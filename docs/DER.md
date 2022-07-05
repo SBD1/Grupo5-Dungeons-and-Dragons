@@ -14,12 +14,12 @@
 
 Este documento irá conter as imagens da primeira parte do projeto, que consiste em um Diagrama do tipo Entidade-Relacionamento (DER).
 
-## Diagrama Entidade-Relacionamento (DER)
+# Diagrama Entidade-Relacionamento (DER)
 
  Está é a última atualização com relação ao diagrama antes da entrega 1, ou seja, essa é a arquitetura pensada a primeiro momento, podendo existir algumas alterações ao longo do desenvolvimento.
 
 
-![0.2](../images/DER03.jpg)
+![0.3](../images/DER03.jpg)
 
 ## Versões Anteriores
 

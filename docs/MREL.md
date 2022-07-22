@@ -5,13 +5,14 @@
   |03/07/2022|0.1|Primeira versão do diagrama lógico |[Ian Rocha](https://github.com/IanPSRocha),[Pedro Lucas](https://github.com/PedroLSF), [João Batista](https://github.com/jvBatista), [Filipe Machado](https://github.com/fmaachadoo)|
   |03/07/2022|0.2|Correção textual|[Pedro Lucas](https://github.com/PedroLSF)|
   |04/07/2022|0.3|Organização do diagrama lógico|[Pedro Lucas](https://github.com/PedroLSF)|
+  |21/07/2022|0.4|Alteração da Nomenclatura|[João Victor](https://github.com/jvBatista)|
   
  
 ## Introdução
 
 Este documento irá conter as imagens da primeira parte do projeto, que consiste em transformar o diagrama Entidade-Relacional em um sistema lógico envolvendo os atributos presentes.
 
-# Modelo de Relacionamento Lógico (MERL)
+# Modelo Relacional (MREL)
 
   Esta é uma versão inacabada do Modelo de  Lógico, é a versão final para a entrega 1.
   

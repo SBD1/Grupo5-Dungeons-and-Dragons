@@ -3,6 +3,7 @@
   |Data|Versão|Alteração|Autor| 
   |----|------|---------|-----|
   |04/07/2022|0.1|Primeira versão do MER |[Ian Rocha](https://github.com/IanPSRocha)|
+  |21/07/2022|0.2|Adição de Entidade |[João Victor](https://github.com/jvBatista)|
 
 # Modelo Entidade-Relacionamento
 ## Entidades
@@ -25,6 +26,7 @@
 		- **Poção**
 		- **Boost**
  - **Instância Item**
+ - **Categoria Item**
  - **Missão**
  - **Região**
  - **Mapa**
@@ -36,7 +38,7 @@
  - **Raça:** <ins>ID_Raça</ins>, Nome.
  - **Corpo:** Cabeça, Tronco, LHand, RHand.
  - **Inventário:** Capacidade, Ouro.
- - **NPC:** <ins>ID_NPC</ins>, Dialogos.
+ - **NPC:** <ins>ID_NPC</ins>, Nome, Dialogos.
 	- **Inimigo:** Vida, Dano.
 		- **Boss:** Habilidade.
 	- **Mercador:** Tipo.
@@ -47,6 +49,7 @@
 	- **Consumível**
 		- **Poção:** Vida_Recuperada.
 		- **Boost:** Pontos_Aumentados, Duracao, Atributo.
+ - **Categoria Item:** <ins>ID_CatItem</ins>, Nome
  - **Missão:** <ins>ID_Missao</ins>, Status, Objetivo, Requisitos.
  - **Região:** <ins>ID_Regiao</ins>, Coordenadas, Descricao.
  - **Mapa:** <ins>ID_Mapa</ins>.
@@ -69,6 +72,9 @@
 **Aventureiro *recebe* Missão**
 - Um aventureiro pode receber *nenhuma* missão ou *várias* **(0,n)**. Uma missão pode ser recebida por *nenhum* aventureiro ou *vários* **(0,n)**.
 
+**Aventureiro *negocia* Instancia_Item**
+- Um aventureiro pode negociar (comprar/vender) *nenhuma* instância de item ou *várias* **(0,n)**. Uma instância de item pode ser negociada (comprada/vendida) por *um* **(0,1)** aventureiro.
+
 **Inventário *guarda* Instancia_Item**
  - Um inventário pode guardar *nenhum* item ou *vários* **(0,n)**. Uma Instancia_Item pode ser guardada por *nenhum* inventário ou *um* **(0,1)**.
 
@@ -81,11 +87,8 @@
 **Inimigo *ataca* Aventureiro**
 - Um inimigo pode atacar *nenhum* aventureiro ou *vários* aventureiros **(0,n)**. Um aventureiro pode atacar *nenhum* inimigo ou *vários* inimigos **(0,n)**
 
-**Mercador *negocia* Instancia_Item**
-- Um mercador pode negociar no mínimo *uma* instancia_item ou *várias* **(1,n)**. Uma instancia_item pode ser negociada por no mínimo *um* mercador ou *vários* **(1,n)**.
-
-**Mercador *Negocia* com Aventureiro**
-- Um mercador pode negociar com *nenhum* aventureiro ou *vários* **(0,n)**. Um aventureiro pode negociar com *nenhum* mercador ou com *vários* **(0,n)**.
+**Mercador *negocia* uma Categoria Item**
+- Um mercador pode negociar (vender/comprar) itens de *uma* categoria de item. Uma categoria de item pode ser negociada por no mínimo *um* mercador ou *vários* **(1,n)**.
 
 **Região *contem* Aventureiro**
 - Uma região pode conter *nenhum* aventureiro ou *vários* **(0,n)**. Um aventureiro pode estar contido em somente *uma* região **(1,1)**.

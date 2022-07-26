@@ -6,7 +6,7 @@
 
  ##  💻 Visão Geral
  
-Este repositório será para aprofundarmos e trabalharmos os conhecimentos com relação a matéria Sisteam de Banco de Dados 1 da faculdade do Gama (FGA).
+Este repositório será para aprofundarmos e trabalharmos os conhecimentos com relação a matéria Sistema de Banco de Dados 1 da faculdade do Gama (FGA).
 
 ## 👨‍💻 Desenvolvedores
 

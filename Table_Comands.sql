@@ -45,20 +45,20 @@ create table inimigo_comum
 (vida int,
  dano int,
  fk_id_npc int not NULL references npc (id_npc)
+ id_comum serial primary key
 );
 
 create table inimigo_boss
 (vida int,
  dano int,
  fk_id_npc int not NULL references npc (id_npc)
- fk_id_habilidade int not NULL references habilidade (id_habilidade)
+ id_boss serial primary key
 );
 
-create table inimigo_boss
-(vida int,
- dano int,
- fk_id_npc int not NULL references npc (id_npc)
- fk_id_habilidade int not NULL references habilidade (id_habilidade)
+create table boss_habilidade
+(fk_id_boss int not NULL references inimigo_boss (fk_id_npc),
+ fk_id_habilidade int not NULL references habilidade (id_habilidade),
+ primary key (fk_id_boss, fk_id_habilidade)
 );
 
 create table missao
@@ -95,13 +95,6 @@ create table aventureiro
  fk_id_raca int not NULL references raca (id_raca),
  fk_id_corpo int not NULL references corpo (id_corpo),
  fk_id_inventario int not NULL references inventario (id_inventario)
-);
-
-create table corpo
-(cabeça boolean primary key,
- tronco boolean primary key,
- mao_esquerda boolean primary key,
- mao_direita boolean primary key
 );
 
 create table boost

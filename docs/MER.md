@@ -4,6 +4,7 @@
   |----|------|---------|-----|
   |04/07/2022|0.1|Primeira versão do MER |[Ian Rocha](https://github.com/IanPSRocha)|
   |21/07/2022|0.2|Adição de Entidade |[João Victor](https://github.com/jvBatista)|
+  |27/07/2022|0.3|Adição de Entidades e Relacionamentos |[João Victor](https://github.com/jvBatista)|
 
 # Modelo Entidade-Relacionamento
 ## Entidades
@@ -12,6 +13,7 @@
  - **Classe**
  - **Raça**
  - **Corpo**
+ - **Atributos**
  - **Inventário**
  - **NPC**
 	- **Inimigo**
@@ -28,16 +30,19 @@
  - **Instância Item**
  - **Categoria Item**
  - **Missão**
+ - **Requisitos Missão**
+ - **Objetivos Missão**
  - **Região**
  - **Mapa**
  
 ## Atributos
 
- - **Aventureiro:** <ins>ID_Aventureiro</ins>, Posicao, Nivel, Pontos, Nome, Atributos {Destreza, Carisma, Inteligencia, Forca, Sabedoria, Constituicao}.
+ - **Aventureiro:** <ins>ID_Aventureiro</ins>, Posicao, Nivel, Pontos, Nome.
  - **Classe:** <ins>ID_Classe</ins>, Habilidades, Nome.
  - **Raça:** <ins>ID_Raça</ins>, Nome.
- - **Corpo:** Cabeça, Tronco, LHand, RHand.
- - **Inventário:** Capacidade, Ouro.
+ - **Corpo:** <ins>ID_Corpo</ins>, Cabeça, Tronco, LHand, RHand.
+ - **Atributos:** <ins>ID_Atb</ins>, Destreza, Carisma, Inteligencia, Forca, Sabedoria, Constituicao.
+ - **Inventário:** <ins>ID_Invt</ins>, Capacidade, Ouro.
  - **NPC:** <ins>ID_NPC</ins>, Nome, Dialogos.
 	- **Inimigo:** Vida, Dano.
 		- **Boss:** Habilidade.
@@ -50,7 +55,9 @@
 		- **Poção:** Vida_Recuperada.
 		- **Boost:** Pontos_Aumentados, Duracao, Atributo.
  - **Categoria Item:** <ins>ID_CatItem</ins>, Nome
- - **Missão:** <ins>ID_Missao</ins>, Status, Objetivo, Requisitos.
+ - **Missão:** <ins>ID_Missao</ins>, Status.
+ - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição, Status.
+ - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição, Status.
  - **Região:** <ins>ID_Regiao</ins>, Coordenadas, Descricao.
  - **Mapa:** <ins>ID_Mapa</ins>.
 
@@ -69,11 +76,14 @@
 **Aventureiro *possui* Corpo**
  - Um aventureiro pode possuir somente *um* corpo **(1,1)**. Um corpo pode ser possuído por somente *um* aventureiro **(1,1)**.
 
-**Aventureiro *recebe* Missão**
-- Um aventureiro pode receber *nenhuma* missão ou *várias* **(0,n)**. Uma missão pode ser recebida por *nenhum* aventureiro ou *vários* **(0,n)**.
+**Aventureiro *possui* Atributos**
+ - Um aventureiro pode possuir somente *um* conjunto de atributos **(1,1)**. Um conjunto de atributos pode ser possuído por somente *um* aventureiro **(1,1)**.
 
-**Aventureiro *negocia* Instancia_Item**
-- Um aventureiro pode negociar (comprar/vender) *nenhuma* instância de item ou *várias* **(0,n)**. Uma instância de item pode ser negociada (comprada/vendida) por *um* **(0,1)** aventureiro.
+**Aventureiro *cumpre* Requisitos Missão**
+- Um aventureiro pode cumprir *nenhuma* requisito de missão ou *várias* **(0,n)**. Uma requisito de missão pode ser cumprido por *nenhum* aventureiro ou *vários* **(0,n)**.
+
+**Aventureiro *cumpre* Objetivos Missão**
+- Um aventureiro pode cumprir *nenhuma* objetivo de missão ou *várias* **(0,n)**. Uma objetivo de missão pode ser cumprido por *nenhum* aventureiro ou *vários* **(0,n)**.
 
 **Inventário *guarda* Instancia_Item**
  - Um inventário pode guardar *nenhum* item ou *vários* **(0,n)**. Uma Instancia_Item pode ser guardada por *nenhum* inventário ou *um* **(0,1)**.
@@ -89,6 +99,12 @@
 
 **Mercador *negocia* uma Categoria Item**
 - Um mercador pode negociar (vender/comprar) itens de *uma* categoria de item. Uma categoria de item pode ser negociada por no mínimo *um* mercador ou *vários* **(1,n)**.
+
+**Missão *possui* Requisitos Missão**
+- Uma missão pode possuir *nenhum* requisito ou *vários* requisitos **(0,n)**. Uma requisito pode ser atribuído a *nenhuma* missão ou *várias* missões **(1,n)**.
+
+**Missão *possui* Objetivos Missão**
+- Uma missão pode possuir *um* objetivo ou *vários* objetivos **(1,n)**. Uma objetivo pode ser atribuído a *nenhuma* missão ou *várias* missões **(1,n)**.
 
 **Região *contem* Aventureiro**
 - Uma região pode conter *nenhum* aventureiro ou *vários* **(0,n)**. Um aventureiro pode estar contido em somente *uma* região **(1,1)**.

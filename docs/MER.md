@@ -60,7 +60,7 @@
  - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição, Status.
  - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição, Status.
  - **Região:** <ins>ID_Regiao</ins>, Norte, Sul, Leste, Oeste, Nome, Descricao.
- - **Mapa:** <ins>ID_Mapa</ins>.
+ - **Mapa:** <ins>ID_Mapa</ins>, Nome.
 
  ## Relacionamentos
  

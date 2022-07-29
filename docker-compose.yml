@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  mud-game:
+    image: mud-game-dungeons-and-dragons
+    container_name: mud-game-dungeons-and-dragons
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/app"
+    entrypoint: "tail -f /dev/null"

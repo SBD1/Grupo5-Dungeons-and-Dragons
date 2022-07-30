@@ -147,13 +147,6 @@ create table passagem_missão
  primary key(fk_id_missao, fk_id_npc)
 );
 
-create table habilidades_classe
-(fk_id_classe int not NULL references classe (id_classe),
- nome varchar(50) primary key,
- descricao text,
- dano_base int
-);
-
 create table itens
 (id_item serial primary key,
  valor numeric,

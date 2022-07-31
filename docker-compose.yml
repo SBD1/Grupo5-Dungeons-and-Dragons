@@ -6,7 +6,31 @@ services:
     container_name: mud-game-dungeons-and-dragons
     build:
       context: .
-      dockerfile: GameDockerfile
+      dockerfile: gameDockerfile
     volumes:
       - ".:/app"
     entrypoint: "tail -f /dev/null"
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    container_name: postgres_container
+    build:
+      context: .
+      dockerfile: databaseDockerfile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+       - ./db_data:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: always
+
+networks:
+  postgres:
+    driver: bridge

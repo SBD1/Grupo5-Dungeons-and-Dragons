@@ -6,7 +6,7 @@ services:
     container_name: mud-game-dungeons-and-dragons
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: GameDockerfile
     volumes:
       - ".:/app"
     entrypoint: "tail -f /dev/null"

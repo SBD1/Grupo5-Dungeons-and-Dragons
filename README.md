@@ -8,6 +8,15 @@
  
 Este repositório será para aprofundarmos e trabalharmos os conhecimentos com relação a matéria Sistema de Banco de Dados 1 da faculdade do Gama (FGA).
 
+## 🧙 Execução do Projeto
+
+Uma vez que se tenha o [Docker](https://docs.docker.com/engine/install/) instalado, basta executar o comando para deixar os containers rodando.
+
+```bash
+$ docker-compose up
+```
+
+
 ## 👨‍💻 Desenvolvedores
 
 <table>

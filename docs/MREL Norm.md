@@ -16,5 +16,13 @@ Este documento irá conter as imagens das atualizações do Modelo Relacional no
   P.S.: Pode existir alguma alteração ao longo do desenvolvimento, visto que pode existir algo novo no jogo ou alguma alteração deve ser feita.
   
 
-![0.1](../images/MREL_NORM01.png)
+![0.2](../images/MREL_NORM02.png)
+
+## Versões Anteriores
+
+<summary>0.1</summary>
+  
+  ![0.1](../images/MREL_NORM01.png)
+  
+</details>
 

@@ -35,7 +35,7 @@ Este documento irá conter as imagens da primeira parte do projeto, que consiste
 <details>
 <summary>0.1</summary>
   
-  ![0.1](../images/MREL01.png.png)
+  ![0.1](../images/MREL01.png)
   
 </details>
 

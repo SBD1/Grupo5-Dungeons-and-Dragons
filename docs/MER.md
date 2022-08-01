@@ -5,6 +5,7 @@
   |04/07/2022|0.1|Primeira versão do MER |[Ian Rocha](https://github.com/IanPSRocha)|
   |21/07/2022|0.2|Adição de Entidade |[João Victor](https://github.com/jvBatista)|
   |27/07/2022|0.3|Adição de Entidades e Relacionamentos |[João Victor](https://github.com/jvBatista)|
+  |28/07/2022|0.4|Modificação de Entidades |[João Victor](https://github.com/jvBatista)|
 
 # Modelo Entidade-Relacionamento
 ## Entidades
@@ -47,7 +48,7 @@
 	- **Inimigo:** Vida, Dano.
 		- **Boss:** Habilidade.
 	- **Mercador:** Tipo.
- - **Item:** <ins>ID_Item</ins>, Quantidade, Valor, Valor_Pos_Compra.
+ - **Item:** <ins>ID_Item</ins>, Valor, Valor_Pos_Compra, Natureza_Item.
 	- **Equipamento**
 		- **Arma** Tipo, Dano.
 		- **Armadura:** Tipo, Resistencia, Parte_Corpo.
@@ -58,8 +59,8 @@
  - **Missão:** <ins>ID_Missao</ins>, Status.
  - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição, Status.
  - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição, Status.
- - **Região:** <ins>ID_Regiao</ins>, Coordenadas, Descricao.
- - **Mapa:** <ins>ID_Mapa</ins>.
+ - **Região:** <ins>ID_Regiao</ins>, Norte, Sul, Leste, Oeste, Nome, Descricao.
+ - **Mapa:** <ins>ID_Mapa</ins>, Nome.
 
  ## Relacionamentos
  

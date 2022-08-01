@@ -16,17 +16,17 @@ create table mapa
 create table regiao
 (id_regiao serial primary key,
  nome varchar(50),
- fk_norte int references regiao (id_regiao),
- fk_sul int references regiao (id_regiao),
- fk_oeste int references regiao (id_regiao),
- fk_leste int references regiao (id_regiao),
+ norte int references regiao (id_regiao),
+ sul int references regiao (id_regiao),
+ oeste int references regiao (id_regiao),
+ leste int references regiao (id_regiao),
  descricao text
 );
 
 create table regiao_mapa
-(fk_id_mapa int not NULL references mapa (id_mapa),
- fk_id_regiao int not NULL references regiao (id_regiao),
- primary key(fk_id_regiao, fk_id_mapa)
+(id_mapa int not NULL references mapa (id_mapa),
+ id_regiao int not NULL references regiao (id_regiao),
+ primary key (id_regiao)
 );
 
 create table npc
@@ -36,7 +36,7 @@ create table npc
 
 create table dialogo_npc
 (id_dialogo serial primary key,
- fk_id_npc int not NULL references npc (id_npc),
+ id_npc int not NULL references npc (id_npc),
  dialogo text
 );
 
@@ -46,20 +46,22 @@ create table categoria_item
 );
 
 create table mercador
-(fk_id_categoria_item int not NULL references categoria_item (id_categoria_item),
- fk_id_npc int not NULL references npc (id_npc) primary key
+(categoria_item int not NULL references categoria_item (id_categoria_item),
+ id_mercador int not NULL references npc (id_npc),
+ primary key (id_mercador)
 );
 
 create table inimigo
 (vida int,
  dano int,
- fk_id_npc int not NULL references npc (id_npc) primary key
+ id_inimigo int not NULL references npc (id_npc),
+ primary key (id_inimigo)
 );
 
 create table npc_em_regiao
-(fk_id_npc int not NULL references npc (id_npc),
- fk_id_regiao int not NULL references regiao (id_regiao),
- primary key (fk_id_npc, fk_id_regiao)
+(id_npc int not NULL references npc (id_npc),
+ id_regiao int not NULL references regiao (id_regiao),
+ primary key (id_npc)
 );
 
 create table missao
@@ -70,38 +72,41 @@ create table missao
 
 create table requisitos_missao
 (id_requisitos_missao serial primary key,
- fk_id_missao int not NULL references missao (id_missao),
+ id_missao int not NULL references missao (id_missao),
  descricao text
 );
 
 create table objetivo_missao
 (id_objetivo_missao serial primary key,
- fk_id_missao int not NULL references missao (id_missao),
+ id_missao int not NULL references missao (id_missao),
  descricao text
 );
 
 create table corpo
-(id_corpo serial primary key,
- cabeça boolean,
- tronco boolean,
- mao_esquerda boolean,
- mao_direita boolean
+(id_corpo int not NULL references aventureiro (id_aventureiro),
+ cabeça int,
+ tronco int,
+ mao_esquerda int,
+ mao_direita int,
+ primary key (id_corpo)
 );
 
 create table inventario
-(id_inventario serial primary key,
+(id_inventario int not NULL references aventureiro (id_aventureiro),
  capacidade int default 50,
- ouro int default 0
+ ouro int default 0,
+ primary key (id_inventario)
 );
 
 create table atributos
-(id_atributo serial primary key,
+(id_atributo int not NULL references aventureiro (id_aventureiro),
  destreza numeric,
  carisma numeric,
  inteligencia numeric,
  forca numeric,
  sabedoria numeric,
- constituicao numeric
+ constituicao numeric,
+ primary key (id_atributo)
 );
 
 create table aventureiro
@@ -109,41 +114,38 @@ create table aventureiro
  nivel numeric default 0,
  pontos numeric default 0,
  nome varchar(50),
- fk_id_raca int not NULL references raca (id_raca),
- fk_id_classe int not NULL references classe (id_classe),
- fk_id_corpo int not NULL references corpo (id_corpo),
- fk_id_inventario int not NULL references inventario (id_inventario),
- fk_id_atributo int not NULL references atributos (id_atributo)
+ raca int not NULL references raca (id_raca),
+ classe int not NULL references classe (id_classe),
 );
 
 create table aventureiro_em_regiao
-(fk_id_regiao int not NULL references regiao (id_regiao),
- fk_id_aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(fk_id_regiao, fk_id_aventureiro)
+(regiao int not NULL references regiao (id_regiao),
+ aventureiro int not NULL references aventureiro (id_aventureiro),
+ primary key(regiao, aventureiro)
 );
 
 create table status_requisitos_missao
-(fk_id_requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
- fk_id_aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(fk_id_requisitos_missao, fk_id_aventureiro),
+(requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
+ aventureiro int not NULL references aventureiro (id_aventureiro),
+ primary key(requisitos_missao, aventureiro),
  status boolean default false
 );
 
 create table status_objetivo_missao
-(fk_id_objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
- fk_id_aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(fk_id_objetivo_missao, fk_id_aventureiro),
+(objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
+ aventureiro int not NULL references aventureiro (id_aventureiro),
+ primary key(objetivo_missao, aventureiro),
  status boolean default false
 );
 
 create table passagem_missão
-(fk_id_missao int not NULL references missao(id_missao),
- fk_id_npc int not NULL references npc (id_npc),
- primary key(fk_id_missao, fk_id_npc)
+(missao int not NULL references missao(id_missao),
+ npc int not NULL references npc (id_npc),
+ primary key(missao, npc)
 );
 
 create table habilidades_classe
-(fk_id_classe int not NULL references classe(id_classe),
+(classe int not NULL references classe(id_classe),
  nome varchar(50) primary key,
  descricao text
 );
@@ -160,38 +162,40 @@ create table itens
 );
 
 create table itens_por_categoria
-(fk_id_categoria_item int not NULL references categoria_item (id_categoria_item),
- fk_id_item int not NULL references itens (id_item),
- primary key(fk_id_categoria_item, fk_id_item)
+(categoria_item int not NULL references categoria_item (id_categoria_item),
+ item int not NULL references itens (id_item),
+ primary key(categoria_item, item)
 );
 
 create table instancia_item
 (id_instancia_item serial primary key,
- fk_id_item int not NULL references itens (id_item)
+ item int not NULL references itens (id_item)
 );
 
 create table instancia_item_em_regiao
-(fk_id_instancia_item int not NULL references instancia_item (id_instancia_item),
- fk_id_regiao int not NULL references regiao (id_regiao),
- primary key (fk_id_instancia_item, fk_id_regiao)
+(instancia_item int not NULL references instancia_item (id_instancia_item),
+ regiao int not NULL references regiao (id_regiao),
+ primary key (instancia_item)
 );
 
 create table itens_inventario
-(fk_id_inventario int not NULL references inventario (id_inventario),
- fk_id_instancia_item int not NULL references instancia_item (id_instancia_item),
- primary key (fk_id_instancia_item, fk_id_inventario)
+(inventario int not NULL references inventario (id_inventario),
+ instancia_item int not NULL references instancia_item (id_instancia_item),
+ primary key (instancia_item)
 );
 
 create table boost
-(fk_id_item int not NULL references itens (id_item) primary key,
+(id_boost int not NULL references itens (id_item),
  atributo text,
  duracao int,
- pontos_aumentados int
+ pontos_aumentados int,
+ primary key (id_boost)
 );
 
 create table pocao
-(fk_id_item int not NULL references itens (id_item) primary key,
- vida_recuperada int
+(id_pocao int not NULL references itens (id_item),
+ vida_recuperada int,
+ primary key (id_pocao)
 );
 
 CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
@@ -200,13 +204,15 @@ CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
 create table arma
 (dano int,
  tipo weapon_type,
- fk_id_item int not NULL references itens (id_item) primary key
+ id_arma int not NULL references itens (id_item),
+ primary key (id_arma)
 );
 
 create table armadura
 (resistencia int,
  tipo armour_type,
  parte_corpo text,
- fk_id_item int not NULL references itens (id_item) primary key
+ id_armadura int not NULL references itens (id_item),
+ primary key (id_armadura)
 );
 

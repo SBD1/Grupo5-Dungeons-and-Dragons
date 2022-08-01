@@ -138,7 +138,7 @@ CREATE TABLE status_objetivo_missao
  status boolean default false
 );
 
-CREATE TABLE passagem_missão
+CREATE TABLE passagem_missao
 (missao int not NULL references missao(id_missao),
  npc int not NULL references npc (id_npc),
  primary key(missao, npc)

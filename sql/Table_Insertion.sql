@@ -33,6 +33,14 @@ VALUES (5, 'Ladrão', 'Proficiência em escape e furtividade');
 INSERT INTO habilidades_classe
 VALUES (6, 'Viking', 'Proficiência em machados e martelos');
 
+-- POPULAR AVENTUREIROS
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (1, 'Hank', 3, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (2, 'Eric', 2, 2);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (3, 'Diana', 2, 3);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (4, 'Presto', 3, 4);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (5, 'Sheila', 5, 5);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (6, 'Bobby', 4, 6);
+
 -- POPULAR CORPOS
 INSERT INTO corpo(id_corpo) VALUES (1);
 INSERT INTO corpo(id_corpo) VALUES (2);
@@ -56,14 +64,6 @@ INSERT INTO inventario(id_inventario) VALUES (3);
 INSERT INTO inventario(id_inventario) VALUES (4);
 INSERT INTO inventario(id_inventario) VALUES (5);
 INSERT INTO inventario(id_inventario) VALUES (6);
-
--- POPULAR AVENTUREIROS
-INSERT INTO aventureiro VALUES (1, 'Hank', 3, 1);
-INSERT INTO aventureiro VALUES (2, 'Eric', 2, 2);
-INSERT INTO aventureiro VALUES (3, 'Diana', 2, 3);
-INSERT INTO aventureiro VALUES (4, 'Presto', 3, 4);
-INSERT INTO aventureiro VALUES (5, 'Sheila', 5, 5);
-INSERT INTO aventureiro VALUES (6, 'Bobby', 4, 6);
 
 
 -- POPULAR ITENS
@@ -101,8 +101,8 @@ INSERT INTO arma VALUES (9, 20, 'Bastão');
 INSERT INTO arma VALUES (10, 40, 'Clava');
 
 -- POPULAR ARMADURAS
-INSERT INTO armadura VALUES (11, 2, 'Veste', 'cabeça');
-INSERT INTO armadura VALUES (12, 2, 'Veste', 'tronco');
+INSERT INTO armadura VALUES (11, 2, 'Veste', 'C');
+INSERT INTO armadura VALUES (12, 2, 'Veste', 'T');
 
 -- POPULAR CATEGORIAS
 INSERT INTO categoria_item VALUES (1, 'Recuperação & Performance');

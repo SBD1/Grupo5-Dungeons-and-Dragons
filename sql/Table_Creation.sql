@@ -1,19 +1,19 @@
-create table raca
+CREATE TABLE raca
 (id_raca serial primary key,
  nome varchar(50)
 );
 
-create table classe
+CREATE TABLE classe
 (id_classe serial primary key,
  nome varchar(50)
 );
 
-create table mapa
+CREATE TABLE mapa
 (id_mapa serial primary key,
  nome varchar(50)
 );
 
-create table regiao
+CREATE TABLE regiao
 (id_regiao serial primary key,
  nome varchar(50),
  norte int references regiao (id_regiao),
@@ -23,66 +23,75 @@ create table regiao
  descricao text
 );
 
-create table regiao_mapa
+CREATE TABLE regiao_mapa
 (id_mapa int not NULL references mapa (id_mapa),
  id_regiao int not NULL references regiao (id_regiao),
  primary key (id_regiao)
 );
 
-create table npc
+CREATE TABLE npc
 (id_npc serial primary key,
  nome varchar(50)
 );
 
-create table dialogo_npc
+CREATE TABLE dialogo_npc
 (id_dialogo serial primary key,
  id_npc int not NULL references npc (id_npc),
  dialogo text
 );
 
-create table categoria_item
+CREATE TABLE categoria_item
 (id_categoria_item serial primary key,
  nome text
 );
 
-create table mercador
+CREATE TABLE mercador
 (categoria_item int not NULL references categoria_item (id_categoria_item),
  id_mercador int not NULL references npc (id_npc),
  primary key (id_mercador)
 );
 
-create table inimigo
+CREATE TABLE inimigo
 (vida int,
  dano int,
  id_inimigo int not NULL references npc (id_npc),
  primary key (id_inimigo)
 );
 
-create table npc_em_regiao
+CREATE TABLE npc_em_regiao
 (id_npc int not NULL references npc (id_npc),
  id_regiao int not NULL references regiao (id_regiao),
  primary key (id_npc)
 );
 
-create table missao
+CREATE TABLE missao
 (status boolean default false,
  descricao text,
  id_missao serial primary key
 );
 
-create table requisitos_missao
+CREATE TABLE requisitos_missao
 (id_requisitos_missao serial primary key,
  id_missao int not NULL references missao (id_missao),
  descricao text
 );
 
-create table objetivo_missao
+CREATE TABLE objetivo_missao
 (id_objetivo_missao serial primary key,
  id_missao int not NULL references missao (id_missao),
  descricao text
 );
 
-create table corpo
+CREATE TABLE aventureiro
+(id_aventureiro serial primary key,
+ nivel numeric default 0,
+ pontos numeric default 0,
+ nome varchar(50),
+ raca int not NULL references raca (id_raca),
+ classe int not NULL references classe (id_classe)
+);
+
+CREATE TABLE corpo
 (id_corpo int not NULL references aventureiro (id_aventureiro),
  cabeça int,
  tronco int,
@@ -91,14 +100,14 @@ create table corpo
  primary key (id_corpo)
 );
 
-create table inventario
+CREATE TABLE inventario
 (id_inventario int not NULL references aventureiro (id_aventureiro),
  capacidade int default 50,
  ouro int default 0,
  primary key (id_inventario)
 );
 
-create table atributos
+CREATE TABLE atributos
 (id_atributo int not NULL references aventureiro (id_aventureiro),
  destreza numeric,
  carisma numeric,
@@ -109,42 +118,33 @@ create table atributos
  primary key (id_atributo)
 );
 
-create table aventureiro
-(id_aventureiro serial primary key,
- nivel numeric default 0,
- pontos numeric default 0,
- nome varchar(50),
- raca int not NULL references raca (id_raca),
- classe int not NULL references classe (id_classe),
-);
-
-create table aventureiro_em_regiao
+CREATE TABLE aventureiro_em_regiao
 (regiao int not NULL references regiao (id_regiao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
  primary key(regiao, aventureiro)
 );
 
-create table status_requisitos_missao
+CREATE TABLE status_requisitos_missao
 (requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
  primary key(requisitos_missao, aventureiro),
  status boolean default false
 );
 
-create table status_objetivo_missao
+CREATE TABLE status_objetivo_missao
 (objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
  primary key(objetivo_missao, aventureiro),
  status boolean default false
 );
 
-create table passagem_missão
+CREATE TABLE passagem_missão
 (missao int not NULL references missao(id_missao),
  npc int not NULL references npc (id_npc),
  primary key(missao, npc)
 );
 
-create table habilidades_classe
+CREATE TABLE habilidades_classe
 (classe int not NULL references classe(id_classe),
  nome varchar(50) primary key,
  descricao text
@@ -152,7 +152,7 @@ create table habilidades_classe
 
 CREATE TYPE item_type AS ENUM('C','E');
 
-create table itens
+CREATE TABLE itens
 (id_item serial primary key,
  nome varchar(50),
  descricao text,
@@ -161,30 +161,30 @@ create table itens
  natureza_item item_type
 );
 
-create table itens_por_categoria
+CREATE TABLE itens_por_categoria
 (categoria_item int not NULL references categoria_item (id_categoria_item),
  item int not NULL references itens (id_item),
  primary key(categoria_item, item)
 );
 
-create table instancia_item
+CREATE TABLE instancia_item
 (id_instancia_item serial primary key,
  item int not NULL references itens (id_item)
 );
 
-create table instancia_item_em_regiao
+CREATE TABLE instancia_item_em_regiao
 (instancia_item int not NULL references instancia_item (id_instancia_item),
  regiao int not NULL references regiao (id_regiao),
  primary key (instancia_item)
 );
 
-create table itens_inventario
+CREATE TABLE itens_inventario
 (inventario int not NULL references inventario (id_inventario),
  instancia_item int not NULL references instancia_item (id_instancia_item),
  primary key (instancia_item)
 );
 
-create table boost
+CREATE TABLE boost
 (id_boost int not NULL references itens (id_item),
  atributo text,
  duracao int,
@@ -192,7 +192,7 @@ create table boost
  primary key (id_boost)
 );
 
-create table pocao
+CREATE TABLE pocao
 (id_pocao int not NULL references itens (id_item),
  vida_recuperada int,
  primary key (id_pocao)
@@ -200,19 +200,20 @@ create table pocao
 
 CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
 CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
+CREATE TYPE body_part AS ENUM('C','T');
 
-create table arma
-(dano int,
+CREATE TABLE arma
+(id_arma int not NULL references itens (id_item),
+ dano int,
  tipo weapon_type,
- id_arma int not NULL references itens (id_item),
  primary key (id_arma)
 );
 
-create table armadura
-(resistencia int,
+CREATE TABLE armadura
+(id_armadura int not NULL references itens (id_item),
+ resistencia int,
  tipo armour_type,
  parte_corpo text,
- id_armadura int not NULL references itens (id_item),
  primary key (id_armadura)
 );
 

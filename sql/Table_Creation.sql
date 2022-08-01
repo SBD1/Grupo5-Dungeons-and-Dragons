@@ -35,7 +35,8 @@ create table npc
 );
 
 create table dialogo_npc
-(fk_id_npc int not NULL references npc (id_npc) primary key,
+(id_dialogo serial primary key,
+ fk_id_npc int not NULL references npc (id_npc),
  dialogo text
 );
 
@@ -47,12 +48,6 @@ create table categoria_item
 create table mercador
 (fk_id_categoria_item int not NULL references categoria_item (id_categoria_item),
  fk_id_npc int not NULL references npc (id_npc) primary key
-);
-
-create table habilidade_classe
-(fk_id_classe int not NULL references classe (id_classe),
- habilidade varchar(50) primary key,
- descricao text
 );
 
 create table inimigo
@@ -68,7 +63,7 @@ create table npc_em_regiao
 );
 
 create table missao
-(status boolean,
+(status boolean default false,
  descricao text,
  id_missao serial primary key
 );
@@ -95,8 +90,8 @@ create table corpo
 
 create table inventario
 (id_inventario serial primary key,
- capacidade int,
- ouro int
+ capacidade int default 50,
+ ouro int default 0
 );
 
 create table atributos
@@ -111,8 +106,8 @@ create table atributos
 
 create table aventureiro
 (id_aventureiro serial primary key,
- nivel numeric,
- pontos numeric,
+ nivel numeric default 0,
+ pontos numeric default 0,
  nome varchar(50),
  fk_id_raca int not NULL references raca (id_raca),
  fk_id_classe int not NULL references classe (id_classe),
@@ -131,14 +126,14 @@ create table status_requisitos_missao
 (fk_id_requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
  fk_id_aventureiro int not NULL references aventureiro (id_aventureiro),
  primary key(fk_id_requisitos_missao, fk_id_aventureiro),
- status boolean
+ status boolean default false
 );
 
 create table status_objetivo_missao
 (fk_id_objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
  fk_id_aventureiro int not NULL references aventureiro (id_aventureiro),
  primary key(fk_id_objetivo_missao, fk_id_aventureiro),
- status boolean
+ status boolean default false
 );
 
 create table passagem_missão
@@ -148,17 +143,20 @@ create table passagem_missão
 );
 
 create table habilidades_classe
-(fk_id_classe int not NULL references classe (id_classe),
+(fk_id_classe int not NULL references classe(id_classe),
  nome varchar(50) primary key,
- descricao text,
- dano_base int
+ descricao text
 );
+
+CREATE TYPE item_type AS ENUM('C','E');
 
 create table itens
 (id_item serial primary key,
+ nome varchar(50),
+ descricao text,
  valor numeric,
  valor_pos_compra numeric,
- natureza_tem numeric
+ natureza_item item_type
 );
 
 create table itens_por_categoria
@@ -196,15 +194,18 @@ create table pocao
  vida_recuperada int
 );
 
+CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
+CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
+
 create table arma
 (dano int,
- tipo text,
+ tipo weapon_type,
  fk_id_item int not NULL references itens (id_item) primary key
 );
 
 create table armadura
 (resistencia int,
- tipo text,
+ tipo armour_type,
  parte_corpo text,
  fk_id_item int not NULL references itens (id_item) primary key
 );

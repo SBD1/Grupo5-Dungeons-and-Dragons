@@ -34,4 +34,5 @@ $ docker-compose up
   |Conteúdo|Vídeo| 
   |----|------|
   |Módulo 1|https://youtu.be/IVTCS4QZujE|
+  |Módulo 2|https://youtu.be/eQ8IuLWAbEA|
 

@@ -1,45 +1,68 @@
--- POPULAR RAÇAS
-INSERT INTO raca VALUES (1, 'Anão');
-INSERT INTO raca VALUES (2, 'Humano');
-INSERT INTO raca VALUES (3, 'Elfo');
-INSERT INTO raca VALUES (4, 'Orc');
-INSERT INTO raca VALUES (5, 'Halfling');
+-- POPULAR MAPA
+INSERT INTO mapa VALUES (1, 'O Reino');
 
--- POPULAR CLASSES
-INSERT INTO classe VALUES (1, 'Ranger');
-INSERT INTO classe VALUES (2, 'Cavaleiro');
-INSERT INTO classe VALUES (3, 'Acrobata');
-INSERT INTO classe VALUES (4, 'Mago');
-INSERT INTO classe VALUES (5, 'Assassino');
-INSERT INTO classe VALUES (6, 'Bárbaro');
+-- POPULAR REGIÕES
+INSERT INTO regiao(id_regiao, nome, descricao)
+VALUES (1, 'Praça Central', 'Bem vindo à Praça Central!');
+INSERT INTO regiao(id_regiao, nome, descricao)
+VALUES (2, 'Barraca de Poções', 'Bem vindo à Barraca de Poções!');
+INSERT INTO regiao(id_regiao, nome, descricao)
+VALUES (3, 'Arsenal de Armas', 'Bem vindo ao Arsenal de Armas!');
+INSERT INTO regiao(id_regiao, nome, descricao)
+VALUES (4, 'Guilda de Aventureiros', 'Bem vindo à Guilda de Aventureiros!');
+INSERT INTO regiao(id_regiao, nome, descricao, norte, sul, oeste, leste)
+VALUES (5, 'Comércio Local', 'Bem vindo ao Comércio Local!', 4, 1, 2, 3);
+
+-- POPULAR REGIÕES_MAPA
+INSERT INTO regiao_mapa VALUES (1, 1);
+INSERT INTO regiao_mapa VALUES (1, 2);
+INSERT INTO regiao_mapa VALUES (1, 3);
+INSERT INTO regiao_mapa VALUES (1, 4);
+INSERT INTO regiao_mapa VALUES (1, 5);
+
+
+-- POPULAR RAÇAS
+INSERT INTO raca VALUES (1, 'Anão', 0, 0, 0, 0, 0, 0);
+INSERT INTO raca VALUES (2, 'Humano', 0, 0, 0, 0, 0, 0);
+INSERT INTO raca VALUES (3, 'Elfo', 0, 0, 0, 0, 0, 0);
+INSERT INTO raca VALUES (4, 'Orc', 0, 0, 0, 0, 0, 0);
+INSERT INTO raca VALUES (5, 'Halfling', 0, 0, 0, 0, 0, 0);
 
 -- POPULAR HABILIDADES
 INSERT INTO habilidades_classe
 VALUES (1, 'Caçador', 'Proficiência em rastreamento');
 INSERT INTO habilidades_classe
-VALUES (1, 'Arsenal LD', 'Proficiência em armas de longa distância');
+VALUES (2, 'Arsenal LD', 'Proficiência em armas de longa distância');
 INSERT INTO habilidades_classe
-VALUES (2, 'Animal Handling', 'Proficiência em cavalgar');
+VALUES (3, 'Animal Handling', 'Proficiência em cavalgar');
 INSERT INTO habilidades_classe
-VALUES (3, 'Acrobatics', 'Proficiência em escalada');
+VALUES (4, 'Acrobatics', 'Proficiência em escalada');
 INSERT INTO habilidades_classe
-VALUES (3, 'Arsenal Meele', 'Proficiência em armas meele');
+VALUES (5, 'Arsenal Meele', 'Proficiência em armas meele');
 INSERT INTO habilidades_classe
-VALUES (4, 'Feitiçaria', 'Proficiência na produção de magia');
+VALUES (6, 'Feitiçaria', 'Proficiência na produção de magia');
 INSERT INTO habilidades_classe
-VALUES (5, 'Carisma', 'Habilidade de persuasão e convencimento');
+VALUES (7, 'Carisma', 'Habilidade de persuasão e convencimento');
 INSERT INTO habilidades_classe
-VALUES (5, 'Ladrão', 'Proficiência em escape e furtividade');
+VALUES (8, 'Ladrão', 'Proficiência em escape e furtividade');
 INSERT INTO habilidades_classe
-VALUES (6, 'Viking', 'Proficiência em machados e martelos');
+VALUES (9, 'Viking', 'Proficiência em machados e martelos');
+
+-- POPULAR CLASSES
+INSERT INTO classe VALUES (1, 'Ranger', 0, 0, 0, 0, 0, 0, 1, 2);
+INSERT INTO classe VALUES (2, 'Cavaleiro', 0, 0, 0, 0, 0, 0, 3, null);
+INSERT INTO classe VALUES (3, 'Acrobata', 0, 0, 0, 0, 0, 0, 4, 5);
+INSERT INTO classe VALUES (4, 'Mago', 0, 0, 0, 0, 0, 0, 6, null);
+INSERT INTO classe VALUES (5, 'Assassino', 0, 0, 0, 0, 0, 0, 7, 8);
+INSERT INTO classe VALUES (6, 'Bárbaro', 0, 0, 0, 0, 0, 0, 9, null);
 
 -- POPULAR AVENTUREIROS
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (1, 'Hank', 3, 1);
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (2, 'Eric', 2, 2);
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (3, 'Diana', 2, 3);
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (4, 'Presto', 3, 4);
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (5, 'Sheila', 5, 5);
-INSERT INTO aventureiro(id_aventureiro, nome, raca, classe) VALUES (6, 'Bobby', 4, 6);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (1, 'Hank', 3, 1, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (2, 'Eric', 2, 2, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (3, 'Diana', 2, 3, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (4, 'Presto', 3, 4, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (5, 'Sheila', 5, 5, 1);
+INSERT INTO aventureiro(id_aventureiro, nome, raca, classe, regiao) VALUES (6, 'Bobby', 4, 6, 1);
 
 -- POPULAR CORPOS
 INSERT INTO corpo(id_corpo) VALUES (1);
@@ -152,29 +175,6 @@ INSERT INTO mercador VALUES (1, 2);
 INSERT INTO mercador VALUES (2, 1);
 
 
--- POPULAR MAPA
-INSERT INTO mapa VALUES (1, 'O Reino');
-
--- POPULAR REGIÕES
-INSERT INTO regiao(id_regiao, nome, descricao)
-VALUES (1, 'Praça Central', 'Bem vindo à Praça Central!');
-INSERT INTO regiao(id_regiao, nome, descricao)
-VALUES (2, 'Barraca de Poções', 'Bem vindo à Barraca de Poções!');
-INSERT INTO regiao(id_regiao, nome, descricao)
-VALUES (3, 'Arsenal de Armas', 'Bem vindo ao Arsenal de Armas!');
-INSERT INTO regiao(id_regiao, nome, descricao)
-VALUES (4, 'Guilda de Aventureiros', 'Bem vindo à Guilda de Aventureiros!');
-INSERT INTO regiao(id_regiao, nome, descricao, norte, sul, oeste, leste)
-VALUES (5, 'Comércio Local', 'Bem vindo ao Comércio Local!', 4, 1, 2, 3);
-
--- POPULAR REGIÕES_MAPA
-INSERT INTO regiao_mapa VALUES (1, 1);
-INSERT INTO regiao_mapa VALUES (1, 2);
-INSERT INTO regiao_mapa VALUES (1, 3);
-INSERT INTO regiao_mapa VALUES (1, 4);
-INSERT INTO regiao_mapa VALUES (1, 5);
-
-
 -- POPULAR MISSÕES
 INSERT INTO missao(id_missao, descricao)
 VALUES (1, 'Registro na Guilda de Aventureiros');
@@ -190,25 +190,3 @@ INSERT INTO objetivo_missao(id_objetivo_missao, id_missao, descricao)
 VALUES (1, 1, 'Se registrar como Aventureiro na Guilda');
 INSERT INTO objetivo_missao(id_objetivo_missao, id_missao, descricao)
 VALUES (2, 2, 'Matar 1 Morto-vivo');
-
--- POPULAR STATUS DOS REQUISITOS DE MISSÕES
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 1);
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 2);
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 3);
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 4);
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 5);
-INSERT INTO status_requisitos_missao(requisitos_missao, aventureiro) VALUES (1, 6);
-
--- POPULAR STATUS DOS OBJETIVOS DE MISSÕES
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 1);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 2);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 3);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 4);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 5);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (1, 6);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 1);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 2);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 3);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 4);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 5);
-INSERT INTO status_objetivo_missao(objetivo_missao, aventureiro) VALUES (2, 6);

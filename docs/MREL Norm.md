@@ -3,7 +3,7 @@
   |Data|Versão|Alteração|Autor| 
   |----|------|---------|-----|
   |28/07/2022|0.1|Primeira Versão do MREL Normalizado|[João Victor](https://github.com/jvBatista)|
-  |08/08/2022|0.2|Atualização Pós Entrega 2|[João Victor](https://github.com/jvBatista)|
+  |15/08/2022|0.2|Atualização Pós Entrega 2|[João Victor](https://github.com/jvBatista)|
   
  
 ## Introdução

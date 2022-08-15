@@ -90,21 +90,21 @@ INSERT INTO inventario(id_inventario) VALUES (6);
 
 
 -- POPULAR ITENS
-INSERT INTO itens VALUES (1, 'Poção', 'Recupera 10pts de vida', 20, 15, 'C');
-INSERT INTO itens VALUES (2, 'Mega Poção', 'Recupera 30pts de vida', 45, 35, 'C');
+INSERT INTO itens VALUES (1, 'Poção', 'Recupera 10pts de vida', 20, 15, 'P');
+INSERT INTO itens VALUES (2, 'Mega Poção', 'Recupera 30pts de vida', 45, 35, 'P');
 
-INSERT INTO itens VALUES (3, 'X Força', 'Aumenta 5pts de Força por 3 turnos', 25, 20, 'C');
-INSERT INTO itens VALUES (4, 'X Sabedoria', 'Aumenta 5pts de Sabedoria por 3 turnos', 20, 15, 'C');
-INSERT INTO itens VALUES (5, 'X Destreza', 'Aumenta 5pts de destreza por 3 turnos', 15, 10, 'C');
+INSERT INTO itens VALUES (3, 'X Força', 'Aumenta 5pts de Força por 3 turnos', 25, 20, 'B');
+INSERT INTO itens VALUES (4, 'X Sabedoria', 'Aumenta 5pts de Sabedoria por 3 turnos', 20, 15, 'B');
+INSERT INTO itens VALUES (5, 'X Destreza', 'Aumenta 5pts de destreza por 3 turnos', 15, 10, 'B');
 
-INSERT INTO itens VALUES (6, 'Espada Velha', 'Arma meele básica de empunhadura simples', 100, 75, 'E');
-INSERT INTO itens VALUES (7, 'Arco de Luz', 'Arma meele mágica de empunhadura simples', 120, 90, 'E');
-INSERT INTO itens VALUES (8, 'Escudo Básico', 'Arma meele básica de empunhadura simples', 100, 75, 'E');
-INSERT INTO itens VALUES (9, 'Bastão Extensível', 'Arma meele mágica de empunhadura dupla', 120, 90, 'E');
-INSERT INTO itens VALUES (10, 'Clava Grande', 'Arma meele física de empunhadura dupla', 100, 75, 'E');
+INSERT INTO itens VALUES (6, 'Espada Velha', 'Arma meele básica de empunhadura simples', 100, 75, 'W');
+INSERT INTO itens VALUES (7, 'Arco de Luz', 'Arma meele mágica de empunhadura simples', 120, 90, 'W');
+INSERT INTO itens VALUES (8, 'Escudo Básico', 'Arma meele básica de empunhadura simples', 100, 75, 'W');
+INSERT INTO itens VALUES (9, 'Bastão Extensível', 'Arma meele mágica de empunhadura dupla', 120, 90, 'W');
+INSERT INTO itens VALUES (10, 'Clava Grande', 'Arma meele física de empunhadura dupla', 100, 75, 'W');
 
-INSERT INTO itens VALUES (11, 'Chapeu Mágico', 'Equipamento mágico de cabeça', 200, 140, 'E');
-INSERT INTO itens VALUES (12, 'Manto da Invisibilidade', 'Equipamento mágico de tronco', 200, 140, 'E');
+INSERT INTO itens VALUES (11, 'Chapeu Mágico', 'Equipamento mágico de cabeça', 200, 140, 'A');
+INSERT INTO itens VALUES (12, 'Manto da Invisibilidade', 'Equipamento mágico de tronco', 200, 140, 'A');
 
 
 -- POPULAR POÇÕES
@@ -152,11 +152,11 @@ INSERT INTO itens_por_categoria VALUES (3, 12);
 
 
 -- POPULAR NPCS
-INSERT INTO npc VALUES (1, 'Fineas, o Ferreiro');
-INSERT INTO npc VALUES (2, 'Edvan, Mestre de Poções');
-INSERT INTO npc VALUES (3, 'Martha, Gerente da Guilda');
-INSERT INTO npc VALUES (4, 'Morto-vivo');
-INSERT INTO npc VALUES (5, 'Mímico');
+INSERT INTO npc VALUES (1, 'Fineas, o Ferreiro', 'M');
+INSERT INTO npc VALUES (2, 'Edvan, Mestre de Poções', 'M');
+INSERT INTO npc VALUES (3, 'Martha, Gerente da Guilda', 'N');
+INSERT INTO npc VALUES (4, 'Morto-vivo', 'I');
+INSERT INTO npc VALUES (5, 'Mímico', 'I');
 
 -- POPULAR DIALOGOS
 INSERT INTO dialogo_npc VALUES (1, 1, 'Apenas armas de primeira por aqui...por um preço justo é claro');

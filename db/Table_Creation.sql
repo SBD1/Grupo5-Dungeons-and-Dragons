@@ -1,4 +1,5 @@
-CREATE TYPE item_type AS ENUM('C','E'); -- Consumível ou Equipamento
+CREATE TYPE npc_type AS ENUM('N','M','I'); -- NPC, Mercador, Inimigo
+CREATE TYPE item_type AS ENUM('W','A','P', 'B'); -- Arma, Armadura, Poção, Boost
 CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
 CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
 CREATE TYPE body_part AS ENUM('C','T'); -- Cabeça ou Tronco
@@ -56,7 +57,8 @@ CREATE TABLE regiao_mapa
 
 CREATE TABLE npc
 (id_npc serial primary key,
- nome varchar(50)
+ nome varchar(50),
+ tipo npc_type
 );
 
 CREATE TABLE dialogo_npc
@@ -90,8 +92,7 @@ CREATE TABLE npc_em_regiao
 );
 
 CREATE TABLE missao
-(status boolean default false,
- descricao text,
+(descricao text,
  id_missao serial primary key
 );
 
@@ -156,6 +157,12 @@ CREATE TABLE status_objetivo_missao
  primary key(objetivo_missao, aventureiro)
 );
 
+CREATE TABLE conclusao_missao
+(id_missao int not NULL references missao (id_missao),
+ aventureiro int not NULL references aventureiro (id_aventureiro),
+ primary key(aventureiro)
+);
+
 CREATE TABLE passagem_missao
 (missao int not NULL references missao(id_missao),
  npc int not NULL references npc (id_npc),
@@ -168,7 +175,7 @@ CREATE TABLE itens
  descricao text,
  valor numeric,
  valor_pos_compra numeric,
- natureza_item item_type
+ tipo item_type
 );
 
 CREATE TABLE itens_por_categoria

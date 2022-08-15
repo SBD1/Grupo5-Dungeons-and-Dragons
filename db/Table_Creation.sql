@@ -158,15 +158,15 @@ CREATE TABLE status_objetivo_missao
 );
 
 CREATE TABLE conclusao_missao
-(id_missao int not NULL references missao (id_missao),
+(missao int not NULL references missao (id_missao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(aventureiro)
+ primary key(missao, aventureiro)
 );
 
 CREATE TABLE passagem_missao
 (missao int not NULL references missao(id_missao),
  npc int not NULL references npc (id_npc),
- primary key(missao, npc)
+ primary key(missao)
 );
 
 CREATE TABLE itens

@@ -16,6 +16,17 @@ Uma vez que se tenha o [Docker](https://docs.docker.com/engine/install/) instala
 $ docker-compose up
 ```
 
+Para acessar o postgres do container do banco de dados, execute o comando:
+
+```bash
+$ docker exec -it postgres_container psql -U postgres
+```
+ou
+
+```bash
+$ psql -h 0.0.0.0 -U postgres
+```
+
 
 ## 👨‍💻 Desenvolvedores
 

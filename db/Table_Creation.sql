@@ -1,11 +1,37 @@
+CREATE TYPE npc_type AS ENUM('N','M','I'); -- NPC, Mercador, Inimigo
+CREATE TYPE item_type AS ENUM('W','A','P', 'B'); -- Arma, Armadura, Poção, Boost
+CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
+CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
+CREATE TYPE body_part AS ENUM('C','T'); -- Cabeça ou Tronco
+
 CREATE TABLE raca
 (id_raca serial primary key,
- nome varchar(50)
+ nome varchar(50),
+ mod_destreza numeric,
+ mod_carisma numeric,
+ mod_inteligencia numeric,
+ mod_forca numeric,
+ mod_sabedoria numeric,
+ mod_constituicao numeric
+);
+
+CREATE TABLE habilidades_classe
+(id_habilidade serial primary key
+ nome varchar(50) primary key,
+ descricao text
 );
 
 CREATE TABLE classe
 (id_classe serial primary key,
- nome varchar(50)
+ nome varchar(50),
+ mod_destreza numeric,
+ mod_carisma numeric,
+ mod_inteligencia numeric,
+ mod_forca numeric,
+ mod_sabedoria numeric,
+ mod_constituicao numeric,
+ habilidade1 int references habilidades_classe (id_habilidade),
+ habilidade2 int references habilidades_classe (id_habilidade)
 );
 
 CREATE TABLE mapa
@@ -31,7 +57,8 @@ CREATE TABLE regiao_mapa
 
 CREATE TABLE npc
 (id_npc serial primary key,
- nome varchar(50)
+ nome varchar(50),
+ tipo npc_type
 );
 
 CREATE TABLE dialogo_npc
@@ -65,8 +92,7 @@ CREATE TABLE npc_em_regiao
 );
 
 CREATE TABLE missao
-(status boolean default false,
- descricao text,
+(descricao text,
  id_missao serial primary key
 );
 
@@ -88,7 +114,8 @@ CREATE TABLE aventureiro
  pontos numeric default 0,
  nome varchar(50),
  raca int not NULL references raca (id_raca),
- classe int not NULL references classe (id_classe)
+ classe int not NULL references classe (id_classe),
+ regiao int references regiao (id_regiao)
 );
 
 CREATE TABLE corpo
@@ -118,39 +145,29 @@ CREATE TABLE atributos
  primary key (id_atributo)
 );
 
-CREATE TABLE aventureiro_em_regiao
-(regiao int not NULL references regiao (id_regiao),
- aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(regiao, aventureiro)
-);
-
 CREATE TABLE status_requisitos_missao
 (requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(requisitos_missao, aventureiro),
- status boolean default false
+ primary key(requisitos_missao, aventureiro)
 );
 
 CREATE TABLE status_objetivo_missao
 (objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
  aventureiro int not NULL references aventureiro (id_aventureiro),
- primary key(objetivo_missao, aventureiro),
- status boolean default false
+ primary key(objetivo_missao, aventureiro)
+);
+
+CREATE TABLE conclusao_missao
+(missao int not NULL references missao (id_missao),
+ aventureiro int not NULL references aventureiro (id_aventureiro),
+ primary key(missao, aventureiro)
 );
 
 CREATE TABLE passagem_missao
 (missao int not NULL references missao(id_missao),
  npc int not NULL references npc (id_npc),
- primary key(missao, npc)
+ primary key(missao)
 );
-
-CREATE TABLE habilidades_classe
-(classe int not NULL references classe(id_classe),
- nome varchar(50) primary key,
- descricao text
-);
-
-CREATE TYPE item_type AS ENUM('C','E');
 
 CREATE TABLE itens
 (id_item serial primary key,
@@ -158,7 +175,7 @@ CREATE TABLE itens
  descricao text,
  valor numeric,
  valor_pos_compra numeric,
- natureza_item item_type
+ tipo item_type
 );
 
 CREATE TABLE itens_por_categoria
@@ -197,10 +214,6 @@ CREATE TABLE pocao
  vida_recuperada int,
  primary key (id_pocao)
 );
-
-CREATE TYPE weapon_type AS ENUM('Espada','Machado', 'Arco', 'Lança', 'Bastão', 'Clava', 'Martelo', 'Escudo');
-CREATE TYPE armour_type AS ENUM('Veste','Capacete', 'Armadura');
-CREATE TYPE body_part AS ENUM('C','T');
 
 CREATE TABLE arma
 (id_arma int not NULL references itens (id_item),

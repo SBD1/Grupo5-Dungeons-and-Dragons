@@ -3,6 +3,7 @@
   |Data|Versão|Alteração|Autor| 
   |----|------|---------|-----|
   |28/07/2022|0.1|Primeira Versão do MREL Normalizado|[João Victor](https://github.com/jvBatista)|
+  |15/08/2022|0.2|Atualização Pós Entrega 2|[João Victor](https://github.com/jvBatista)|
   
  
 ## Introdução
@@ -16,13 +17,18 @@ Este documento irá conter as imagens das atualizações do Modelo Relacional no
   P.S.: Pode existir alguma alteração ao longo do desenvolvimento, visto que pode existir algo novo no jogo ou alguma alteração deve ser feita.
   
 
-![0.2](../images/MREL_NORM02.png)
+![0.3](../images/MREL_NORM03.png)
 
 ## Versões Anteriores
 
-<summary>0.1</summary>
-  
-  ![0.1](../images/MREL_NORM01.png)
-  
+<details>
+  <summary>0.2</summary>
+
+  ![0.2](../images/MREL_NORM02.png)
 </details>
 
+<details>
+  <summary>0.1</summary>
+
+  ![0.1](../images/MREL_NORM01.png)  
+</details>

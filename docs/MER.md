@@ -6,6 +6,7 @@
   |21/07/2022|0.2|Adição de Entidade |[João Victor](https://github.com/jvBatista)|
   |27/07/2022|0.3|Adição de Entidades e Relacionamentos |[João Victor](https://github.com/jvBatista)|
   |28/07/2022|0.4|Modificação de Entidades |[João Victor](https://github.com/jvBatista)|
+  |08/08/2022|0.5|Atualizações Pós Entrega 2 |[João Victor](https://github.com/jvBatista)|
 
 # Modelo Entidade-Relacionamento
 ## Entidades
@@ -39,8 +40,9 @@
 ## Atributos
 
  - **Aventureiro:** <ins>ID_Aventureiro</ins>, Posicao, Nivel, Pontos, Nome.
- - **Classe:** <ins>ID_Classe</ins>, Habilidades, Nome.
- - **Raça:** <ins>ID_Raça</ins>, Nome.
+  - **Habilidade:** <ins>ID_Habilidade</ins>, Nome, Descrição.
+ - **Classe:** <ins>ID_Classe</ins>, Nome, Mod_Destreza, Mod_Carisma, Mod_Inteligencia, Mod_Forca, Mod_Sabedoria, Mod_Constituicao.
+ - **Raça:** <ins>ID_Raça</ins>, Nome, Mod_Destreza, Mod_Carisma, Mod_Inteligencia, Mod_Forca, Mod_Sabedoria, Mod_Constituicao.
  - **Corpo:** <ins>ID_Corpo</ins>, Cabeça, Tronco, LHand, RHand.
  - **Atributos:** <ins>ID_Atb</ins>, Destreza, Carisma, Inteligencia, Forca, Sabedoria, Constituicao.
  - **Inventário:** <ins>ID_Invt</ins>, Capacidade, Ouro.
@@ -57,15 +59,17 @@
 		- **Boost:** Pontos_Aumentados, Duracao, Atributo.
  - **Categoria Item:** <ins>ID_CatItem</ins>, Nome
  - **Missão:** <ins>ID_Missao</ins>, Status.
- - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição, Status.
- - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição, Status.
+ - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição.
+ - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição.
  - **Região:** <ins>ID_Regiao</ins>, Norte, Sul, Leste, Oeste, Nome, Descricao.
  - **Mapa:** <ins>ID_Mapa</ins>, Nome.
 
  ## Relacionamentos
  
-**Aventureiro *possui* Inventário**
+ **Classe *possui* Habilidades**
+ - Uma classe pode possuir no mínimo *uma* habilidade, e no máximo *duas* habilidades **(1,2)**. Uma habilidade pode ser pertencida por no mínimo *uma* classe ou várias **(0,n)**.
 
+**Aventureiro *possui* Inventário**
  - Um aventureiro pode carregar no mínimo *um* inventário, e no máximo *um* inventario **(1,1)**. Um inventário só pode ser carregado por *um* aventureiro **(1,1)**.
 
 **Aventureiro *pertence* a uma Classe**

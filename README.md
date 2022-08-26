@@ -16,7 +16,8 @@ Uma vez que se tenha o [Docker](https://docs.docker.com/engine/install/) instala
 $ docker-compose up
 ```
 
-Para acessar o postgres do container do banco de dados, execute o comando:
+Ao inicializar as imagens docker, o banco já estará online no localhost, utilizando a porta 5432.
+Em seguida, para acessar o postgres do container do banco de dados, execute o comando:
 
 ```bash
 $ docker exec -it postgres_container psql -U postgres

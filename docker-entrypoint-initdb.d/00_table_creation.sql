@@ -71,7 +71,8 @@ CREATE TABLE regiao_mapa (
 CREATE TABLE npc (
     id_npc serial primary key,
     nome varchar(50),
-    tipo npc_type
+    tipo npc_type,
+    UNIQUE(nome)
 );
 
 CREATE TABLE dialogo_npc (

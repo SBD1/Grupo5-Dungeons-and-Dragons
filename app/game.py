@@ -3,7 +3,7 @@ from player import Player
 
 
 class Game:
-    
+
     def __init__(self):
         self.db_connection = DatabaseConnection()
         self.player = None
@@ -15,7 +15,7 @@ class Game:
 
     def start_new_game(self):
         print('Novo Jogo!')
-        
+
         # location_id = self.db_connection.get_location('Centro de Neverwinter')
         name = input('Digite o nome do seu personagem: ')
         id_race = self.choose_race()
@@ -45,12 +45,12 @@ class Game:
             'armour': [],
             'boost': [],
         }
-        
+
         self.player = Player(
             player_id=player_id,
             inventory=inventory
         )
-        
+
         player_info = self.db_connection.get_player_basic_info(player_id)
         self.display_player_info(player_info)
 
@@ -62,7 +62,8 @@ class Game:
         name = player_info[0]
         race_data = player_info[1].replace('(', '').replace(')', '').split(',')
         race_name = race_data[1]
-        class_data = player_info[2].replace('(', '').replace(')', '').split(',')
+        class_data = player_info[2].replace('(', '').replace(')', '').split(
+            ',')
         class_name = class_data[1]
         location = player_info[3]
         print('!! AVENTUREIRO -----------------------------------------------')
@@ -118,34 +119,34 @@ class Game:
     def load_game(self):
         print('Carregar Jogo!')
         pass
-    
+
     def exit(self):
         pass
-        
+
     def execute_menu(self):
         menu = {
             '1': {
-                'str':'Iniciar novo jogo',
+                'str': 'Iniciar novo jogo',
                 'func': self.start_new_game
             },
             '2': {
-                'str':'Carregar jogo',
+                'str': 'Carregar jogo',
                 'func': self.load_game},
             '0': {
                 'str': 'Sair',
-                'func':self.exit
-            }            
+                'func': self.exit
+            }
         }
         for item in menu:
             print(f'{item}) {menu.get(item).get("str")}')
         player_choice = input('Escolha uma opção: ')
-        
+
         if player_choice:
             menu.get(str(player_choice)).get('func')()
         else:
             exit()
 
-        
+
 if __name__ == '__main__':
     game = Game()
     game.start()

@@ -22,7 +22,8 @@ class Game:
         id_class = '1'
         id_map = '5'
         # player_id = self.db_connection.create_player(name, id_race, id_class, id_map)
-        player_id = '37'
+        # O cara que tem que criar o personagem (Mas deixa agr pro mod 4)
+        player_id = '37' #Id tem que ser serial, não inserir manualmente
         inventory = {
             'weapons': [
                 self.db_connection.add_item_to_inventory(

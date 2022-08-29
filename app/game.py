@@ -52,9 +52,8 @@ class Game:
         )
 
         player_info = self.db_connection.get_player_basic_info(player_id)
+        print('AVENTUREIRO CRIADO COM SUCESSO!')
         self.display_player_info(player_info)
-
-        pass
 
     @staticmethod
     def display_player_info(player_list):
@@ -143,8 +142,22 @@ class Game:
 
         if player_choice:
             menu.get(str(player_choice)).get('func')()
+            if self.player:
+                self.run_gameplay()
         else:
             exit()
+
+    def run_gameplay(self):
+        while True:
+            self.display_player_location()
+            command = input('>>> ')
+            status = self.parse_command(command)
+
+    def display_player_location(self):
+        pass
+
+    def parse_command(self, player_input):
+        pass
 
 
 if __name__ == '__main__':

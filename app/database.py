@@ -69,10 +69,14 @@ class DatabaseConnection:
         try:
             cursor = self.connection.cursor()
             cursor.execute(
-                f"""SELECT * from {item_type} where {item_field} = {field_data}""")
+                f"""SELECT * from {item_type} where {item_field} = '{field_data}'"""
+            )
+
             result = cursor.fetchone()
 
-        except:
+        except Exception as e:
+            print(e)
+            print(f'ERRO: Não foi possível obter item {field_data}')
             pass
         finally:
             cursor.close()
@@ -81,41 +85,55 @@ class DatabaseConnection:
 
     def get_weapon(self, weapon_name, cursor):
         item = self.get_item('arma', 'tipo', weapon_name)
-        instantied_item = self.create_item_instance(item, cursor)
+        instantied_item = self.create_item_instance(
+            item,
+            weapon_name.title(),
+            cursor
+        )
+
         weapon = {
+            'item_name': weapon_name,
             'instance_id': instantied_item[0],
             'damage': item[1],
             'type': item[2]
         }
         return weapon
 
-    def create_item_instance(self, item, cursor):
+    def create_item_instance(self, item, name, cursor):
         item_id = item[0]
-        cursor.execute(f"INSERT INTO instancia_item (item) VALUES({item_id})")
+        cursor.execute(
+            f"INSERT INTO instancia_item (item, nome) VALUES('{item_id}', '{name}') RETURNING id_instancia_item"
+        )
+        item_instance = cursor.fetchone()
         self.connection.commit()
 
-    def add_item_to_inventory(self, player_id, create_item_function,
-                              item_name):
+        return item_instance
+
+
+    def add_item_to_inventory(
+            self, player_id, create_item_function, item_name
+    ):
         cursor = self.connection.cursor()
 
         item_instance = create_item_function(item_name, cursor)
 
         self.add_item_instance_to_inventory(item_instance, player_id)
-
-        cursor.quit()
+        self.connection.commit()
+        cursor.close()
 
         return item_instance
 
     def add_item_instance_to_inventory(self, item_instance, player_id):
         cursor = self.connection.cursor()
-        item_id = item_instance.get('id')
+
+        item_id = item_instance.get('instance_id')
         cursor.execute(
-            f'INSERT INTO itens_inventario (id_item, inventario) VALUES ({item_id}, {player_id})'
+            f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
         )
 
         self.connection.commit()
 
-        cursor.quit()
+        cursor.close()
 
     def get_races(self):
         cursor = self.connection.cursor()
@@ -133,16 +151,37 @@ class DatabaseConnection:
 
         return classes
 
+    def get_player_basic_info(self, player_id):
+        cursor = self.connection.cursor()
+        cursor.execute(
+            f"""
+            SELECT 
+                avnt.nome as nome,
+                rc,
+                cls,
+                rg.nome
+            FROM aventureiro avnt 
+                JOIN raca rc on rc.id_raca = avnt.raca 
+                JOIN classe cls on cls.id_classe = avnt.classe
+                JOIN regiao rg on rg.id_regiao = avnt.regiao
+                WHERE avnt.id_aventureiro = '{player_id}'
+            """
+        )
+        result = cursor.fetchall()
+        cursor.close()
+
+        return result
+
     def create_player(self, name, race, char_class, id_map):
         cursor = self.connection.cursor()
 
         cursor.execute(
             f"call insert_aventureiro("
-                f"'{name.title()}::varchar(50)', "
-                f"'{race.title()}'::varchar(50), "
-                f"'{char_class.title()}'::varchar(50), "
-                f"'5'::integer, "
-                f"'0'::integer"
+            f"'{name.title()}'::varchar(50), "
+            f"'{race.title()}'::varchar(50), "
+            f"'{char_class.title()}'::varchar(50), "
+            f"'5'::integer, "
+            f"'0'::integer"
             f")"
         )
 
@@ -154,7 +193,6 @@ class DatabaseConnection:
                 INSERT INTO inventario(id_inventario) VALUES ({player_id});
             """
         )
-
 
         self.connection.commit()
         cursor.close()
@@ -172,6 +210,6 @@ class DatabaseConnection:
 
         location = self.get_location_by_id(location_id=location_id)
 
-        cursor.quit()
+        cursor.close()
 
         return location

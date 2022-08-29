@@ -16,13 +16,17 @@ class Game:
     def start_new_game(self):
         print('Novo Jogo!')
         
-        # location = self.db_connection.get_location('Centro de Neverwinter')
+        # location_id = self.db_connection.get_location('Centro de Neverwinter')
         name = input('Digite o nome do seu personagem: ')
         id_race = self.choose_race()
         id_class = self.choose_class()
         id_map = '5'
-        player_id = self.db_connection.create_player(name, id_race, id_class, id_map)
-        # O cara que tem que criar o personagem (Mas deixa agr pro mod 4)
+        player_id = self.db_connection.create_player(
+            name,
+            id_race,
+            id_class,
+            id_map
+        )
 
         inventory = {
             'weapons': [
@@ -30,6 +34,11 @@ class Game:
                     player_id,
                     self.db_connection.get_weapon,
                     'Espada'
+                ),
+                self.db_connection.add_item_to_inventory(
+                    player_id,
+                    self.db_connection.get_weapon,
+                    'Escudo'
                 )
             ],
             'potions': [],
@@ -42,8 +51,39 @@ class Game:
             inventory=inventory
         )
         
-        player_info = self.db_connection.get_player_basic_info()
+        player_info = self.db_connection.get_player_basic_info(player_id)
+        self.display_player_info(player_info)
+
         pass
+
+    @staticmethod
+    def display_player_info(player_list):
+        player_info = player_list[0]
+        name = player_info[0]
+        race_data = player_info[1].replace('(', '').replace(')', '').split(',')
+        race_name = race_data[1]
+        class_data = player_info[2].replace('(', '').replace(')', '').split(',')
+        class_name = class_data[1]
+        location = player_info[3]
+        print('!! AVENTUREIRO -----------------------------------------------')
+        print(f'Nome: {name}')
+        print(f'Raça: {race_name}')
+        print(f'Classe: {class_name}')
+        print(f'Local Atual: {location}')
+        stats = {
+            0: 'DESTREZA',
+            1: 'CARISMA',
+            2: 'INTELIGENCIA',
+            3: 'FORÇA',
+            4: 'SABEDORIA',
+            5: 'CONSTITUIÇÃO'
+        }
+        for index, value in enumerate(zip(race_data[2:8], class_data[2:8])):
+            print(
+                f'{stats.get(index)}: '
+                f'{str(sum([int(item) for item in value]))}'
+            )
+        print('--------------------------------------------------------------')
 
     def choose_class(self):
         classes = self.db_connection.get_classes()

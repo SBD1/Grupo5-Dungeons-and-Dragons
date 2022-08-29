@@ -1,10 +1,12 @@
 from database import DatabaseConnection
+from player import Player
 
 
 class Game:
     
     def __init__(self):
-        db_connection = DatabaseConnection()
+        self.db_connection = DatabaseConnection()
+        self.player = None
         pass
 
     def start(self):
@@ -13,6 +15,11 @@ class Game:
 
     def start_new_game(self):
         print('Novo Jogo!')
+        # location = self.db_connection.get_location('Centro de Neverwinter')
+        location = self.db_connection.get_location_by_name('Comércio Local')
+        self.player = Player(location=location)
+        
+        print(self.player.location)
         pass
     
     def load_game(self):

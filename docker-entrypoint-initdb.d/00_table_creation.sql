@@ -3,12 +3,12 @@ CREATE TYPE npc_type AS ENUM('N', 'M', 'I');
 -- NPC, Mercador, Inimigo
 CREATE TYPE item_type AS ENUM('W', 'A', 'P', 'B');
 
--- Arma, Armadura, Poção, Boost
+-- Arma, Armadura, Pocão, Boost
 CREATE TYPE weapon_type AS ENUM(
     'Espada',
     'Machado',
     'Arco',
-    'Lança',
+    'Lanca',
     'Bastão',
     'Clava',
     'Martelo',
@@ -19,7 +19,7 @@ CREATE TYPE armour_type AS ENUM('Veste', 'Capacete', 'Armadura');
 
 CREATE TYPE body_part AS ENUM('C', 'T');
 
--- Cabeça ou Tronco
+-- Cabeca ou Tronco
 CREATE TABLE raca (
     id_raca serial primary key,
     nome varchar(50),
@@ -131,10 +131,10 @@ CREATE TABLE aventureiro (
 
 CREATE TABLE corpo (
     id_corpo int not NULL references aventureiro (id_aventureiro),
-    cabeça int,
-    tronco int,
-    mao_esquerda int,
-    mao_direita int,
+    cabeca int references itens_inventario(id_instancia_item),
+    tronco int references itens_inventario(id_instancia_item),
+    mao_esquerda int references itens_inventario(id_instancia_item),
+    mao_direita int references itens_inventario(id_instancia_item),
     primary key (id_corpo)
 );
 
@@ -210,6 +210,7 @@ CREATE TABLE instancia_item_em_regiao (
 CREATE TABLE itens_inventario (
     inventario int not NULL references inventario (id_inventario),
     instancia_item int not NULL references instancia_item (id_instancia_item),
+    nome varchar(50) references instancia_item(nome),
     primary key (instancia_item)
 );
 

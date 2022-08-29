@@ -1,13 +1,13 @@
 -- PROCEDURE CRIAR AVENTUREIRO
-create or replace procedure insert_aventureiro(_nome varchar(50), _raca varchar(50), _classe varchar(50)) as 
-	$insert_aventureiro$
-		declare 
+create or replace procedure insert_aventureiro(_nome varchar(50), _raca varchar(50), _classe varchar(50), _id_regiao integer) as 
+    $insert_aventureiro$
+        declare 
             _id integer;
-			_idRaca integer;
+            _idRaca integer;
             _idClasse integer;
-		begin
-			insert into aventureiro(nome, raca) values(_nome, raca.id_raca where _raca == raca.nome, classe.id_classe where _classe == classe.nome) returning id_aventureiro into _id;
-		end;
-	$insert_aventureiro$ language 'plpgsql';
-
-    -- Falta inserir a região, mas sera um valor fixo de inicio
+        begin
+            select id_raca into _idRaca from raca where raca.nome like _raca;
+            select id_classe into _idClasse from classe where classe.nome like _classe;
+            insert into aventureiro(nome, raca, classe, regiao) values(_nome, _idRaca, _idClasse, _id_regiao);
+        end;
+    $insert_aventureiro$ language 'plpgsql';

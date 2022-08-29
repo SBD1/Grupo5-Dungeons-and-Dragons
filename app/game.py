@@ -15,9 +15,31 @@ class Game:
 
     def start_new_game(self):
         print('Novo Jogo!')
+        
         # location = self.db_connection.get_location('Centro de Neverwinter')
-        location = self.db_connection.get_location_by_name('Comércio Local')
-        self.player = Player(location=location)
+        name = 'Ragnar' # TODO fix this to input
+        id_race = 'Elf on a shelf'
+        id_class = '1'
+        id_map = '5'
+        # player_id = self.db_connection.create_player(name, id_race, id_class, id_map)
+        player_id = '37'
+        inventory = {
+            'weapons': [
+                self.db_connection.add_item_to_inventory(
+                    player_id,
+                    self.db_connection.get_weapon,
+                    'Espada'
+                )
+            ],
+            'potions': [],
+            'armour': [],
+            'boost': [],
+        }
+        
+        self.player = Player(
+            player_id=player_id,
+            inventory=inventory
+        )
         
         print(self.player.location)
         pass

@@ -9,11 +9,7 @@ class Game:
 
     def start(self):
         print('Jogo Iniciou')
-        self.menu()
-        
-    def menu(self):
-        self.display_menu()
-        player_choice = input('Escolha uma opção')
+        self.execute_menu()
 
     def start_new_game(self):
         print('Novo Jogo!')
@@ -26,7 +22,7 @@ class Game:
     def exit(self):
         pass
         
-    def display_menu(self):
+    def execute_menu(self):
         menu = {
             '1': {
                 'str':'Iniciar novo jogo',
@@ -48,9 +44,6 @@ class Game:
             menu.get(str(player_choice)).get('func')()
         else:
             exit()
-    
-    def read_menu_input(self):
-        pass
 
         
 if __name__ == '__main__':

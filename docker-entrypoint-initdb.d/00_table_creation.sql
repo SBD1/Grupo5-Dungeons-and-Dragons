@@ -123,6 +123,7 @@ CREATE TABLE aventureiro (
     id_aventureiro serial primary key,
     nivel numeric default 0,
     pontos numeric default 0,
+    xp numeric default 0,
     nome varchar(50),
     raca int not NULL references raca (id_raca),
     classe int not NULL references classe (id_classe),

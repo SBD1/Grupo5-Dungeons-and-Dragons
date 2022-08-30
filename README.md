@@ -47,4 +47,5 @@ $ psql -h 0.0.0.0 -U postgres
   |----|------|
   |Módulo 1|https://youtu.be/IVTCS4QZujE|
   |Módulo 2|https://youtu.be/eQ8IuLWAbEA|
+  |Módulo 3 MUD DEMO|https://youtu.be/aenoWhFl6yg|
 

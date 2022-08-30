@@ -2,7 +2,7 @@
 create or replace function upar_nivel() as $upar_nivel$
     begin
         if(old.xp <> new.xp) then
-            if(new.xp = ) --ta faltando um limitador pra saber quando upar
+            if(new.xp = 100) 
             update aventureiro set nivel = nivel + 1;
         end if;
         return null;

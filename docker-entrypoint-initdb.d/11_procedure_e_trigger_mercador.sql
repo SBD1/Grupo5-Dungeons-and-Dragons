@@ -15,7 +15,7 @@ create or replace function checar_mercador() returns trigger as
 	begin
 		perform * from npc inner join mercador on npc.id_npc = mercador.id_mercador where npc.tipo !=  'M';
 		if found then 
-			raise exception 'Este npc precisa ser do tipo Mercador';
+			raise exception 'Este NPC precisa ser do tipo Mercador';
 		end if;
 		return new;
 	end;

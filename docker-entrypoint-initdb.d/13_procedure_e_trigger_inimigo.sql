@@ -15,7 +15,7 @@ create or replace function checar_inimigo() returns trigger as
 	begin
 		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I';
 		if found then 
-			raise exception 'Este npc precisa ser do tipo Inimigo';
+			raise exception 'Este NPC precisa ser do tipo Inimigo';
 		end if;
 		return new;
 	end;

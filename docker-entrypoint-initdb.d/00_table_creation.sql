@@ -1,9 +1,7 @@
-CREATE TYPE npc_type AS ENUM('N', 'M', 'I');
+CREATE TYPE npc_type AS ENUM('N', 'M', 'I'); -- NPC, Mercador, Inimigo
 
--- NPC, Mercador, Inimigo
-CREATE TYPE item_type AS ENUM('W', 'A', 'P', 'B');
+CREATE TYPE item_type AS ENUM('W', 'A', 'P', 'B'); -- Arma, Armadura, Poção, Boost
 
--- Arma, Armadura, Poção, Boost
 CREATE TYPE weapon_type AS ENUM(
     'Espada',
     'Machado',
@@ -17,9 +15,10 @@ CREATE TYPE weapon_type AS ENUM(
 
 CREATE TYPE armour_type AS ENUM('Veste', 'Capacete', 'Armadura');
 
-CREATE TYPE body_part AS ENUM('C', 'T');
+CREATE TYPE atribute AS ENUM('D', 'C', 'I', 'F', 'S', 'E'); -- destreza, carisma, inteligencia, forca, sabedoria, constituicao
 
--- Cabeça ou Tronco
+CREATE TYPE body_part AS ENUM('C', 'T'); -- Cabeça ou Tronco
+
 CREATE TABLE raca (
     id_raca serial primary key,
     nome varchar(50),
@@ -238,6 +237,6 @@ CREATE TABLE armadura (
     id_armadura int not NULL references itens (id_item),
     resistencia int,
     tipo armour_type,
-    parte_corpo text,
+    parte_corpo body_part,
     primary key (id_armadura)
 );

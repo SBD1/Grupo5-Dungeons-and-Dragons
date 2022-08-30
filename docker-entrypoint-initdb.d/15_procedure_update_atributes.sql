@@ -5,7 +5,7 @@ create or replace function gastar_atributos() as $gastar_atributos$
             set destreza = destreza + 1,
             set carisma = carisma + 1, 
             set inteligencia = inteligencia + 1,
-            set foraa = forca + 1,
+            set forca = forca + 1,
             set sabedoria = sabedoria + 1,
             set constituicao = constituicao + 1,
             from ATRIBUTOS where atributos.id_Atributos = aventureiro.id_aventureiro;

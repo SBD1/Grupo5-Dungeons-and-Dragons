@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 services:
   mud-game:
@@ -13,6 +13,8 @@ services:
     depends_on:
       - db
     restart: always
+    networks:
+      - postgres-connection
 
   db:
     container_name: postgres_container
@@ -24,14 +26,18 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     volumes:
-       - ./db_data:/data/postgres
+      - ./db_data:/data/postgres
     ports:
       - "5432:5432"
-    networks:
-      - postgres
+    expose:
+      - "5432"
     restart: always
+    networks:
+      - postgres-connection
 
 networks:
-  postgres:
+  postgres-connection:
     driver: bridge
+    name: postgres-connection
+
 

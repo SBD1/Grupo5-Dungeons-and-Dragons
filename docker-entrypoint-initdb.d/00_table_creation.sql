@@ -196,7 +196,6 @@ CREATE TABLE itens_por_categoria (
 
 CREATE TABLE instancia_item (
     id_instancia_item serial primary key,
-    nome varchar(50),
     item int not NULL references itens (id_item)
 );
 

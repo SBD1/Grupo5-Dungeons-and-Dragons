@@ -33,16 +33,3 @@ create or replace procedure create_missao(
 	$create_missao$ language 'plpgsql';
 
 -- Verificar quais objetivos tem com um ID de missao X
-
-create or replace procedure create_missao(
-    _descricao text,
-    _descricao_objetivo text
-    ) as 
-	$create_missao$
-    declare 
-			_id integer;
-		begin
-            create into missao(descricao) values(_descricao) returning id_missao into _id;
-            call create_objetivo(_id, _descricao_objetivo);
-		end;
-	$create_missao$ language 'plpgsql';

@@ -299,15 +299,18 @@ class Game:
         pass
 
     def parse_command(self, player_input):
-        key_words = player_input.split()
-        input_command = key_words.pop(0)
+        args = player_input.split()
+        input_command = args.pop(0)
         user_command = [
             self.commands.get(command) 
             for command in self.commands if self.is_synonym(
                 input_command, self.commands.get(command)
             )
         ]
-        print(user_command)
+        print(user_command) # TODO
+        # status = user_command.get(function)(args) 
+        # return status
+
 
     @staticmethod
     def is_synonym(input_command, command):

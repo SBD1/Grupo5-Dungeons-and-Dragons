@@ -16,6 +16,10 @@ class Game:
     def start_new_game(self):
         print('Novo Jogo!')
 
+        player_info = self.create_character()        
+        self.display_player_info(player_info)
+
+    def create_character(self):
         # location_id = self.db_connection.get_location('Centro de Neverwinter')
         name = input('Digite o nome do seu personagem: ')
         id_race = self.choose_race()
@@ -53,7 +57,7 @@ class Game:
 
         player_info = self.db_connection.get_player_basic_info(player_id)
         print('AVENTUREIRO CRIADO COM SUCESSO!')
-        self.display_player_info(player_info)
+        return player_info
 
     @staticmethod
     def display_player_info(player_list):

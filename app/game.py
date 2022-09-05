@@ -113,7 +113,7 @@ class Game:
                     """
                     COMANDO: largar [item]
 
-                        O jogador irá deixar no chão o item especificado
+                    O jogador irá deixar no chão o item especificado
       
                     """
                 ),
@@ -126,7 +126,20 @@ class Game:
 
                     """
                 )
+            },
+            'ajuda': {
+                'function': '',
+                'synonyms': ['help', 'ajuda'],
+                'help': (
+                    """
+                    COMANDO: ajuda [comando]
+                    
+                    Exibe instruções de comandos.
+                    
+                    """
+                )
             }
+
         }
 
     def __init__(self):

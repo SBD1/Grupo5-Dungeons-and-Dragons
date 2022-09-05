@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   mud-game:
@@ -38,6 +38,5 @@ services:
 networks:
   postgres-connection:
     driver: bridge
-    name: postgres-connection
 
 

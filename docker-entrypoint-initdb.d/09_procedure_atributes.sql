@@ -1,5 +1,5 @@
 -- PROCEDURE GASTAR PONTOS DE ATRIBUTOS
-create or replace function gastar_atributos() as $gastar_atributos$
+create or replace function spend_atributes() as $spend_atributes$
     begin
         if(old.nivel <> new.nivel) then
             set destreza = destreza + 1,
@@ -12,7 +12,7 @@ create or replace function gastar_atributos() as $gastar_atributos$
         end if;
     end;
 
-$gastar_atributos$ language 'plpgsql';
+$spend_atributes$ language 'plpgsql';
 
-drop trigger gastar_atributos_tg on aventureiro;
-create trigger gastar_atributos_tg after update on aventureiro execute procedure gastar_atributos();
+drop trigger spend_atributes_tg on aventureiro;
+create trigger spend_atributes_tg after update on aventureiro execute procedure spend_atributes();

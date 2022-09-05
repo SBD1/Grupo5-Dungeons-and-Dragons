@@ -4,6 +4,131 @@ from player import Player
 
 class Game:
 
+    commands = {
+            'ir': {
+                'function': '',
+                'synonyms': ['ir', 'entrar'],
+                'help': (
+                    """
+                        COMANDO: ir [lugar]
+
+                        O jogador irá para o lugar especificado.
+
+                    """
+                ),
+                'usage tips': (
+                    """
+                        Exemplo:
+                            ir estábulos de neverwinter
+
+                        Exemplo:
+                            ir loja de poções
+
+                        Exemplo:
+                            entrar loja de poções
+                    """
+                )
+            },
+            'atacar': {
+                'function': '',
+                'synonyms': ['atacar', 'hit'],
+                'help': (
+                    """
+                        COMANDO: atacar [inimigo]
+
+                        O jogador irá atacar o inimigo especificado
+
+                    """
+                ),
+                'usage tips': (
+                    """
+                        Exemplo:
+                            atacar
+
+                            Obs: Irá atacar o primeiro goblin da lista
+
+                        Exemplo:
+                            atacar 2
+
+                            Obs: Irá atacar o inimigo numero 2 na lista
+
+                        Exemplo:
+                            hit 1
+
+                            Obs: Irá atacar o inimigo numero 3 na lista
+
+                        OBS: Poderá usar o comando atacar quando existir algum inimigo na mesma área que você,
+                        será exibido algo parecido com:
+
+                        '''
+                            Inimigos:
+                                (1) Goblin. HP: 10
+                                (2) Goblin. HP: 12
+                        '''
+
+
+                    """
+                )
+            },
+            'falar': {
+                'function': '',
+                'synonyms': ['conversar'],
+                'help': (
+                    """
+                    COMANDO: falar [npc]
+
+                    O jogador irá conversar com o npc especificado
+
+                    """
+                ),
+                'usage tips': (
+                    """
+                        Exemplo:
+                            falar
+
+                            Obs: Irá conversar, com o npc, se houver apenas um npc na área
+
+                        Exemplo:
+                            falar 2
+
+                            Obs: Irá conversar com o NPC número dois da lista
+                    
+                        OBS: Poderá usar o comando falar quando existir algum NPC na mesma área que você,
+                        será exibido algo parecido com:
+
+                        '''
+                            NPC's:
+                                (1) Mercador de poções.
+                                (2) Gundren Rockseeker.
+                        '''
+
+
+                    """
+                )
+            },
+            'largar': {
+                'function': '',
+                'synonyms': ['largar', 'deixar'],
+                'help': (
+                    """
+                    COMANDO: largar [item]
+
+                        O jogador irá deixar no chão o item especificado
+      
+                    """
+                ),
+                'usage tips': (
+                    """
+                        Exemplo:
+                            largar 1
+
+                            Obs: Irá largar o item 1 especificado no inventário
+
+                    """
+                )
+            }
+        }
+
     def __init__(self):
         self.db_connection = DatabaseConnection()
         self.player = None
@@ -161,119 +286,13 @@ class Game:
         pass
 
     def parse_command(self, player_input):
-        commands = {
-            'ir': {
-                'function': '',
-                'synonyms': ['ir', 'entrar'],
-                'usage tips': (
-                    """
-                        COMANDO: ir [lugar]
-
-                        O jogador irá para o lugar especificado.
-
-                        Exemplo:
-                            ir estábulos de neverwinter
-
-                        Exemplo:
-                            ir loja de poções
-
-                        Exemplo:
-                            entrar loja de poções
-                    """
-                )
-            },
-            'atacar': {
-                'function': '',
-                'synonyms': ['atacar', 'hit'],
-                'usage tips': (
-                    """
-                        COMANDO: atacar [inimigo]
-
-                        O jogador irá atacar o inimigo especificado
-
-                        Exemplo:
-                            atacar
-
-                            Obs: Irá atacar o primeiro goblin da lista
-
-                        Exemplo:
-                            atacar 2
-
-                            Obs: Irá atacar o inimigo numero 2 na lista
-
-                        Exemplo:
-                            hit 1
-
-                            Obs: Irá atacar o inimigo numero 3 na lista
-
-                        OBS: Poderá usar o comando atacar quando existir algum inimigo na mesma área que você,
-                        será exibido algo parecido com:
-
-                        '''
-                            Inimigos:
-                                (1) Goblin. HP: 10
-                                (2) Goblin. HP: 12
-                        '''
-
-
-                    """
-                )
-            },
-            'falar': {
-                'function': '',
-                'synonyms': ['conversar'],
-                'usage tips': (
-                    """
-                        COMANDO: falar [npc]
-
-                        O jogador irá conversar com o npc especificado
-
-                        Exemplo:
-                            falar
-
-                            Obs: Irá conversar, com o npc, se houver apenas um npc na área
-
-                        Exemplo:
-                            falar 2
-
-                            Obs: Irá conversar com o NPC número dois da lista
-                    
-                        OBS: Poderá usar o comando falar quando existir algum NPC na mesma área que você,
-                        será exibido algo parecido com:
-
-                        '''
-                            NPC's:
-                                (1) Mercador de poções.
-                                (2) Gundren Rockseeker.
-                        '''
-
-
-                    """
-                )
-            },
-            'largar': {
-                'function': '',
-                'synonyms': ['deixar'],
-                'usage tips': (
-                    """
-                        COMANDO: largar [item]
-
-                        O jogador irá deixar no chão o item especificado
-
-                        Exemplo:
-                            largar 1
-
-                            Obs: Irá largar o item 1 especificado no inventário
-
-                    """
-                )
-            }
-        }
         key_words = player_input.split()
-        input_command = key_words.pop()
+        input_command = key_words.pop(0)
         user_command = [
-            command.get('function') 
-            for command in commands if self.is_synonym(input_command, command)
+            self.commands.get(command) 
+            for command in self.commands if self.is_synonym(
+                input_command, self.commands.get(command)
+            )
         ]
         print(user_command)
 

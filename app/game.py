@@ -256,7 +256,15 @@ class Game:
                 'synonyms': ['deixar'],
                 'usage tips': (
                     """
-                            
+                        COMANDO: largar [item]
+
+                        O jogador irá deixar no chão o item especificado
+
+                        Exemplo:
+                            largar 1
+
+                            Obs: Irá largar o item 1 especificado no inventário
+
                     """
                 )
             }

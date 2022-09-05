@@ -161,7 +161,117 @@ class Game:
         pass
 
     def parse_command(self, player_input):
-        pass
+        commands = {
+            'ir': {
+                'function': '',
+                'synonyms': ['ir', 'entrar'],
+                'usage tips': (
+                    """
+                        COMANDO: ir [lugar]
+
+                        O jogador irá para o lugar especificado.
+
+                        Exemplo:
+                            ir estábulos de neverwinter
+
+                        Exemplo:
+                            ir loja de poções
+
+                        Exemplo:
+                            entrar loja de poções
+                    """
+                )
+            },
+            'atacar': {
+                'function': '',
+                'synonyms': ['atacar', 'hit'],
+                'usage tips': (
+                    """
+                        COMANDO: atacar [inimigo]
+
+                        O jogador irá atacar o inimigo especificado
+
+                        Exemplo:
+                            atacar
+
+                            Obs: Irá atacar o primeiro goblin da lista
+
+                        Exemplo:
+                            atacar 2
+
+                            Obs: Irá atacar o inimigo numero 2 na lista
+
+                        Exemplo:
+                            hit 1
+
+                            Obs: Irá atacar o inimigo numero 3 na lista
+
+                        OBS: Poderá usar o comando atacar quando existir algum inimigo na mesma área que você,
+                        será exibido algo parecido com:
+
+                        '''
+                            Inimigos:
+                                (1) Goblin. HP: 10
+                                (2) Goblin. HP: 12
+                        '''
+
+
+                    """
+                )
+            },
+            'falar': {
+                'function': '',
+                'synonyms': ['conversar'],
+                'usage tips': (
+                    """
+                        COMANDO: falar [npc]
+
+                        O jogador irá conversar com o npc especificado
+
+                        Exemplo:
+                            falar
+
+                            Obs: Irá conversar, com o npc, se houver apenas um npc na área
+
+                        Exemplo:
+                            falar 2
+
+                            Obs: Irá conversar com o NPC número dois da lista
+                    
+                        OBS: Poderá usar o comando falar quando existir algum NPC na mesma área que você,
+                        será exibido algo parecido com:
+
+                        '''
+                            NPC's:
+                                (1) Mercador de poções.
+                                (2) Gundren Rockseeker.
+                        '''
+
+
+                    """
+                )
+            },
+            'largar': {
+                'function': '',
+                'synonyms': ['deixar'],
+                'usage tips': (
+                    """
+                            
+                    """
+                )
+            }
+        }
+        key_words = player_input.split()
+        input_command = key_words.pop()
+        user_command = [
+            command.get('function') 
+            for command in commands if self.is_synonym(input_command, command)
+        ]
+        print(user_command)
+
+    @staticmethod
+    def is_synonym(input_command, command):
+        return input_command in command.get('synonyms')
 
 
 if __name__ == '__main__':

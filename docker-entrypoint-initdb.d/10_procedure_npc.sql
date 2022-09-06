@@ -20,8 +20,8 @@ create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vid
 	$create_enemy$ language 'plpgsql';
 
 
-create or replace function checar_enemy() returns trigger as 
-	$checar_enemy$
+create or replace function check_enemy() returns trigger as 
+	$check_enemy$
 	begin
 		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I';
 		if found then 
@@ -29,12 +29,21 @@ create or replace function checar_enemy() returns trigger as
 		end if;
 		return new;
 	end;
-	$checar_enemy$ language 'plpgsql';
+	$check_enemy$ language 'plpgsql';
 
 
-drop trigger checar_enemy_tg on inimigo;
+drop trigger check_enemy_tg on inimigo;
 
-create trigger checar_enemy_tg after insert on inimigo execute procedure checar_enemy();
+create trigger check_enemy_tg after insert on inimigo execute procedure check_enemy();
+
+
+-- PROCEDURE CRIAR INSTANCIA DE INIMIGO
+create or replace procedure create_enemy_inst(_inimigo) as 
+	$create_enemy_inst$
+		begin
+			insert into instancia_inimigo(inimigo) values (_inimigo)
+		end;
+	$create_enemy_inst$ language 'plpgsql';
 
 
 

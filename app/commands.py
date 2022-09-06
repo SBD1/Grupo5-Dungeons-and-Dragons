@@ -10,6 +10,19 @@ def show_help(*args):
         print(COMMANDS.get(args[0][0]).get("usage tips"))
 
 
+def goto_command(player, arguments):
+    if not player.in_combat:
+        if arguments:
+            location = arguments[0]
+            pass
+            # TODO move_player_to_location(player, location)
+        else:
+            print('Especifique o lugar que deseja ir!')
+    else:
+        print('Você está em combate, não pode ir para outro lugar!')
+
+
+
 COMMANDS = {
     'ir': {
         'function': '',

@@ -25,7 +25,7 @@ def goto_command(player, arguments):
 
 COMMANDS = {
     'ir': {
-        'function': '',
+        'function': goto_command,
         'synonyms': ['ir', 'entrar'],
         'help': (
             """COMANDO: ir [lugar]

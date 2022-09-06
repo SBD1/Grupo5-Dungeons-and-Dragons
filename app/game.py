@@ -173,7 +173,6 @@ class Game:
         if user_command:
             status = user_command[0].get('function')(arguments)
 
-
     @staticmethod
     def is_synonym(input_command, command):
         return input_command in command.get('synonyms')

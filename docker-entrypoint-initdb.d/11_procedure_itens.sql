@@ -120,25 +120,12 @@ create or replace procedure create_boost(
 
 
 -- PROCEDURE CRIAR INSTANCIA DE ITEM
-create or replace procedure create_inst_item(_item) as 
+create or replace procedure create_inst_item(_item integer) as 
 	$create_item$
 		begin
-			insert into instancia_item(item) values (_item)
+			insert into instancia_item(item) values (_item);
 		end;
 	$create_item$ language 'plpgsql';
-
-create or replace function check_item() returns trigger as 
-	$check_item$
-	begin
-		perform itens.id_item from itens where itens.id_item != exists;
-		if found then 
-			raise exception 'Este item não existe';
-		end if;
-		return new;
-	end;
-	$check_item$ language 'plpgsql';
-
-create trigger check_item_tg after insert on item execute procedure check_item();
 
 
 

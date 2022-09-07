@@ -101,15 +101,21 @@ CREATE TABLE inimigo (
     primary key (id_inimigo)
 );
 
+CREATE TABLE npc_em_regiao (
+    id_npc int not NULL references npc (id_npc),
+    id_regiao int not NULL references regiao (id_regiao),
+    primary key (id_npc)
+);
+
 CREATE TABLE instancia_inimigo (
     id_instancia_inimigo serial primary key,
     inimigo int not NULL references inimigo (id_inimigo)
 );
 
-CREATE TABLE npc_em_regiao (
-    id_npc int not NULL references npc (id_npc),
+CREATE TABLE inimigo_em_regiao (
+    id_inimigo int not NULL references instancia_inimigo (id_instancia_inimigo),
     id_regiao int not NULL references regiao (id_regiao),
-    primary key (id_npc)
+    primary key (id_instancia_inimigo)
 );
 
 CREATE TABLE aventureiro (
@@ -217,18 +223,18 @@ CREATE TABLE missao (
 );
 
 CREATE TABLE requisito_missao (
-    id_requisitos_missao serial primary key,
+    id_requisito_missao serial primary key,
     id_missao int not NULL references missao (id_missao),
     tipo mission_req_type
 );
 
 CREATE TABLE requisito_nivel (
-    id_requisito int not NULL references requisitos_missao (id_requisito_missao),
+    id_requisito int not NULL references requisito_missao (id_requisito_missao),
     nivel_min int not NULL
 );
 
 CREATE TABLE requisito_item (
-    id_requisito int not NULL references requisitos_missao (id_requisito_missao),
+    id_requisito int not NULL references requisito_missao (id_requisito_missao),
     item int not NULL references itens (id_item),
     quantidade int not NULL
 );
@@ -253,7 +259,7 @@ CREATE TABLE objetivo_item (
 CREATE TABLE status_requisito_missao (
     requisito_missao int not NULL references requisito_missao(id_requisito_missao),
     aventureiro int not NULL references aventureiro (id_aventureiro),
-    primary key(requisitos_missao, aventureiro)
+    primary key(requisito_missao, aventureiro)
 );
 
 CREATE TABLE status_objetivo_missao (

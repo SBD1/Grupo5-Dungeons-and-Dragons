@@ -2,8 +2,9 @@
 
 class CommandInterpreter:
 
-    def __init__(self, player):
+    def __init__(self, player, scenario):
         self.player = player
+        self.scenario = scenario
 
     @property
     def commands(self):
@@ -141,7 +142,9 @@ class CommandInterpreter:
             if arguments:
                 location = arguments[0]
                 pass
-                # TODO move_player_to_location(player, location)
+                # TODO location = move_player_to_location(player, location)
+                self.player.location = location
+                self.scenario['location'] = location
             else:
                 print('Especifique o lugar que deseja ir!')
         else:

@@ -1,12 +1,16 @@
 from database import DatabaseConnection
 from player import Player
+from commands import CommandInterpreter
 
 
-class Game:
+class Game(CommandInterpreter):
+
+    player = None
+    scenario = {}
 
     def __init__(self):
+        super(CommandInterpreter, self).__init__()
         self.db_connection = DatabaseConnection()
-        self.player = None
         pass
 
     def start(self):
@@ -16,7 +20,10 @@ class Game:
     def start_new_game(self):
         print('Novo Jogo!')
 
-        # location_id = self.db_connection.get_location('Centro de Neverwinter')
+        player_info = self.create_character()
+        self.display_player_info(player_info)
+
+    def create_character(self):
         name = input('Digite o nome do seu personagem: ')
         id_race = self.choose_race()
         id_class = self.choose_class()
@@ -28,7 +35,20 @@ class Game:
             id_map
         )
 
-        inventory = {
+        inventory = self.get_initial_gear(player_id)
+
+        self.player = Player(
+            player_id=player_id,
+            inventory=inventory
+        )
+
+        player_info = self.db_connection.get_player_basic_info(player_id)
+        print('AVENTUREIRO CRIADO COM SUCESSO!')
+        return player_info
+
+    def get_initial_gear(self, player_id):
+        # TODO change this accordingly with the player class
+        return {
             'weapons': [
                 self.db_connection.add_item_to_inventory(
                     player_id,
@@ -45,15 +65,6 @@ class Game:
             'armour': [],
             'boost': [],
         }
-
-        self.player = Player(
-            player_id=player_id,
-            inventory=inventory
-        )
-
-        player_info = self.db_connection.get_player_basic_info(player_id)
-        print('AVENTUREIRO CRIADO COM SUCESSO!')
-        self.display_player_info(player_info)
 
     @staticmethod
     def display_player_info(player_list):
@@ -154,9 +165,6 @@ class Game:
             status = self.parse_command(command)
 
     def display_player_location(self):
-        pass
-
-    def parse_command(self, player_input):
         pass
 
 

@@ -1,8 +1,12 @@
 -- PROCEDURE CRIAR NPC
-create or replace procedure create_npc(_nome varchar(50)) as 
+create or replace procedure create_npc(_nome varchar(50), regiao integer) as 
 	$create_npc$
+		declare 
+			_id integer;
 		begin
-			insert into npc(nome, tipo) values(_nome, 'N');
+			insert into npc(nome, tipo) values(_nome, 'N') returning id_npc into _id;
+
+			insert into npc_em_regiao values (_id, regiao);
 		end;
 	$create_npc$ language 'plpgsql';
 
@@ -20,8 +24,8 @@ create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vid
 	$create_enemy$ language 'plpgsql';
 
 
-create or replace function checar_enemy() returns trigger as 
-	$checar_enemy$
+create or replace function check_enemy() returns trigger as 
+	$check_enemy$
 	begin
 		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I';
 		if found then 
@@ -29,23 +33,41 @@ create or replace function checar_enemy() returns trigger as
 		end if;
 		return new;
 	end;
-	$checar_enemy$ language 'plpgsql';
+	$check_enemy$ language 'plpgsql';
 
 
-drop trigger checar_enemy_tg on inimigo;
+create trigger check_enemy_tg after insert on inimigo execute procedure check_enemy();
 
-create trigger checar_enemy_tg after insert on inimigo execute procedure checar_enemy();
+
+-- PROCEDURE CRIAR INSTANCIA DE INIMIGO
+create or replace procedure create_enemy_inst(_inimigo integer, regiao integer) as 
+	$create_enemy_inst$
+		declare
+			_id integer;
+		begin
+			insert into instancia_inimigo(inimigo) values (_inimigo) returning id_instancia_inimigo into _id;
+
+			insert into inimigo_em_regiao values (_id, regiao);
+		end;
+	$create_enemy_inst$ language 'plpgsql';
 
 
 
 -- PROCEDURE CRIAR MERCADOR
-create or replace procedure create_merchant(_nome varchar(50), _tipo npc_type, _categoria_item integer) as 
+create or replace procedure create_merchant(
+	_nome varchar(50),
+	_tipo npc_type,
+	_categoria_item integer,
+	regiao integer
+) as 
 	$create_merchant$
 		declare 
 			_id integer;
 		begin
 			insert into npc(nome, tipo) values(_nome, _tipo) returning id_npc into _id;
 			insert into mercador values(_categoria_item, _id);
+
+			insert into npc_em_regiao values (_id, regiao);
 		end;
 	$create_merchant$ language 'plpgsql';
 
@@ -61,7 +83,5 @@ create or replace function check_merchant() returns trigger as
 	end;
 	$check_merchant$ language 'plpgsql';
 
-
-drop trigger check_merchant_tg on mercador;
 
 create trigger check_merchant_tg after insert on mercador execute procedure check_merchant();

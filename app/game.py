@@ -4,7 +4,6 @@ from commands import CommandInterpreter
 
 
 class Game(CommandInterpreter):
-
     player = None
     scenario = {}
 
@@ -48,23 +47,24 @@ class Game(CommandInterpreter):
 
     def get_initial_gear(self, player_id):
         # TODO change this accordingly with the player class
-        return {
-            'weapons': [
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Espada'
-                ),
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Escudo'
-                )
-            ],
-            'potions': [],
-            'armour': [],
-            'boost': [],
-        }
+        # return {
+        #     'weapons': [
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Espada'
+        #         ),
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Escudo'
+        #         )
+        #     ],
+        #     'potions': [],
+        #     'armour': [],
+        #     'boost': [],
+        # }
+        return {}
 
     @staticmethod
     def display_player_info(player_list):
@@ -162,10 +162,24 @@ class Game(CommandInterpreter):
         while True:
             self.display_player_location()
             command = input('>>> ')
-            status = self.parse_command(command)
+            try:
+                status = self.parse_command(command)
+            except:
+                print('Erro')
+                pass
 
     def display_player_location(self):
-        pass
+        result = self.db_connection.get_player_location(self.player.player_id)
+        print(result)
+        print(f'Local: {result.get("name")}')
+        print(f'{result.get("description")}')
+        print(
+            f'Saídas:'
+            f'\n\tAo norte: {result.get("north") or "Nada!"}'
+            f'\n\tAo sul: {result.get("south") or "Nada!"}'
+            f'\n\tAo ao leste: {result.get("east") or "Nada!"}'
+            f'\n\tAo oeste: {result.get("west") or "Nada!"}'
+        )
 
 
 if __name__ == '__main__':

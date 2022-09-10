@@ -1,7 +1,7 @@
 -- PROCEDURE CRIAR NPC
-create or replace procedure create_npc(_nome varchar(50), regiao integer) as 
+create or replace procedure create_npc(_nome varchar(50), regiao integer) as
 	$create_npc$
-		declare 
+		declare
 			_id integer;
 		begin
 			insert into npc(nome, tipo) values(_nome, 'N') returning id_npc into _id;
@@ -13,9 +13,9 @@ create or replace procedure create_npc(_nome varchar(50), regiao integer) as
 
 
 -- PROCEDURE CRIAR INIMIGO
-create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vida integer, _dano integer) as 
+create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vida integer, _dano integer) as
 	$create_enemy$
-		declare 
+		declare
 			_id integer;
 		begin
 			insert into npc(nome, tipo) values(_nome, _tipo) returning id_npc into _id;
@@ -24,11 +24,11 @@ create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vid
 	$create_enemy$ language 'plpgsql';
 
 
-create or replace function check_enemy() returns trigger as 
+create or replace function check_enemy() returns trigger as
 	$check_enemy$
 	begin
 		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I';
-		if found then 
+		if found then
 			raise exception 'Este NPC precisa ser do tipo Inimigo';
 		end if;
 		return new;
@@ -40,7 +40,7 @@ create trigger check_enemy_tg after insert on inimigo execute procedure check_en
 
 
 -- PROCEDURE CRIAR INSTANCIA DE INIMIGO
-create or replace procedure create_enemy_inst(_inimigo integer, regiao integer) as 
+create or replace procedure create_enemy_inst(_inimigo integer, regiao integer) as
 	$create_enemy_inst$
 		declare
 			_id integer;
@@ -59,9 +59,9 @@ create or replace procedure create_merchant(
 	_tipo npc_type,
 	_categoria_item integer,
 	regiao integer
-) as 
+) as
 	$create_merchant$
-		declare 
+		declare
 			_id integer;
 		begin
 			insert into npc(nome, tipo) values(_nome, _tipo) returning id_npc into _id;
@@ -72,11 +72,11 @@ create or replace procedure create_merchant(
 	$create_merchant$ language 'plpgsql';
 
 
-create or replace function check_merchant() returns trigger as 
+create or replace function check_merchant() returns trigger as
 	$check_merchant$
 	begin
 		perform * from npc inner join mercador on npc.id_npc = mercador.id_mercador where npc.tipo !=  'M';
-		if found then 
+		if found then
 			raise exception 'Este NPC precisa ser do tipo Mercador';
 		end if;
 		return new;

@@ -120,7 +120,7 @@ create or replace procedure create_boost(
 
 
 -- PROCEDURE CRIAR INSTANCIA DE ITEM
-create or replace procedure create_inst_item(_item integer) as 
+create or replace procedure create_inst_item(_item integer) as
 	$create_item$
 		begin
 			insert into instancia_item(item) values (_item);

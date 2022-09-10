@@ -8,10 +8,7 @@ VALUES ('Centro de Neverwinter',
         'Neverwinter é uma cidade relativamente grande, bem movimentada,' ||
         ' cheia de mercadores, compradores, bares e mercenários!' ||
         'Você está no centro da cidade em uma praça movimentada!',
-        null,
-        null,
-        null,
-        null);
+        null, null, null, null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste)
 VALUES ('Estabulo de Neverwinter',
         'O estábulo possui muitos cavalos e um gerente amigável...' ||
@@ -20,9 +17,9 @@ VALUES ('Estabulo de Neverwinter',
         null,
         null,
         null,
-        1);
+        null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste)
-VALUES ('Arsenal de Armas', 'Bem vindo ao Arsenal de Armas!',
+VALUES ('Floresta ao Sul de Neverwinter', 'Blablablablaba',
         null,
         null,
         null,
@@ -34,7 +31,7 @@ VALUES ('Guilda de Aventureiros', 'Bem vindo à Guilda de Aventureiros!',
         null,
         null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste)
-VALUES ('Comércio Local', 'Bem vindo ao Comércio Local!', 4, 1, 2, 3);
+VALUES ('Comércio Local', 'Bem vindo ao Comércio Local!', null, null, null, null);
 
 -- POPULAR REGIÕES_MAPA
 INSERT INTO regiao_mapa

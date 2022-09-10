@@ -1,5 +1,5 @@
 -- PROCEDURE CRIAR CATEGORIA ITEM
-create or replace procedure create_item_category(_nome text) as
+create or replace procedure create_item_category(_nome text) as 
 	$create_item_category$
 		begin
 			insert into categoria_item(nome) values(_nome);
@@ -17,9 +17,9 @@ create or replace procedure create_weapon(
     _dano integer,
     _tipo_arma weapon_type,
     id_categoria integer
-) as
+) as 
 	$create_weapon$
-        declare
+        declare 
 			_id integer;
 
 		begin
@@ -46,9 +46,9 @@ create or replace procedure create_armour(
     _tipo_armadura armour_type,
     _parte_corpo body_part,
     id_categoria integer
-) as
+) as 
 	$create_armour$
-        declare
+        declare 
 			_id integer;
 
 		begin
@@ -73,9 +73,9 @@ create or replace procedure create_potion(
     _valor_pos_compra numeric,
     _vida_recuperada integer,
     id_categoria integer
-) as
+) as 
 	$create_potion$
-        declare
+        declare 
 			_id integer;
 
 		begin
@@ -101,9 +101,9 @@ create or replace procedure create_boost(
     _duracao integer,
     _pontos_aumentados integer,
     id_categoria integer
-) as
+) as 
 	$create_boost$
-        declare
+        declare 
 			_id integer;
 
 		begin
@@ -120,34 +120,17 @@ create or replace procedure create_boost(
 
 
 -- PROCEDURE CRIAR INSTANCIA DE ITEM
-create or replace procedure create_inst_item(_nome) as
+create or replace procedure create_inst_item(_item integer) as
 	$create_item$
 		begin
-            _item = itens.id_item where _nome = itens.nome
-			insert into instancia_item(nome, item) values (_nome, _item)
+			insert into instancia_item(item) values (_item);
 		end;
 	$create_item$ language 'plpgsql';
-
-create or replace function check_item() returns trigger as
-	$check_item$
-	begin
-		perform itens.id_item from itens where itens.id_item != exists;
-		if found then
-			raise exception 'Este item não existe';
-		end if;
-		return new;
-	end;
-	$check_item$ language 'plpgsql';
-
-
-drop trigger check_item_tg on item;
-
-create trigger check_item_tg after insert on item execute procedure check_item();
 
 
 
 --  Pegar item 
-create or replace procedure pickup_item(_inst_item integer, _inventario integer) as
+create or replace procedure pickup_item(_inst_item integer, _inventario integer) as 
 	$pickup_item$
         declare
             capacity integer := 50;
@@ -171,7 +154,7 @@ create or replace procedure pickup_item(_inst_item integer, _inventario integer)
 
 
 --  Droppar item
-create or replace procedure drop_item(_inst_item integer, _regiao integer) as
+create or replace procedure drop_item(_inst_item integer, _regiao integer) as 
 	$drop_item$
         declare
             capacity integer := 500;

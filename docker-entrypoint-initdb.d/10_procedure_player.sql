@@ -24,16 +24,17 @@ $create_adventurer$ language 'plpgsql';
 
 
 -- PROCEDURE UPAR DE NIVEL
--- create or replace function level_up() as $level_up$
---     begin
---         if(old.xp <> new.xp) then
---             if(new.xp = 100)
---             update aventureiro set nivel = nivel + 1;
---         end if;
---         return null;
---     end;
---
--- $level_up$ language 'plpgsql';
---
--- drop trigger level_up_tg on aventureiro;
--- create trigger level_up_tg after update on aventureiro execute procedure level_up();
+create or replace function level_up() returns trigger as $level_up$
+    begin
+        if(old.xp <> new.xp) then
+            if(new.xp = 100) then
+                update aventureiro set nivel = nivel + 1;
+            end if;
+        end if;
+
+        return null;
+    end;
+
+$level_up$ language 'plpgsql';
+
+create trigger level_up_tg after update on aventureiro execute procedure level_up();

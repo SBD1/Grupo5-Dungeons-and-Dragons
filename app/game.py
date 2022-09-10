@@ -47,23 +47,24 @@ class Game(CommandInterpreter):
 
     def get_initial_gear(self, player_id):
         # TODO change this accordingly with the player class
-        return {
-            'weapons': [
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Espada'
-                ),
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Escudo'
-                )
-            ],
-            'potions': [],
-            'armour': [],
-            'boost': [],
-        }
+        # return {
+        #     'weapons': [
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Espada'
+        #         ),
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Escudo'
+        #         )
+        #     ],
+        #     'potions': [],
+        #     'armour': [],
+        #     'boost': [],
+        # }
+        return {}
 
     @staticmethod
     def display_player_info(player_list):

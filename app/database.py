@@ -109,30 +109,30 @@ class DatabaseConnection:
 
         return item_instance
 
-    def add_item_to_inventory(
-            self, player_id, create_item_function, item_name
-    ):
-        cursor = self.connection.cursor()
+    # def add_item_to_inventory(
+    #         self, player_id, create_item_function, item_name
+    # ):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_instance = create_item_function(item_name, cursor)
+    #
+    #     self.add_item_instance_to_inventory(item_instance, player_id)
+    #     self.connection.commit()
+    #     cursor.close()
+    #
+    #     return item_instance
 
-        item_instance = create_item_function(item_name, cursor)
-
-        self.add_item_instance_to_inventory(item_instance, player_id)
-        self.connection.commit()
-        cursor.close()
-
-        return item_instance
-
-    def add_item_instance_to_inventory(self, item_instance, player_id):
-        cursor = self.connection.cursor()
-
-        item_id = item_instance.get('instance_id')
-        cursor.execute(
-            f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
-        )
-
-        self.connection.commit()
-
-        cursor.close()
+    # def add_item_instance_to_inventory(self, item_instance, player_id):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_id = item_instance.get('instance_id')
+    #     cursor.execute(
+    #         f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
+    #     )
+    #
+    #     self.connection.commit()
+    #
+    #     cursor.close()
 
     def get_races(self):
         cursor = self.connection.cursor()

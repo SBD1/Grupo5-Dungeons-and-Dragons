@@ -112,11 +112,11 @@ CREATE TABLE instancia_inimigo (
     inimigo int not NULL references inimigo (id_inimigo)
 );
 
-CREATE TABLE inimigo_em_regiao (
-    id_inimigo int not NULL references instancia_inimigo (id_instancia_inimigo),
-    id_regiao int not NULL references regiao (id_regiao),
-    primary key (id_instancia_inimigo)
-);
+-- CREATE TABLE inimigo_em_regiao (
+--     id_inimigo int not NULL references instancia_inimigo (id_instancia_inimigo),
+--     id_regiao int not NULL references regiao (id_regiao),
+--     primary key (id_instancia_inimigo)
+-- );
 
 CREATE TABLE aventureiro (
     id_aventureiro serial primary key,

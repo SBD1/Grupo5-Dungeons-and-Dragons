@@ -1,4 +1,4 @@
-
+from database import DatabaseConnection
 
 class CommandInterpreter:
 
@@ -140,11 +140,10 @@ class CommandInterpreter:
     def goto_command(self, arguments):
         if not self.player.in_combat:
             if arguments:
+                connection = DatabaseConnection()
                 location = arguments[0]
-                pass
-                # TODO location = move_player_to_location(player, location)
-                self.player.location = location
-                self.scenario['location'] = location
+                self.player = connection.move_player_to_location(self.player, location) # location é a direcao que ele quer ir, por exemplo, quero ir pro "norte" (norte seria a location)
+                self.scenario['location'] = self.player.location
             else:
                 print('Especifique o lugar que deseja ir!')
         else:

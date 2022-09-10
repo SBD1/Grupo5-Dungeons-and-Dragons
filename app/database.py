@@ -7,10 +7,10 @@ class DatabaseConnection:
     def __init__(self):
         # TODO Change this later
         self.connection = psycopg2.connect(
-            dbname='postgres',
+            dbname='DeD',
             user='postgres',
-            password='postgres',
-            host='localhost'
+            password='pedrolucas0',
+            host='winhost'
         )
 
         pass
@@ -184,7 +184,6 @@ class DatabaseConnection:
             f"'0'::integer"
             f")"
         )
-
         player_id, = cursor.fetchone()
         cursor.execute(
             f"""
@@ -196,8 +195,33 @@ class DatabaseConnection:
 
         self.connection.commit()
         cursor.close()
-
         return player_id
+
+    def update_player_location(self, player):
+        cursor = self.connection.cursor()
+        player_location = player.location["id"]
+        cursor.execute(
+            f"""
+                update aventureiro set regiao = {player_location} where player.id = {player.id}
+            """
+        )
+        self.connection.commit()
+        cursor.close()
+
+    def move_player_to_location(self, player, location):
+
+        oldlocation = self.get_player_location(player.id)
+        if location == "north":
+            newlocation = oldlocation.north
+        elif location == "south":
+            newlocation = oldlocation.south
+        elif location == "west":
+            newlocation = oldlocation.west
+        elif location == "east":
+            newlocation = oldlocation.east
+        player.location = newlocation
+        self.update_player_location(player)
+        return player
 
     def get_player_location(self, player_id):
         cursor = self.connection.cursor()

@@ -7,9 +7,9 @@ class DatabaseConnection:
     def __init__(self):
         # TODO Change this later
         self.connection = psycopg2.connect(
-            dbname='DeD',
+            dbname='postgres',
             user='postgres',
-            password='pedrolucas0',
+            password='postgres',
             host='winhost'
         )
 
@@ -50,7 +50,7 @@ class DatabaseConnection:
             location = {
                 'id': result[0][0],
                 'name': result[0][1],
-                'north': self.get_location_by_id(result[0][2]),
+                'north': self.get_location_by_id(result[0][2]), # 'north': result[0][2],
                 'south': self.get_location_by_id(result[0][3]),
                 'west': self.get_location_by_id(result[0][4]),
                 'east': self.get_location_by_id(result[0][5]),

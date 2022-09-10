@@ -120,7 +120,7 @@ CREATE TABLE inimigo_em_regiao (
 
 CREATE TABLE aventureiro (
     id_aventureiro serial primary key,
-    nivel numeric default 0,
+    nivel numeric default 1,
     pontos numeric default 0,
     xp numeric default 0,
     nome varchar(50),
@@ -131,10 +131,10 @@ CREATE TABLE aventureiro (
 
 CREATE TABLE corpo (
     id_corpo int not NULL references aventureiro (id_aventureiro),
-    cabeça int,
-    tronco int,
-    mao_esquerda int,
-    mao_direita int,
+    cabeça int default NULL,
+    tronco int default NULL,
+    mao_esquerda int default NULL,
+    mao_direita int default NULL,
     primary key (id_corpo)
 );
 

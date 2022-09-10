@@ -3,7 +3,7 @@ create or replace procedure connect_regiao(
     _regiao_b integer,
     _regiao_orientacao varchar(6)
 ) as
-$get_player_location$
+$connect_regiao$
 begin
     IF NOT EXISTS(SELECT 1 FROM regiao where id_regiao = _regiao_a) THEN
         raise exception 'regiao does not exist.';
@@ -41,4 +41,4 @@ exception
 
 
 end;
-$get_player_location$ language 'plpgsql';
+$connect_regiao$ language 'plpgsql';

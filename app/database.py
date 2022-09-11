@@ -214,9 +214,13 @@ class DatabaseConnection:
             _regiao_nome := ''::varchar,
             _regiao_descricao := ''::text,
             _norte_nome := ''::varchar,
+            _norte_id := 1::integer,
             _sul_nome := ''::varchar,
+            _sul_id := 1::integer,
             _leste_nome := ''::varchar,
-            _oeste_nome := ''::varchar
+            _leste_id := 1::integer,
+            _oeste_nome := ''::varchar,
+            _oeste_id := 1::integer
             );
         """
         )
@@ -227,12 +231,28 @@ class DatabaseConnection:
             'id': location_data[0],
             'name': location_data[1],
             'description': location_data[2],
-            'north': location_data[3],
-            'south': location_data[4],
-            'east': location_data[5],
-            'west': location_data[6]
+            'north': {'name': location_data[3], 'id': location_data[4]},
+            'south': {'name': location_data[5], 'id': location_data[6]},
+            'east': {'name': location_data[7], 'id': location_data[8]},
+            'west': {'name': location_data[9], 'id': location_data[10]},
         }
 
         cursor.close()
 
         return location
+
+    def move_player_to_location(self, player_id, desired_location_id):
+        success = False
+        cursor = self.connection.cursor()
+        try:
+            success = cursor.execute(
+                f"""
+                call move_player({desired_location_id}::int , {player_id}::int)
+                """
+            )
+        except:
+            cursor.execute("""ROLLBACK""")
+        finally:
+            cursor.close()
+
+        return bool(success)

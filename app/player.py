@@ -8,7 +8,7 @@ class Player:
     def __init__(self, player_id, inventory, player_basic_info):
         info = self.parse_player_info(player_basic_info)
         self.db_connection = DatabaseConnection()
-        self.player_id = player_id
+        self.player_id, = player_id
         self.location = self.db_connection.get_player_location(player_id)
         self.inventory = inventory
         self.name = info.get('name')

@@ -63,6 +63,10 @@ class DatabaseConnection:
 
         return location
 
+    def get_inventory(self, player_id):
+        # TODO get player inventory
+        return {}
+
     def get_item(self, item_type, item_field, field_data):
         result = None
 

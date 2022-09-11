@@ -109,31 +109,30 @@ class DatabaseConnection:
 
         return item_instance
 
+    # def add_item_to_inventory(
+    #         self, player_id, create_item_function, item_name
+    # ):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_instance = create_item_function(item_name, cursor)
+    #
+    #     self.add_item_instance_to_inventory(item_instance, player_id)
+    #     self.connection.commit()
+    #     cursor.close()
+    #
+    #     return item_instance
 
-    def add_item_to_inventory(
-            self, player_id, create_item_function, item_name
-    ):
-        cursor = self.connection.cursor()
-
-        item_instance = create_item_function(item_name, cursor)
-
-        self.add_item_instance_to_inventory(item_instance, player_id)
-        self.connection.commit()
-        cursor.close()
-
-        return item_instance
-
-    def add_item_instance_to_inventory(self, item_instance, player_id):
-        cursor = self.connection.cursor()
-
-        item_id = item_instance.get('instance_id')
-        cursor.execute(
-            f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
-        )
-
-        self.connection.commit()
-
-        cursor.close()
+    # def add_item_instance_to_inventory(self, item_instance, player_id):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_id = item_instance.get('instance_id')
+    #     cursor.execute(
+    #         f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
+    #     )
+    #
+    #     self.connection.commit()
+    #
+    #     cursor.close()
 
     def get_races(self):
         cursor = self.connection.cursor()
@@ -175,13 +174,15 @@ class DatabaseConnection:
     def create_player(self, name, race, char_class, id_map):
         cursor = self.connection.cursor()
 
+        first_region_id = 1
+
         cursor.execute(
-            f"call insert_aventureiro("
-            f"'{name.title()}'::varchar(50), "
-            f"'{race.title()}'::varchar(50), "
-            f"'{char_class.title()}'::varchar(50), "
-            f"'5'::integer, "
-            f"'0'::integer"
+            f"call create_adventurer("
+            f"_nome := '{name.title()}'::varchar(50), "
+            f"_raca := '{race.title()}'::varchar(50), "
+            f"_classe := '{char_class.title()}'::varchar(50), "
+            f"_id_regiao := '{first_region_id}'::integer, "
+            f"_id_aventureiro := '0'::integer"
             f")"
         )
         player_id, = cursor.fetchone()
@@ -227,12 +228,30 @@ class DatabaseConnection:
         cursor = self.connection.cursor()
 
         cursor.execute(
-            f"SELECT regiao FROM aventureiro where id_aventureiro = {player_id}"
+            f"""call get_player_location(
+            _player_id := {player_id}::integer,
+            _regiao_id := 0::integer,
+            _regiao_nome := ''::varchar,
+            _regiao_descricao := ''::text,
+            _norte_nome := ''::varchar,
+            _sul_nome := ''::varchar,
+            _leste_nome := ''::varchar,
+            _oeste_nome := ''::varchar
+            );
+        """
         )
 
-        location_id = cursor.fetchone()
+        location_data = cursor.fetchone()
 
-        location = self.get_location_by_id(location_id=location_id)
+        location = {
+            'id': location_data[0],
+            'name': location_data[1],
+            'description': location_data[2],
+            'north': location_data[3],
+            'south': location_data[4],
+            'east': location_data[5],
+            'west': location_data[6]
+        }
 
         cursor.close()
 

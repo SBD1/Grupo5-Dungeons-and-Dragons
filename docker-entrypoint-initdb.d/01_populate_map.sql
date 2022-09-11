@@ -21,7 +21,7 @@ VALUES ('Sul de Phandalin',
         null,
         null,
         null,
-        1);
+        null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste)
 VALUES ('Centro de Phandalin', 
         'Parece ser um local bem movimentado com alguns mercadores, talvez seja interessante trocar armas e armaduras' ||

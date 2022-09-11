@@ -128,7 +128,19 @@ class Game(CommandInterpreter):
 
     def load_game(self):
         print('Carregar Jogo!')
-        pass
+
+        player_id = input('Digite o id do seu personagem: ')
+        inventory = self.db_connection.get_inventory(player_id)
+
+        player_info = self.db_connection.get_player_basic_info(player_id)
+
+        self.player = Player(
+            player_id=player_id,
+            inventory=inventory,
+            player_basic_info=player_info
+        )
+
+        self.display_player_info(player_info)
 
     def exit(self):
         pass
@@ -170,7 +182,6 @@ class Game(CommandInterpreter):
 
     def display_player_location(self):
         result = self.db_connection.get_player_location(self.player.player_id)
-        print(result)
         print(f'Local: {result.get("name")}')
         print(f'{result.get("description")}')
         print(

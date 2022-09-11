@@ -1,8 +1,12 @@
+from database import DatabaseConnection
+
+
 class CommandInterpreter:
 
     def __init__(self, player, scenario):
         self.player = player
         self.scenario = scenario
+        self.db_connection = DatabaseConnection()
 
     @property
     def commands(self):
@@ -11,20 +15,20 @@ class CommandInterpreter:
                 'function': self.goto_command,
                 'synonyms': ['ir', 'entrar'],
                 'help': (
-                    """COMANDO: ir [lugar]
+                    """COMANDO: ir [id do lugar]
                     O jogador irá para o lugar especificado.
                     """
                 ),
                 'usage tips': (
                     """
                     Exemplo:
-                        >>> ir estábulos de neverwinter
+                        >>> ir 1
     
                     Exemplo:
-                        >>> ir loja de poções
+                        >>> ir 2
     
                     Exemplo:
-                        >>> entrar loja de poções
+                        >>> entrar 2
                     """
                 )
             },
@@ -127,20 +131,33 @@ class CommandInterpreter:
         if not arguments:
             for command in self.commands:
                 print(f'{self.commands.get(command).get("help")}')
-                print(f'Sinônimos: {self.commands.get(command).get("synonyms")}')
+                print(
+                    f'Sinônimos: {self.commands.get(command).get("synonyms")}')
                 print(
                     '---------------------------------------------------------')
         else:
-            print(f'{arguments[0]}: {self.commands.get(arguments[0]).get("help")}')
-            print(f'Sinônimos: {self.commands.get(arguments[0]).get("synonyms")}')
+            print(
+                f'{arguments[0]}: {self.commands.get(arguments[0]).get("help")}')
+            print(
+                f'Sinônimos: {self.commands.get(arguments[0]).get("synonyms")}')
             print(self.commands.get(arguments[0]).get("usage tips"))
 
     def goto_command(self, arguments):
         if not self.player.in_combat:
             if arguments:
                 location = arguments[0]
-                pass
-                # TODO location = move_player_to_location(player, location)
+                try:
+                    success = self.db_connection.move_player_to_location(
+                        self.player.player_id,
+                        location
+                    )
+                    if not success:
+                        print('Não é possível acessar esse local!')
+                        return
+                except Exception as error:
+                    print('Não é possível acessar esse local!')
+                    return
+
                 self.player.location = location
                 self.scenario['location'] = location
             else:

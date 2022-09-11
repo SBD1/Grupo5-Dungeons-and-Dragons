@@ -184,12 +184,39 @@ class Game(CommandInterpreter):
         result = self.db_connection.get_player_location(self.player.player_id)
         print(f'Local: {result.get("name")}')
         print(f'{result.get("description")}')
+        north_string = (
+            f'{result.get("north").get("name")}, '
+            f'id: {result.get("north").get("id")}'
+        ) if result.get("north").get("id") else "Nada!"
+
+        south_string = (
+            f'{result.get("south").get("name")}, '
+            f'id: {result.get("south").get("id")}'
+        ) if result.get("south").get("id") else "Nada!"
+
+        east_string = (
+            f'{result.get("east").get("name")}, '
+            f'id: {result.get("east").get("id")}'
+        ) if result.get("east").get("id") else "Nada!"
+
+        west_string = (
+            f'{result.get("west").get("name")}, '
+            f'id: {result.get("west").get("id")}'
+        ) if result.get("west").get("id") else "Nada!"
+
         print(
             f'Saídas:'
-            f'\n\tAo norte: {result.get("north") or "Nada!"}'
-            f'\n\tAo sul: {result.get("south") or "Nada!"}'
-            f'\n\tAo ao leste: {result.get("east") or "Nada!"}'
-            f'\n\tAo oeste: {result.get("west") or "Nada!"}'
+            f'\n\tAo norte: {north_string}'
+            f'\n\tAo sul: {south_string}'
+            f'\n\tAo ao leste: {east_string}'
+            f'\n\tAo oeste: {west_string}'
+        )
+
+        print(
+            '''\n\tPara se mover digite o comando "ir {id do lugar}, por exemplo."
+            Para mais informações, utilize o comando "ajuda ir",
+            Ou apenas "ajuda" para obter informações gerais sobre os comandos.            
+            '''
         )
 
 

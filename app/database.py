@@ -257,4 +257,36 @@ class DatabaseConnection:
         finally:
             cursor.close()
 
-        return bool(new_location)
+        return new_location
+
+    def load_enemies(self, location_id):
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                f"""
+                SELECT n.id_npc, n.nome, i.vida, i.dano
+                FROM inimigo_em_regiao ir 
+                    JOIN npc n ON ir.id_inimigo = n.id_npc
+                    JOIN inimigo i ON i.id_inimigo = n.id_npc
+                WHERE ir.id_regiao = {location_id}
+                """
+            )
+            result = cursor.fetchall()
+            enemies = self.serialize_enemies(result)
+        finally:
+            cursor.close()
+
+        return enemies
+
+    @staticmethod
+    def serialize_enemies(result):
+        enemies = []
+        for enemy_instance in result:
+            enemy = {
+                'id': enemy_instance[0],
+                'name': enemy_instance[1],
+                'life': enemy_instance[2],
+                'damage': enemy_instance[3]
+            }
+            enemies.append(enemy)
+        return enemies

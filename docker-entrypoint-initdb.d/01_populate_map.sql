@@ -168,4 +168,3 @@ INSERT INTO regiao_mapa
 VALUES (1, 11);
 INSERT INTO regiao_mapa
 VALUES (1, 12);
-

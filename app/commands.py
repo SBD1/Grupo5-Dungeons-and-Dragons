@@ -5,8 +5,8 @@ class CommandInterpreter:
 
     def __init__(self, player, scenario):
         self.player = player
-        self.scenario = scenario
         self.db_connection = DatabaseConnection()
+        self.enemies = []
 
     @property
     def commands(self):
@@ -147,14 +147,21 @@ class CommandInterpreter:
             if arguments:
                 location = arguments[0]
                 try:
-                    success = self.db_connection.move_player_to_location(
+                    location = self.db_connection.move_player_to_location(
                         self.player.player_id,
                         location
                     )
-                    if not success:
+                    if not location:
                         print('Não é possível acessar esse local!')
                         return
+
+                    if enemies := self.db_connection.load_enemies(location):
+                        self.enemies = enemies
+                    else:
+                        print('Aparentemente não há inimigos aqui, parece estar seguro!')
+
                 except Exception as error:
+                    print(error)
                     print('Não é possível acessar esse local!')
                     return
 

@@ -5,7 +5,7 @@ from commands import CommandInterpreter
 
 class Game(CommandInterpreter):
     player = None
-    scenario = {}
+    enemies = []
 
     def __init__(self):
         super(CommandInterpreter, self).__init__()
@@ -184,26 +184,38 @@ class Game(CommandInterpreter):
         result = self.db_connection.get_player_location(self.player.player_id)
         print(f'Local: {result.get("name")}')
         print(f'{result.get("description")}')
+        self.display_enemies()
+        if not self.player.in_combat:
+            self.display_exits(result)
+
+    def display_enemies(self):
+        if not self.enemies:
+            self.player.in_combat = False
+            return
+
+        self.player.in_combat = True
+        print('\nHá inimigos aqui! Você está em combate!')
+        for enemy in self.enemies:
+            print(f'INIMIGO: {enemy.get("name")}, Vida: {enemy.get("life")}\n')
+
+    @staticmethod
+    def display_exits(result):
         north_string = (
             f'{result.get("north").get("name")}, '
             f'id: {result.get("north").get("id")}'
         ) if result.get("north").get("id") else "Nada!"
-
         south_string = (
             f'{result.get("south").get("name")}, '
             f'id: {result.get("south").get("id")}'
         ) if result.get("south").get("id") else "Nada!"
-
         east_string = (
             f'{result.get("east").get("name")}, '
             f'id: {result.get("east").get("id")}'
         ) if result.get("east").get("id") else "Nada!"
-
         west_string = (
             f'{result.get("west").get("name")}, '
             f'id: {result.get("west").get("id")}'
         ) if result.get("west").get("id") else "Nada!"
-
         print(
             f'Saídas:'
             f'\n\tAo norte: {north_string}'

@@ -14,8 +14,22 @@ class Player:
         self.name = info.get('name')
         self.race = info.get('race_name')
         self.class_name = info.get('class_name')
-        self.race_data = info.get('race_data')
+        self.class_attributes = {} # TODO GET ATTRIBUTES
+        self.race_data = info.get('race_data') # TODO SERIALIZE RACE DATA
+        self.life = 10 # TODO GET LIFE FROM ATTRIBUTES
+        self.damage_modifier = self.get_damage_modifier()
+        self.damage = 6 + self.damage_modifier
+        import pdb;pdb.set_trace()
         pass
+
+    def get_damage_modifier(self):
+        if self.class_name in ['Assassino', 'Ranger']:
+            return int(self.class_attributes.get('DESTREZA')/2)
+        if self.class_name in ['Bárbaro', 'Guerreiro']:
+            return int(self.class_attributes.get('FORÇA')/2)
+        if self.class_name in ['Mago']:
+            return int(self.class_attributes.get('DESTREZA') / 3)
+        return 0
 
     def parse_player_info(self, player_data):
         player_info = player_data[0]

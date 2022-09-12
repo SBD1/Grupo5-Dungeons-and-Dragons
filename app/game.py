@@ -196,7 +196,9 @@ class Game(CommandInterpreter):
         self.player.in_combat = True
         print('\nHá inimigos aqui! Você está em combate!')
         for enemy in self.enemies:
-            print(f'INIMIGO: {enemy.get("name")}, Vida: {enemy.get("life")}\n')
+            print(f'Id ({enemy.get("id")}) '
+                  f'INIMIGO: {enemy.get("name")}, '
+                  f'Vida: {enemy.get("life")}\n')
 
     @staticmethod
     def display_exits(result):

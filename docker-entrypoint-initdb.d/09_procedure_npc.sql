@@ -27,7 +27,7 @@ create or replace procedure create_enemy(_nome varchar(50), _tipo npc_type, _vid
 create or replace function check_enemy() returns trigger as
 	$check_enemy$
 	begin
-		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I';
+		perform * from npc inner join inimigo on npc.id_npc = inimigo.id_inimigo where npc.tipo !=  'I'::npc_type;
 		if found then
 			raise exception 'Este NPC precisa ser do tipo Inimigo';
 		end if;
@@ -40,7 +40,7 @@ create trigger check_enemy_tg after insert on inimigo execute procedure check_en
 
 
 -- PROCEDURE CRIAR INSTANCIA DE INIMIGO
-create or replace procedure create_enemy_inst(_inimigo integer, regiao integer) as
+create or replace procedure create_enemy_inst(_inimigo integer , regiao integer) as
 	$create_enemy_inst$
 		declare
 			_id integer;

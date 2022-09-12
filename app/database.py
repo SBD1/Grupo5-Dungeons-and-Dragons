@@ -242,17 +242,19 @@ class DatabaseConnection:
         return location
 
     def move_player_to_location(self, player_id, desired_location_id):
-        success = False
         cursor = self.connection.cursor()
         try:
-            success = cursor.execute(
+            cursor.execute(
                 f"""
-                call move_player({desired_location_id}::int , {player_id}::int)
+                call move_player({desired_location_id}::int , {player_id}::int, '0'::int)
                 """
             )
-        except:
-            cursor.execute("""ROLLBACK""")
+            new_location, = cursor.fetchone()
+            cursor.execute("COMMIT;")
+        except Exception as error:
+            print(error)
+
         finally:
             cursor.close()
 
-        return bool(success)
+        return bool(new_location)

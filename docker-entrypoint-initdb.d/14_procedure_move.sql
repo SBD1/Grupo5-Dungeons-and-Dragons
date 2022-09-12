@@ -1,6 +1,10 @@
 -- PROCEDURE MOVE PLAYER
 create or replace procedure
-    move_player(_regiao_desejada int, _id_aventureiro int) as
+    move_player(
+    _regiao_desejada int,
+    _id_aventureiro int,
+    inout _nova_regiao int
+) as
 $move_player$
 begin
     IF (_regiao_desejada)
@@ -19,8 +23,10 @@ begin
         UPDATE aventureiro
         SET regiao = _regiao_desejada
         WHERE id_aventureiro = _id_aventureiro;
+
+        SELECT _regiao_desejada into _nova_regiao;
     ELSE
-        raise exception 'Essa região está indisponível';
+        select 0 into _nova_regiao;
     END IF;
 
     RETURN;

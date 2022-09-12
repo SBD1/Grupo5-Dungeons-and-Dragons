@@ -109,6 +109,8 @@ CREATE TABLE npc_em_regiao (
 
 CREATE TABLE instancia_inimigo (
     id_instancia_inimigo serial primary key,
+    loot int not NULL references instancia_item (id_instancia_item),
+    vida int,
     inimigo int not NULL references inimigo (id_inimigo)
 );
 
@@ -126,6 +128,7 @@ CREATE TABLE aventureiro (
     nome varchar(50),
     raca int not NULL references raca (id_raca),
     classe int not NULL references classe (id_classe),
+    vida int,
     regiao int references regiao (id_regiao)
 );
 

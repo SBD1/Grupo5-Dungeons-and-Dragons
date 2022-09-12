@@ -176,11 +176,26 @@ class CommandInterpreter:
         if self.player.in_combat:
             if arguments:
                 enemy = arguments[0]
-                pass
-                # TODO player_attack_enemy(player, enemy)
+                self.player_attack_enemy(enemy)
             else:
-                # TODO player_attack_enemy(player, enemy)
-                pass
+                print("Você ataca o primeiro inimigo que aparece a sua frente")
+                player_attack_enemy(self.enemies[0])
+        else:
+            print("Você não está em nenhum combate nesse momento.")
+
+    def player_attack_enemy(self, enemy):
+        import pdb;pdb.set_trace()
+        for enemy in self.enemies:
+            if str(enemy.get('id')) == str(enemy).strip():
+                enemy['life'] -= self.player.damage
+                print(f'{enemy.get("name")} Recebeu {self.player.damage} de dano!')
+                if int(enemy.get('life')) <= 0:
+                    self.db_connection.kill_enemy()
+                    self.enemies.remove(enemy)
+                    if self.enemies == []:
+                        self.player.in_combat = False
+                        print("Você derrotou todos os inimigos dessa area!")
+                return
 
     def parse_command(self, player_input):
         arguments = player_input.split()

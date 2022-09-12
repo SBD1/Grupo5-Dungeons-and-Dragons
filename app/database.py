@@ -290,3 +290,18 @@ class DatabaseConnection:
             }
             enemies.append(enemy)
         return enemies
+
+    def kill_enemy(self, enemy_id):
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                f"""
+                DELETE from inimigo_instancia where inimigo_instancia_id = {enemy_id};
+                DELETE from inimigo_em_regiao where inimigo_id = {enemy_id};
+
+                COMMIT;
+
+                """
+            )
+        finally:
+            cursor.close()

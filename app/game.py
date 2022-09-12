@@ -1,12 +1,15 @@
 from database import DatabaseConnection
 from player import Player
+from commands import CommandInterpreter
 
 
-class Game:
+class Game(CommandInterpreter):
+    player = None
+    enemies = []
 
     def __init__(self):
+        super(CommandInterpreter, self).__init__()
         self.db_connection = DatabaseConnection()
-        self.player = None
         pass
 
     def start(self):
@@ -16,7 +19,10 @@ class Game:
     def start_new_game(self):
         print('Novo Jogo!')
 
-        # location_id = self.db_connection.get_location('Centro de Neverwinter')
+        player_info = self.create_character()
+        self.display_player_info(player_info)
+
+    def create_character(self):
         name = input('Digite o nome do seu personagem: ')
         id_race = self.choose_race()
         id_class = self.choose_class()
@@ -28,23 +34,7 @@ class Game:
             id_map
         )
 
-        inventory = {
-            'weapons': [
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Espada'
-                ),
-                self.db_connection.add_item_to_inventory(
-                    player_id,
-                    self.db_connection.get_weapon,
-                    'Escudo'
-                )
-            ],
-            'potions': [],
-            'armour': [],
-            'boost': [],
-        }
+        inventory = self.get_initial_gear(player_id)
 
         self.player = Player(
             player_id=player_id,
@@ -53,7 +43,28 @@ class Game:
 
         player_info = self.db_connection.get_player_basic_info(player_id)
         print('AVENTUREIRO CRIADO COM SUCESSO!')
-        self.display_player_info(player_info)
+        return player_info
+
+    def get_initial_gear(self, player_id):
+        # TODO change this accordingly with the player class
+        # return {
+        #     'weapons': [
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Espada'
+        #         ),
+        #         self.db_connection.add_item_to_inventory(
+        #             player_id,
+        #             self.db_connection.get_weapon,
+        #             'Escudo'
+        #         )
+        #     ],
+        #     'potions': [],
+        #     'armour': [],
+        #     'boost': [],
+        # }
+        return {}
 
     @staticmethod
     def display_player_info(player_list):
@@ -117,7 +128,19 @@ class Game:
 
     def load_game(self):
         print('Carregar Jogo!')
-        pass
+
+        player_id = input('Digite o id do seu personagem: ')
+        inventory = self.db_connection.get_inventory(player_id)
+
+        player_info = self.db_connection.get_player_basic_info(player_id)
+
+        self.player = Player(
+            player_id=player_id,
+            inventory=inventory,
+            player_basic_info=player_info
+        )
+
+        self.display_player_info(player_info)
 
     def exit(self):
         pass
@@ -151,13 +174,64 @@ class Game:
         while True:
             self.display_player_location()
             command = input('>>> ')
-            status = self.parse_command(command)
+            try:
+                status = self.parse_command(command)
+            except:
+                print('Erro')
+                pass
 
     def display_player_location(self):
-        pass
+        result = self.db_connection.get_player_location(self.player.player_id)
+        print(f'Local: {result.get("name")}')
+        print(f'{result.get("description")}')
+        self.display_enemies()
+        if not self.player.in_combat:
+            self.display_exits(result)
 
-    def parse_command(self, player_input):
-        pass
+    def display_enemies(self):
+        if not self.enemies:
+            self.player.in_combat = False
+            return
+
+        self.player.in_combat = True
+        print('\nHá inimigos aqui! Você está em combate!')
+        for enemy in self.enemies:
+            print(f'Id ({enemy.get("id")}) '
+                  f'INIMIGO: {enemy.get("name")}, '
+                  f'Vida: {enemy.get("life")}\n')
+
+    @staticmethod
+    def display_exits(result):
+        north_string = (
+            f'{result.get("north").get("name")}, '
+            f'id: {result.get("north").get("id")}'
+        ) if result.get("north").get("id") else "Nada!"
+        south_string = (
+            f'{result.get("south").get("name")}, '
+            f'id: {result.get("south").get("id")}'
+        ) if result.get("south").get("id") else "Nada!"
+        east_string = (
+            f'{result.get("east").get("name")}, '
+            f'id: {result.get("east").get("id")}'
+        ) if result.get("east").get("id") else "Nada!"
+        west_string = (
+            f'{result.get("west").get("name")}, '
+            f'id: {result.get("west").get("id")}'
+        ) if result.get("west").get("id") else "Nada!"
+        print(
+            f'Saídas:'
+            f'\n\tAo norte: {north_string}'
+            f'\n\tAo sul: {south_string}'
+            f'\n\tAo ao leste: {east_string}'
+            f'\n\tAo oeste: {west_string}'
+        )
+
+        print(
+            '''\n\tPara se mover digite o comando "ir {id do lugar}, por exemplo."
+            Para mais informações, utilize o comando "ajuda ir",
+            Ou apenas "ajuda" para obter informações gerais sobre os comandos.            
+            '''
+        )
 
 
 if __name__ == '__main__':

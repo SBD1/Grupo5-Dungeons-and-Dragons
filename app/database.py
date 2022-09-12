@@ -63,6 +63,10 @@ class DatabaseConnection:
 
         return location
 
+    def get_inventory(self, player_id):
+        # TODO get player inventory
+        return {}
+
     def get_item(self, item_type, item_field, field_data):
         result = None
 
@@ -109,31 +113,30 @@ class DatabaseConnection:
 
         return item_instance
 
+    # def add_item_to_inventory(
+    #         self, player_id, create_item_function, item_name
+    # ):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_instance = create_item_function(item_name, cursor)
+    #
+    #     self.add_item_instance_to_inventory(item_instance, player_id)
+    #     self.connection.commit()
+    #     cursor.close()
+    #
+    #     return item_instance
 
-    def add_item_to_inventory(
-            self, player_id, create_item_function, item_name
-    ):
-        cursor = self.connection.cursor()
-
-        item_instance = create_item_function(item_name, cursor)
-
-        self.add_item_instance_to_inventory(item_instance, player_id)
-        self.connection.commit()
-        cursor.close()
-
-        return item_instance
-
-    def add_item_instance_to_inventory(self, item_instance, player_id):
-        cursor = self.connection.cursor()
-
-        item_id = item_instance.get('instance_id')
-        cursor.execute(
-            f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
-        )
-
-        self.connection.commit()
-
-        cursor.close()
+    # def add_item_instance_to_inventory(self, item_instance, player_id):
+    #     cursor = self.connection.cursor()
+    #
+    #     item_id = item_instance.get('instance_id')
+    #     cursor.execute(
+    #         f"INSERT INTO itens_inventario (instancia_item, inventario) VALUES ('{item_id}', '{player_id}')"
+    #     )
+    #
+    #     self.connection.commit()
+    #
+    #     cursor.close()
 
     def get_races(self):
         cursor = self.connection.cursor()
@@ -175,13 +178,15 @@ class DatabaseConnection:
     def create_player(self, name, race, char_class, id_map):
         cursor = self.connection.cursor()
 
+        first_region_id = 1
+
         cursor.execute(
-            f"call insert_aventureiro("
-            f"'{name.title()}'::varchar(50), "
-            f"'{race.title()}'::varchar(50), "
-            f"'{char_class.title()}'::varchar(50), "
-            f"'5'::integer, "
-            f"'0'::integer"
+            f"call create_adventurer("
+            f"_nome := '{name.title()}'::varchar(50), "
+            f"_raca := '{race.title()}'::varchar(50), "
+            f"_classe := '{char_class.title()}'::varchar(50), "
+            f"_id_regiao := '{first_region_id}'::integer, "
+            f"_id_aventureiro := '0'::integer"
             f")"
         )
 
@@ -203,13 +208,85 @@ class DatabaseConnection:
         cursor = self.connection.cursor()
 
         cursor.execute(
-            f"SELECT regiao FROM aventureiro where id_aventureiro = {player_id}"
+            f"""call get_player_location(
+            _player_id := {player_id}::integer,
+            _regiao_id := 0::integer,
+            _regiao_nome := ''::varchar,
+            _regiao_descricao := ''::text,
+            _norte_nome := ''::varchar,
+            _norte_id := 1::integer,
+            _sul_nome := ''::varchar,
+            _sul_id := 1::integer,
+            _leste_nome := ''::varchar,
+            _leste_id := 1::integer,
+            _oeste_nome := ''::varchar,
+            _oeste_id := 1::integer
+            );
+        """
         )
 
-        location_id = cursor.fetchone()
+        location_data = cursor.fetchone()
 
-        location = self.get_location_by_id(location_id=location_id)
+        location = {
+            'id': location_data[0],
+            'name': location_data[1],
+            'description': location_data[2],
+            'north': {'name': location_data[3], 'id': location_data[4]},
+            'south': {'name': location_data[5], 'id': location_data[6]},
+            'east': {'name': location_data[7], 'id': location_data[8]},
+            'west': {'name': location_data[9], 'id': location_data[10]},
+        }
 
         cursor.close()
 
         return location
+
+    def move_player_to_location(self, player_id, desired_location_id):
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                f"""
+                call move_player({desired_location_id}::int , {player_id}::int, '0'::int)
+                """
+            )
+            new_location, = cursor.fetchone()
+            cursor.execute("COMMIT;")
+        except Exception as error:
+            print(error)
+
+        finally:
+            cursor.close()
+
+        return new_location
+
+    def load_enemies(self, location_id):
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                f"""
+                SELECT n.id_npc, n.nome, i.vida, i.dano
+                FROM inimigo_em_regiao ir 
+                    JOIN npc n ON ir.id_inimigo = n.id_npc
+                    JOIN inimigo i ON i.id_inimigo = n.id_npc
+                WHERE ir.id_regiao = {location_id}
+                """
+            )
+            result = cursor.fetchall()
+            enemies = self.serialize_enemies(result)
+        finally:
+            cursor.close()
+
+        return enemies
+
+    @staticmethod
+    def serialize_enemies(result):
+        enemies = []
+        for enemy_instance in result:
+            enemy = {
+                'id': enemy_instance[0],
+                'name': enemy_instance[1],
+                'life': enemy_instance[2],
+                'damage': enemy_instance[3]
+            }
+            enemies.append(enemy)
+        return enemies

@@ -19,6 +19,9 @@ CREATE TYPE atribute AS ENUM('D', 'C', 'I', 'F', 'S', 'E'); -- destreza, carisma
 
 CREATE TYPE body_part AS ENUM('C', 'T'); -- Cabeça ou Tronco
 
+CREATE TYPE mission_req_type AS ENUM('N', 'I'); -- Nível ou Item 
+
+
 CREATE TABLE raca (
     id_raca serial primary key,
     nome varchar(50),
@@ -104,24 +107,21 @@ CREATE TABLE npc_em_regiao (
     primary key (id_npc)
 );
 
-CREATE TABLE missao (descricao text, id_missao serial primary key);
-
-CREATE TABLE requisitos_missao (
-    id_requisitos_missao serial primary key,
-    id_missao int not NULL references missao (id_missao),
-    descricao text
+CREATE TABLE instancia_inimigo (
+    id_instancia_inimigo serial primary key,
+    inimigo int not NULL references inimigo (id_inimigo)
 );
 
-CREATE TABLE objetivo_missao (
-    id_objetivo_missao serial primary key,
-    id_missao int not NULL references missao (id_missao),
-    descricao text
+CREATE TABLE inimigo_em_regiao (
+    id_inimigo int not NULL references instancia_inimigo (id_instancia_inimigo),
+    id_regiao int not NULL references regiao (id_regiao)
 );
 
 CREATE TABLE aventureiro (
     id_aventureiro serial primary key,
     nivel numeric default 0,
     pontos numeric default 0,
+    xp numeric default 0,
     nome varchar(50),
     raca int not NULL references raca (id_raca),
     classe int not NULL references classe (id_classe),
@@ -153,30 +153,6 @@ CREATE TABLE atributos (
     sabedoria numeric,
     constituicao numeric,
     primary key (id_atributo)
-);
-
-CREATE TABLE status_requisitos_missao (
-    requisitos_missao int not NULL references requisitos_missao(id_requisitos_missao),
-    aventureiro int not NULL references aventureiro (id_aventureiro),
-    primary key(requisitos_missao, aventureiro)
-);
-
-CREATE TABLE status_objetivo_missao (
-    objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
-    aventureiro int not NULL references aventureiro (id_aventureiro),
-    primary key(objetivo_missao, aventureiro)
-);
-
-CREATE TABLE conclusao_missao (
-    missao int not NULL references missao (id_missao),
-    aventureiro int not NULL references aventureiro (id_aventureiro),
-    primary key(missao, aventureiro)
-);
-
-CREATE TABLE passagem_missao (
-    missao int not NULL references missao(id_missao),
-    npc int not NULL references npc (id_npc),
-    primary key(missao)
 );
 
 CREATE TABLE itens (
@@ -238,4 +214,67 @@ CREATE TABLE armadura (
     tipo armour_type,
     parte_corpo body_part,
     primary key (id_armadura)
+);
+
+CREATE TABLE missao (
+    descricao text,
+    id_missao serial primary key
+);
+
+CREATE TABLE requisito_missao (
+    id_requisito_missao serial primary key,
+    id_missao int not NULL references missao (id_missao),
+    tipo mission_req_type
+);
+
+CREATE TABLE requisito_nivel (
+    id_requisito int not NULL references requisito_missao (id_requisito_missao),
+    nivel_min int not NULL
+);
+
+CREATE TABLE requisito_item (
+    id_requisito int not NULL references requisito_missao (id_requisito_missao),
+    item int not NULL references itens (id_item),
+    quantidade int not NULL
+);
+
+CREATE TABLE objetivo_missao (
+    id_objetivo_missao serial primary key,
+    id_missao int not NULL references missao (id_missao),
+    tipo mission_req_type
+);
+
+CREATE TABLE objetivo_nivel (
+    id_objetivo int not NULL references objetivo_missao (id_objetivo_missao),
+    nivel_min int not NULL
+);
+
+CREATE TABLE objetivo_item (
+    id_objetivo int not NULL references objetivo_missao (id_objetivo_missao),
+    item int not NULL references itens (id_item),
+    quantidade int not NULL
+);
+
+CREATE TABLE status_requisito_missao (
+    requisito_missao int not NULL references requisito_missao(id_requisito_missao),
+    aventureiro int not NULL references aventureiro (id_aventureiro),
+    primary key(requisito_missao, aventureiro)
+);
+
+CREATE TABLE status_objetivo_missao (
+    objetivo_missao int not NULL references objetivo_missao(id_objetivo_missao),
+    aventureiro int not NULL references aventureiro (id_aventureiro),
+    primary key(objetivo_missao, aventureiro)
+);
+
+CREATE TABLE conclusao_missao (
+    missao int not NULL references missao (id_missao),
+    aventureiro int not NULL references aventureiro (id_aventureiro),
+    primary key(missao, aventureiro)
+);
+
+CREATE TABLE passagem_missao (
+    missao int not NULL references missao(id_missao),
+    npc int not NULL references npc (id_npc),
+    primary key(missao)
 );

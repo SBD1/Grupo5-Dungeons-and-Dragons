@@ -2,10 +2,34 @@ from database import DatabaseConnection
 
 
 class Player:
-        
-    def __init__(self, player_id, inventory):
+
+    in_combat = False
+
+    def __init__(self, player_id, inventory, player_basic_info):
+        info = self.parse_player_info(player_basic_info)
         self.db_connection = DatabaseConnection()
-        self.player_id = player_id
-        self.location = self.db_connection = self.db_connection.get_player_location(player_id)
+        self.player_id, = player_id
+        self.location = self.db_connection.get_player_location(player_id)
         self.inventory = inventory
+        self.name = info.get('name')
+        self.race = info.get('race_name')
+        self.class_name = info.get('class_name')
+        self.race_data = info.get('race_data')
         pass
+
+    def parse_player_info(self, player_data):
+        player_info = player_data[0]
+        name = player_info[0]
+        race_data = player_info[1].replace('(', '').replace(')', '').split(',')
+        race_name = race_data[1]
+        class_data = player_info[2].replace('(', '').replace(')', '').split(
+            ',')
+        class_name = class_data[1]
+        location = player_info[3]
+        return {
+            'location': location,
+            'class_name': class_name,
+            'race_name': race_name,
+            'race_data': race_data,
+            'name': name
+        }

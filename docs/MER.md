@@ -7,6 +7,7 @@
   |27/07/2022|0.3|Adição de Entidades e Relacionamentos |[João Victor](https://github.com/jvBatista)|
   |28/07/2022|0.4|Modificação de Entidades |[João Victor](https://github.com/jvBatista)|
   |08/08/2022|0.5|Atualizações Pós Entrega 2 |[João Victor](https://github.com/jvBatista)|
+  |05/09/2022|0.6|Adição de Entidades e Relacionamentos|[João Victor](https://github.com/jvBatista)|
 
 # Modelo Entidade-Relacionamento
 ## Entidades
@@ -19,9 +20,8 @@
  - **Inventário**
  - **NPC**
 	- **Inimigo**
-		- **Comum**
-		- **Boss**
 	- **Mercador**
+ - **Instância Inimigo**
  - **Item**
 	- **Equipamento**
 		- **Arma**
@@ -32,8 +32,12 @@
  - **Instância Item**
  - **Categoria Item**
  - **Missão**
- - **Requisitos Missão**
- - **Objetivos Missão**
+ - **Requisito Missão**
+	- **Requisito de Nível**
+	- **Requisito de Item**
+ - **Objetivo Missão**
+	- **Objetivo de Nível**
+	- **Objetivo de Item**
  - **Região**
  - **Mapa**
  
@@ -48,7 +52,6 @@
  - **Inventário:** <ins>ID_Invt</ins>, Capacidade, Ouro.
  - **NPC:** <ins>ID_NPC</ins>, Nome, Dialogos.
 	- **Inimigo:** Vida, Dano.
-		- **Boss:** Habilidade.
 	- **Mercador:** Tipo.
  - **Item:** <ins>ID_Item</ins>, Valor, Valor_Pos_Compra, Natureza_Item.
 	- **Equipamento**
@@ -59,8 +62,12 @@
 		- **Boost:** Pontos_Aumentados, Duracao, Atributo.
  - **Categoria Item:** <ins>ID_CatItem</ins>, Nome
  - **Missão:** <ins>ID_Missao</ins>, Status.
- - **Requisitos Missão** <ins>ID_ReqMissao</ins>, Descrição.
- - **Objetivos Missão** <ins>ID_ObjMissao</ins>, Descrição.
+ - **Requisito Missão** <ins>ID_ReqMissao</ins>, Tipo.
+	- **Requisito de Nível:** Nível_Min.
+	- **Requisito de Item:** Item, Quantidade.
+ - **Objetivo Missão** <ins>ID_ObjMissao</ins>, Tipo.
+	- **Objetivo de Nível:** Nível_Min.
+	- **Objetivo de Item:** Item, Quantidade.
  - **Região:** <ins>ID_Regiao</ins>, Norte, Sul, Leste, Oeste, Nome, Descricao.
  - **Mapa:** <ins>ID_Mapa</ins>, Nome.
 
@@ -94,7 +101,7 @@
  - Um inventário pode guardar *nenhum* item ou *vários* **(0,n)**. Uma Instancia_Item pode ser guardada por *nenhum* inventário ou *um* **(0,1)**.
 
 **Instancia_Item *referencia* Item**
- - Uma instancia_item pode referencia somente *um* item **(1,1)**. Um item pode ser referenciado por *nenhuma* instancia_item ou *várias* **(0,n)**.
+ - Uma instancia de item pode referencia somente *um* item **(1,1)**. Um item pode ser referenciado por *nenhuma* instancia de item ou *várias* **(0,n)**.
 
 **NPC *contém* Missão**
 - Um NPC pode conter *nenhuma* missão ou no máximo *uma* missão **(0,1)**.  Uma missão pode ser contida por *nenhum* NPC ou no máximo *um* NPC **(0,1)**.
@@ -104,6 +111,9 @@
 
 **Mercador *negocia* uma Categoria Item**
 - Um mercador pode negociar (vender/comprar) itens de *uma* categoria de item. Uma categoria de item pode ser negociada por no mínimo *um* mercador ou *vários* **(1,n)**.
+
+**Instancia_Inimigo *referencia* Inimigo**
+ - Uma instancia de inimigo pode referencia somente *um* inimigo **(1,1)**. Um inimigo pode ser referenciado por *nenhuma* instancia de inimigo ou *várias* **(0,n)**.
 
 **Missão *possui* Requisitos Missão**
 - Uma missão pode possuir *nenhum* requisito ou *vários* requisitos **(0,n)**. Uma requisito pode ser atribuído a *nenhuma* missão ou *várias* missões **(1,n)**.

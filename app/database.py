@@ -256,3 +256,20 @@ class DatabaseConnection:
             cursor.close()
 
         return bool(success)
+
+
+    def drop_enemy_loot(self, enemy_id, desired_location_id):
+        success = False
+        cursor = self.connection.cursor()
+        try:
+            success = cursor.execute(
+                f"""
+                call drop_loot({enemy_id}::int, {desired_location_id}::int)
+                """
+            )
+        except:
+            cursor.execute("""ROLLBACK""")
+        finally:
+            cursor.close()
+
+        return bool(success)

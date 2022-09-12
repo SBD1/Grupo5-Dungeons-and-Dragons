@@ -190,14 +190,14 @@ class DatabaseConnection:
             f")"
         )
 
-        player_id, = cursor.fetchone()
-        cursor.execute(
-            f"""
-                INSERT INTO corpo(id_corpo) VALUES ({player_id});
-                INSERT INTO atributos VALUES ({player_id}, 5, 4, 5, 3, 5, 4);
-                INSERT INTO inventario(id_inventario) VALUES ({player_id});
-            """
-        )
+        player_id = cursor.fetchone()
+        # cursor.execute(
+        #     f"""
+        #         INSERT INTO corpo(id_corpo) VALUES ({player_id});
+        #         INSERT INTO atributos VALUES ({player_id}, 5, 4, 5, 3, 5, 4);
+        #         INSERT INTO inventario(id_inventario) VALUES ({player_id});
+        #     """
+        # )
 
         self.connection.commit()
         cursor.close()

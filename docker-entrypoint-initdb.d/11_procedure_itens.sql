@@ -174,3 +174,21 @@ create or replace procedure drop_item(_inst_item integer, _regiao integer) as
             DELETE FROM itens_inventario WHERE instancia_item = _inst_item;
 		end;
 	$drop_item$ language 'plpgsql';
+
+
+-- PROCEDURE DROP LOOT
+create or replace procedure drop_loot(_inimigo integer, _regiao integer) as 
+	$drop_loot$
+		declare
+			_id integer;
+            _item integer;
+		begin
+			select item into _item
+            from loot_inimigo
+            where inimigo=_inimigo;
+
+            insert into instancia_item(item) values (_item) returning id_instancia_item into _id;
+
+            INSERT INTO instancia_item_em_regiao(instancia_item, regiao) VALUES(_id, _regiao);
+		end;
+	$drop_loot$ language 'plpgsql';

@@ -115,7 +115,7 @@ CREATE TABLE instancia_inimigo (
 CREATE TABLE inimigo_em_regiao (
     id_inimigo int not NULL references instancia_inimigo (id_instancia_inimigo),
     id_regiao int not NULL references regiao (id_regiao),
-    primary key (id_instancia_inimigo)
+    primary key (id_inimigo)
 );
 
 CREATE TABLE aventureiro (
@@ -169,6 +169,12 @@ CREATE TABLE itens_por_categoria (
     categoria_item int not NULL references categoria_item (id_categoria_item),
     item int not NULL references itens (id_item),
     primary key(categoria_item, item)
+);
+
+CREATE TABLE loot_inimigo (
+    inimigo int not NULL references inimigo (id_inimigo),
+    item int not NULL references itens (id_item),
+    primary key(inimigo, item)
 );
 
 CREATE TABLE instancia_item (

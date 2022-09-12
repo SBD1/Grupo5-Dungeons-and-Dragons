@@ -184,15 +184,19 @@ class Game(CommandInterpreter):
         result = self.db_connection.get_player_location(self.player.player_id)
         print(f'Local: {result.get("name")}')
         print(f'{result.get("description")}')
-        # self.display_enemies(self.player.player_id)
-        self.display_exits(result)
+        self.display_enemies()
+        if not self.player.in_combat:
+            self.display_exits(result)
 
-        print(
-            '''\n\tPara se mover digite o comando "ir {id do lugar}, por exemplo."
-            Para mais informações, utilize o comando "ajuda ir",
-            Ou apenas "ajuda" para obter informações gerais sobre os comandos.            
-            '''
-        )
+    def display_enemies(self):
+        if not self.enemies:
+            self.player.in_combat = False
+            return
+
+        self.player.in_combat = True
+        print('\nHá inimigos aqui! Você está em combate!')
+        for enemy in self.enemies:
+            print(f'INIMIGO: {enemy.get("name")}, Vida: {enemy.get("life")}\n')
 
     @staticmethod
     def display_exits(result):
@@ -218,6 +222,13 @@ class Game(CommandInterpreter):
             f'\n\tAo sul: {south_string}'
             f'\n\tAo ao leste: {east_string}'
             f'\n\tAo oeste: {west_string}'
+        )
+
+        print(
+            '''\n\tPara se mover digite o comando "ir {id do lugar}, por exemplo."
+            Para mais informações, utilize o comando "ajuda ir",
+            Ou apenas "ajuda" para obter informações gerais sobre os comandos.            
+            '''
         )
 
 

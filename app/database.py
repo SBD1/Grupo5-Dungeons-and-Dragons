@@ -264,18 +264,29 @@ class DatabaseConnection:
         try:
             cursor.execute(
                 f"""
-                SELECT n.id_npc, n.nome, i.vida, i.dano FROM npc_em_regiao nr 
-                    JOIN npc n ON nr.id_npc = n.id_npc
+                SELECT n.id_npc, n.nome, i.vida, i.dano
+                FROM inimigo_em_regiao ir 
+                    JOIN npc n ON ir.id_inimigo = n.id_npc
                     JOIN inimigo i ON i.id_inimigo = n.id_npc
-                WHERE nr.id_regiao = {location_id}
+                WHERE ir.id_regiao = {location_id}
                 """
             )
             result = cursor.fetchall()
-            return self.serialize_enemies(result)
+            enemies = self.serialize_enemies(result)
         finally:
             cursor.close()
 
+        return enemies
+
     @staticmethod
     def serialize_enemies(result):
-        import pdb;pdb.set_trace()
-        pass
+        enemies = []
+        for enemy_instance in result:
+            enemy = {
+                'id': enemy_instance[0],
+                'name': enemy_instance[1],
+                'life': enemy_instance[2],
+                'damage': enemy_instance[3]
+            }
+            enemies.append(enemy)
+        return enemies

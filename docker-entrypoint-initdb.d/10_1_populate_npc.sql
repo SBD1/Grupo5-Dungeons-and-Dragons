@@ -6,13 +6,26 @@ INSERT INTO npc(nome, tipo) VALUES ('Martha, Gerente da Guilda', 'N');
 call create_enemy(_nome := 'Goblin'::varchar, _tipo := 'I'::npc_type,
                   _vida := 10::integer, _dano := 3::integer);
 
--- call create_enemy_inst(1, )
+call create_enemy_inst(4, 7);
+call create_enemy_inst(4, 7);
+
+call create_enemy_inst(4, 8);
+call create_enemy_inst(4, 8);
+
+call create_enemy_inst(4, 9);
+call create_enemy_inst(4, 9);
 
 call create_enemy(_nome := 'Bandido'::varchar, _tipo := 'I'::npc_type,
                   _vida := 10::integer, _dano := 3::integer);
 
+call create_enemy_inst(5, 5);
+call create_enemy_inst(5, 5);
+call create_enemy_inst(5, 6);
+
 call create_enemy(_nome := 'Goblin Chefe'::varchar, _tipo := 'I'::npc_type,
                   _vida := 20::integer, _dano := 6::integer);
+
+call create_enemy_inst(6, 12);
 
 -- POPULAR DIALOGOS
 -- INSERT INTO dialogo_npc(id_npc, dialogo) VALUES (1, 'Apenas armas de primeira por aqui...por um preço justo é claro');

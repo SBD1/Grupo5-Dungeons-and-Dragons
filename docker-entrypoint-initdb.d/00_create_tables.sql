@@ -109,7 +109,6 @@ CREATE TABLE npc_em_regiao (
 
 CREATE TABLE instancia_inimigo (
     id_instancia_inimigo serial primary key,
-    loot int not NULL references instancia_item (id_instancia_item),
     vida int,
     inimigo int not NULL references inimigo (id_inimigo)
 );

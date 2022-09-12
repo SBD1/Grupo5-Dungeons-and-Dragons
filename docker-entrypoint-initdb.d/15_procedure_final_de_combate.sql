@@ -13,14 +13,12 @@ $die_player$ language 'plpgsql';
 
 -- PROCEDURE DROP LOOT
 create or replace procedure
-    fight(_id_aventureiro int,  _id_instancia_inimigo int, _accepted_loot varchar(10), dano int) as
+    fight(_id_aventureiro int,  _id_instancia_inimigo int, dano int) as
 $fight$
     declare
     _new_life int;
 begin
-    UPDATE instancia_inimigo SET vida = (vida - dano) where _id_instancia_inimigo = inimigo.id_instancia_inimgo;
-    IF(id_instancia_inimigo != EXISTS) THEN
-        
+    UPDATE instancia_inimigo SET vida = (vida - dano) where _id_instancia_inimigo = inimigo.id_instancia_inimgo;   
     RETURN;
 end;
 

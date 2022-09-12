@@ -1,3 +1,4 @@
+-- PROCEDURE CRIAR AVENTUREIRO
 create or replace procedure create_adventurer(
     _nome varchar(50),
     _raca varchar(50),
@@ -18,6 +19,9 @@ $create_adventurer$
         insert into aventureiro(nome, raca, classe, regiao)
         values (_nome, _idRaca, _idClasse, _id_regiao) 
         RETURNING id_aventureiro INTO _id_aventureiro;
+
+        insert into inventario(id_inventario)
+        values (_id_aventureiro);
     end;
 $create_adventurer$ language 'plpgsql';
 

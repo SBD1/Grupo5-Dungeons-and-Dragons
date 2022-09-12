@@ -10,7 +10,8 @@ CREATE TYPE weapon_type AS ENUM(
     'Bastão',
     'Clava',
     'Martelo',
-    'Escudo'
+    'Escudo',
+    'Adaga'
 );
 
 CREATE TYPE armour_type AS ENUM('Veste', 'Capacete', 'Armadura');

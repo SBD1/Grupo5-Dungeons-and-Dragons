@@ -45,6 +45,10 @@ class Game(CommandInterpreter):
         print('AVENTUREIRO CRIADO COM SUCESSO!')
         return player_info
 
+   ## def get_weapon():
+        
+
+
     def get_initial_gear(self, player_id):
         # TODO change this accordingly with the player class
         # return {

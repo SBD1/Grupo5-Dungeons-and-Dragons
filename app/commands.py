@@ -192,8 +192,20 @@ class CommandInterpreter:
         for enemy in self.enemies:
             if str(entity.get('id')) == str(enemy.get('id')).strip():
                 enemy['life'] -= self.player.damage
+                self.player.life -= enemy.get('damage')
                 print(
-                    f'{enemy.get("name")} Recebeu {self.player.damage} de dano!')
+                    f'{enemy.get("name")} te causou '
+                    f'{enemy.get("damage")} de dano!'
+                )
+                if self.player.life <= 0:
+                    print("Você morreu!")
+                    self.player.dead = True
+                    return
+
+                print(
+                    f'{enemy.get("name")} Recebeu '
+                    f'{self.player.damage} de dano!'
+                )
                 if int(enemy.get('life')) <= 0:
                     print(
                         f'Inimigo {enemy.get("name")} '

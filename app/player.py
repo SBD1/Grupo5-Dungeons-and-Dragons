@@ -7,6 +7,7 @@ class Player:
 
     def __init__(self, player_id, inventory, player_basic_info):
         info = self.parse_player_info(player_basic_info)
+        self.dead = False
         self.db_connection = DatabaseConnection()
         self.player_id, = player_id
         self.location = self.db_connection.get_player_location(player_id)
@@ -17,6 +18,7 @@ class Player:
         self.class_attributes = {} # TODO GET ATTRIBUTES
         self.race_data = info.get('race_data') # TODO SERIALIZE RACE DATA
         self.life = 10 # TODO GET LIFE FROM ATTRIBUTES
+        self.max_life = self.life
         self.damage_modifier = self.get_damage_modifier()
         self.damage = 6 + self.damage_modifier
         pass

@@ -172,6 +172,8 @@ class Game(CommandInterpreter):
 
     def run_gameplay(self):
         while True:
+            if self.player.dead:
+                break
             self.display_player_location()
             command = input('>>> ')
             try:
@@ -179,6 +181,9 @@ class Game(CommandInterpreter):
             except Exception as error:
                 print(f'Erro {error}')
                 pass
+
+        if self.player.dead:
+            print("Game Over!")
 
     def display_player_location(self):
         result = self.db_connection.get_player_location(self.player.player_id)

@@ -19,7 +19,6 @@ class Player:
         self.life = 10 # TODO GET LIFE FROM ATTRIBUTES
         self.damage_modifier = self.get_damage_modifier()
         self.damage = 6 + self.damage_modifier
-        import pdb;pdb.set_trace()
         pass
 
     def get_damage_modifier(self):

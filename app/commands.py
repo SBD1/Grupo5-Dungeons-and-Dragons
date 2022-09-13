@@ -3,7 +3,7 @@ from database import DatabaseConnection
 
 class CommandInterpreter:
 
-    def __init__(self, player, scenario):
+    def __init__(self, player):
         self.player = player
         self.db_connection = DatabaseConnection()
         self.enemies = []
@@ -33,7 +33,7 @@ class CommandInterpreter:
                 )
             },
             'atacar': {
-                'function': '',
+                'function': self.attack_command,
                 'synonyms': ['atacar', 'hit'],
                 'help': (
                     """COMANDO: atacar [inimigo]
@@ -158,7 +158,8 @@ class CommandInterpreter:
                     if enemies := self.db_connection.load_enemies(location):
                         self.enemies = enemies
                     else:
-                        print('Aparentemente não há inimigos aqui, parece estar seguro!')
+                        print(
+                            'Aparentemente não há inimigos aqui, parece estar seguro!')
 
                 except Exception as error:
                     print(error)
@@ -166,7 +167,6 @@ class CommandInterpreter:
                     return
 
                 self.player.location = location
-                self.scenario['location'] = location
             else:
                 print('Especifique o lugar que deseja ir!')
         else:
@@ -175,26 +175,35 @@ class CommandInterpreter:
     def attack_command(self, arguments):
         if self.player.in_combat:
             if arguments:
-                enemy = arguments[0]
-                self.player_attack_enemy(enemy)
+                entity, = [
+                    enemy for enemy in self.enemies if (
+                            str(enemy.get('id')) == str(arguments[0])
+                    )
+                ]
+
+                self.player_attack_enemy(entity)
             else:
                 print("Você ataca o primeiro inimigo que aparece a sua frente")
-                player_attack_enemy(self.enemies[0])
+                self.player_attack_enemy(self.enemies[0])
         else:
             print("Você não está em nenhum combate nesse momento.")
 
-    def player_attack_enemy(self, enemy):
-        import pdb;pdb.set_trace()
+    def player_attack_enemy(self, entity):
         for enemy in self.enemies:
-            if str(enemy.get('id')) == str(enemy).strip():
+            if str(entity.get('id')) == str(enemy.get('id')).strip():
                 enemy['life'] -= self.player.damage
-                print(f'{enemy.get("name")} Recebeu {self.player.damage} de dano!')
+                print(
+                    f'{enemy.get("name")} Recebeu {self.player.damage} de dano!')
                 if int(enemy.get('life')) <= 0:
-                    self.db_connection.kill_enemy()
+                    print(
+                        f'Inimigo {enemy.get("name")} '
+                        f'({enemy.get("id")}) morreu!'
+                    )
+                    self.db_connection.kill_enemy(enemy.get('id'))
                     self.enemies.remove(enemy)
-                    if self.enemies == []:
+                    if not self.enemies:
                         self.player.in_combat = False
-                        print("Você derrotou todos os inimigos dessa area!")
+                        print("Você derrotou todos os inimigos dessa area!\n")
                 return
 
     def parse_command(self, player_input):

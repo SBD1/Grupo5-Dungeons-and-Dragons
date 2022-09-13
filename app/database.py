@@ -296,9 +296,8 @@ class DatabaseConnection:
         try:
             cursor.execute(
                 f"""
-                DELETE from inimigo_instancia where inimigo_instancia_id = {enemy_id};
-                DELETE from inimigo_em_regiao where inimigo_id = {enemy_id};
-
+                DELETE from inimigo_em_regiao where id_inimigo = {enemy_id};
+                DELETE from instancia_inimigo where id_instancia_inimigo = {enemy_id};
                 COMMIT;
 
                 """

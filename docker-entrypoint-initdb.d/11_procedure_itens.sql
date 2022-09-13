@@ -174,7 +174,7 @@ create or replace procedure drop_item(_inst_item integer, _regiao integer) as
             DELETE FROM itens_inventario WHERE instancia_item = _inst_item;
 		end;
 	$drop_item$ language 'plpgsql';
-    
+
 
 
 --  Comprar item
@@ -230,3 +230,71 @@ create or replace procedure drop_loot(_inimigo integer, _regiao integer) as
             INSERT INTO instancia_item_em_regiao(instancia_item, regiao) VALUES(_id, _regiao);
 		end;
 	$drop_loot$ language 'plpgsql';
+
+
+--  Equipar item  
+create or replace procedure equip_weapon(_id_aventureiro integer, _id_instancia_item integer) as
+    $equip_weapon$
+         declare
+            _mao_esquerda int;
+            _mao_direita int;
+		begin
+            SELECT mao_esquerda INTO _mao_esquerda
+            FROM corpo
+            WHERE id_corpo = _id_aventureiro;
+            
+            IF _mao_esquerda > 0 THEN
+                SELECT mao_direita into _mao_direita
+                FROM corpo
+                WHERE id_corpo = _id_aventureiro;
+
+                IF _mao_direita > 0 THEN
+                    RAISE EXCEPTION 'Você está com as duas mãos ocupadas';
+                ELSE
+                    UPDATE corpo SET mao_direita = _id_instancia_item WHERE id_corpo = _id_aventureiro;
+                    DELETE FROM itens_inventario WHERE instancia_item = _id_instancia_item;
+                END IF;
+            ELSE
+                UPDATE corpo SET mao_esquerda = _id_instancia_item WHERE id_corpo = _id_aventureiro;
+                DELETE FROM itens_inventario WHERE instancia_item = _id_instancia_item;
+            END IF;
+        end
+    $equip_weapon$ language 'plpgsql';
+
+
+create or replace procedure equip_body_armour(_id_aventureiro integer, _id_instancia_item integer) as
+    $equip_body_armour$
+         declare
+            _tronco int;
+		begin
+            SELECT tronco INTO _tronco
+            FROM corpo
+            WHERE id_corpo = _id_aventureiro;
+
+            IF _tronco > 0 THEN
+                RAISE EXCEPTION 'Você já tem um item equipado no tronco';
+            ELSE
+                UPDATE corpo SET tronco = _id_instancia_item WHERE id_corpo = _id_aventureiro;
+                DELETE FROM itens_inventario WHERE instancia_item = _id_instancia_item;
+            END IF;
+        end
+    $equip_body_armour$ language 'plpgsql';
+
+
+create or replace procedure equip_head_armour(_id_aventureiro integer, _id_instancia_item integer) as
+    $equip_head_armour$
+         declare
+            _cabeça int;
+		begin
+            SELECT cabeça INTO _cabeça
+            FROM corpo
+            WHERE id_corpo = _id_aventureiro;
+
+            IF _cabeça > 0 THEN
+                RAISE EXCEPTION 'Você já tem um item equipado na cabeça';
+            ELSE
+                UPDATE corpo SET cabeça = _id_instancia_item WHERE id_corpo = _id_aventureiro;
+                DELETE FROM itens_inventario WHERE instancia_item = _id_instancia_item;
+            END IF;
+        end
+    $equip_head_armour$ language 'plpgsql';

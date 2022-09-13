@@ -176,8 +176,8 @@ class Game(CommandInterpreter):
             command = input('>>> ')
             try:
                 status = self.parse_command(command)
-            except:
-                print('Erro')
+            except Exception as error:
+                print(f'Erro {error}')
                 pass
 
     def display_player_location(self):

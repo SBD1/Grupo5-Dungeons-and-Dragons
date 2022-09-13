@@ -174,3 +174,59 @@ create or replace procedure drop_item(_inst_item integer, _regiao integer) as
             DELETE FROM itens_inventario WHERE instancia_item = _inst_item;
 		end;
 	$drop_item$ language 'plpgsql';
+    
+
+
+--  Comprar item
+create or replace procedure buy_item(_id_item integer, _id_aventureiro integer) as 
+	$buy_item$
+		declare
+			_valor integer;
+			_ouro integer;
+			capacity integer := 50;
+            total_items integer;
+            _inst_item integer;
+		begin
+			SELECT COUNT(*) INTO total_items
+            FROM itens_inventario
+            WHERE inventario = _id_aventureiro;
+
+            IF total_items >= capacity THEN
+                RAISE EXCEPTION 'Inventário sem espaço disponível';
+            END IF;
+
+            SELECT valor INTO _valor
+			FROM itens 
+			WHERE id_item = _id_item;
+        
+			SELECT ouro INTO _ouro
+			FROM inventario
+			WHERE id_inventario = _id_aventureiro;
+			
+            IF (_ouro < _valor) THEN
+				RAISE EXCEPTION 'Você não tem ouro suficiente para comprar esse item';
+			END IF;
+
+            INSERT INTO instancia_item(item) VALUES(_id_item) RETURNING id_instancia_item INTO _inst_item;
+            INSERT INTO itens_inventario(inventario, instancia_item) VALUES(_id_aventureiro, _inst_item);
+            UPDATE inventario SET ouro = ouro - _valor WHERE id_inventario = _id_aventureiro;
+		end
+	$buy_item$ language 'plpgsql';
+
+
+-- PROCEDURE DROP LOOT
+create or replace procedure drop_loot(_inimigo integer, _regiao integer) as 
+	$drop_loot$
+		declare
+			_id integer;
+            _item integer;
+		begin
+			select item into _item
+            from loot_inimigo
+            where inimigo=_inimigo;
+
+            insert into instancia_item(item) values (_item) returning id_instancia_item into _id;
+
+            INSERT INTO instancia_item_em_regiao(instancia_item, regiao) VALUES(_id, _regiao);
+		end;
+	$drop_loot$ language 'plpgsql';

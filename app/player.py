@@ -10,7 +10,7 @@ class Player:
         self.dead = False
         self.db_connection = DatabaseConnection()
         self.player_id, = player_id
-        self.location = self.db_connection.get_player_location(player_id)
+        self.location = self.db_connection.get_player_location(self.player_id)
         self.inventory = inventory
         self.name = info.get('name')
         self.race = info.get('race_name')
@@ -25,14 +25,15 @@ class Player:
 
     def get_damage_modifier(self):
         if self.class_name in ['Assassino', 'Ranger']:
-            return int(self.class_attributes.get('DESTREZA')/2)
+            return int((self.class_attributes.get('DESTREZA') or 0)/2)
         if self.class_name in ['Bárbaro', 'Guerreiro']:
-            return int(self.class_attributes.get('FORÇA')/2)
+            return int((self.class_attributes.get('FORÇA') or 0)/2)
         if self.class_name in ['Mago']:
-            return int(self.class_attributes.get('DESTREZA') / 3)
+            return int((self.class_attributes.get('DESTREZA') or 0) / 3)
         return 0
 
-    def parse_player_info(self, player_data):
+    @staticmethod
+    def parse_player_info(player_data):
         player_info = player_data[0]
         name = player_info[0]
         race_data = player_info[1].replace('(', '').replace(')', '').split(',')

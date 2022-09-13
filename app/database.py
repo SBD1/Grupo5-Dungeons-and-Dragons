@@ -178,7 +178,7 @@ class DatabaseConnection:
     def create_player(self, name, race, char_class, id_map):
         cursor = self.connection.cursor()
 
-        first_region_id = 1
+        first_region_id = 11 # Centro de neverwinter
 
         cursor.execute(
             f"call create_adventurer("

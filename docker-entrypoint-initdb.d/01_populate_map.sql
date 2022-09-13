@@ -5,17 +5,19 @@ VALUES ('Redondezas do Reino');
 -- POPULAR REGIÕES
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 1
 VALUES ('Caverna',
-        'Uma busca pela saída da caverna, mas o que é isso?' ||
-        'Pode ser que exista algo ao norte.' ||
-        'Será que devo continuar ao norte? Mas que escolha eu tenho?Uma luz ao norte, acho melhor seguir',
+        'Uma caverna onde não se sabe o qual profunda é...' ||
+        'Cheia de musgo, estalactites, estalagmites, insetos e barulhos estranhos' ||
+        'Esses barulhos parecem grunhidos, será se vale a pena investigar mais a fundo?',
         null,
         null,
         null,
         null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 2
 VALUES ('Sul de Phandalin',
-        'O sul de uma pequena vila, existe uma saída para uma caverna e um aparente amigo. Seria um guia?' ||
-        '"Venha e se aventure na Caverna" grita um morador da cidade, porém parece ser um pedido de ajuda' ||
+        'O sul de uma pequena vila, existem poucas casas, algumas de pedra, outras de alvenaria, mas tudo muito simples e singelo ' ||
+        'O chão é na maior parte apenas lama e pedras, as ruas são bem rústicas e tem pouco movimento... ' ||
+        'você avista o que aparenta ser uma pessoa amigável. ' ||
+        '"Eu vi! Eu vi! Tem monstros na caverna!" grita um morador da cidade, isso está parecendo ser um pedido de ajuda ' ||
         'O que aquele homem está olhando? Será que está querendo algo da caverna?',
         null,
         null,
@@ -23,16 +25,20 @@ VALUES ('Sul de Phandalin',
         null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 3
 VALUES ('Centro de Phandalin', 
-        'Parece ser um local bem movimentado com alguns mercadores, talvez seja interessante trocar armas e armaduras' ||
-        'Um comércio? Talvez seja o momento de escolher novas armas e armaduras',
+        'Apesar de ser uma cidade pequena e com pouco movimento, você avista alguns mercadores, talvez seja interessante trocar armas e armaduras ' ||
+        'Não existem muitas tavernas nesta cidade, porém as que existem são bem acolhedoras ' ||
+        'Existem poucos guardas, um trabalhadores simples e umas pessoas mal encaradas andando pela cidade ' ||
+        'Você escuta rumores sobre ataques de goblins nas redondezas.',
         null,
         null,
         null,
         null);
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 4
 VALUES ('Entrada de Phandalin', 
-        'Bem vindo à Phandalin' ||
-        'Está em uma pequena vila chamada Phandalin, talvez seja interessante buscar conhecer um pouco mais',
+        '"Bem vindo à Phandalin", mostra uma placa rústica feita de madeira, ' ||
+        'Aparentemente é uma vila bem nova, olhando de longe parece que essa cidade está sendo reaproveitada das ruínas de uma cidade antiga... ' ||
+        'Você vê alguns poucos guardas na entrada, um estábulo pequeno, e conforme você vai entrando na cidade as pessoas vão te olhando com um ar de curiosidade e estranheza ' ||
+        'claramente você é um estrangeiro e as pessoas notam isso, em poucos instantes , para evitar problemas, elas voltam a fazer o que estavam fazendo.',
         null,
         null,
         null,
@@ -41,7 +47,8 @@ VALUES ('Entrada de Phandalin',
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 5
 VALUES ('Floresta em volta de Phandalin', 
         'Uma densa floresta, quem sabe o que podemos achar aqui?' ||
-        'Que barulhos são esses, talvez eu deva verificar',
+        'Você vê sinais de que alguém possa ter passado recentemente por ali, ' ||
+        'vê pegadas de cavalos e de outras pessoas... observando mais atentamente vê sinais de fogueira',
         null,
         null,
         null,
@@ -67,9 +74,9 @@ VALUES ('Floresta em volta de Neverwinters',
 
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 8
 VALUES ('Esconderijo dos goblins', 
-        'Um esconderijo de alguns goblins, o que pode acontecer aqui?' ||
-        'São 2 goblins, devem estar descansando' ||
-        'Dois Goblins sentados, estão esperando algo?',
+        'Um esconderijo de alguns goblins, o que pode acontecer aqui? ' ||
+        'São 2 goblins, devem estar descansando ' ||
+        'Dois Goblins sentados, estão esperando algo? ',
         null,
         null,
         null,
@@ -77,7 +84,7 @@ VALUES ('Esconderijo dos goblins',
 
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 9
 VALUES ('Interior da Caverna', 
-        '"ti ti ti ti ti" esses morcegos não param de aparecer' ||
+        '"ti ti ti ti ti" esses morcegos não param de aparecer ' ||
         'Está tudo escuro e úmido para onde será a saída?',
         null,
         null,
@@ -87,8 +94,8 @@ VALUES ('Interior da Caverna',
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 10
 VALUES ('Estábulo de Neverwinter', 
         'Os cavalos parecem agitados' ||
-        'iiirrrrí' ||
-        'Talvez seja melhor conversar com alguém, seria interessante ajudar com os cavalos',
+        '***iiirrrrí***' ||
+        'Esse é o ultimo ponto da saída da cidade, você vê um caminho de terra que vai em direção a uma floresta',
         null,
         null,
         null,
@@ -96,8 +103,9 @@ VALUES ('Estábulo de Neverwinter',
 
 INSERT INTO regiao(nome, descricao, norte, sul, oeste, leste) -- 11
 VALUES ('Centro de Neverwinter', 
-        'Bem-Vindo ao centro de Neverwinter, as melhores poções das redondezas' ||
-        'Um lugar movimentado, com barraquinhas e guerreiros comprando poções para sair em alguma aventura',
+        '"Bem-Vindo ao centro de Neverwinter, as melhores poções das redondezas", você escuta um mercador anunciando em uma praça movimentada! ' ||
+        'Um lugar muito movimentado, com várias tavernas, muitos mercadores, muitas pessoas de todas as raças e profissões, ' ||
+        'Certamente é um bom lugar para arrumar trabalhos e conhecer pessoas, ande por aí, explore o lugar, conheça pessoas, faça sua aventura!',
         null,
         null,
         null,

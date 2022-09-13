@@ -17,6 +17,16 @@ $ docker-compose up
 ```
 
 Ao inicializar as imagens docker, o banco já estará online no localhost, utilizando a porta 5432.
+
+Para jogar o jogo:
+
+```bash
+$ python app/game.py
+```
+
+Certifique que você possui as dependencias do projeto instaladas!
+Você também pode rodar o comando internamente pela imagem docker...
+
 Em seguida, para acessar o postgres do container do banco de dados, execute o comando:
 
 ```bash

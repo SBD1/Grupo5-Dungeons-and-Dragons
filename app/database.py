@@ -112,7 +112,7 @@ class DatabaseConnection:
         self.connection.commit()
 
         return item_instance
-
+    
     # def add_item_to_inventory(
     #         self, player_id, create_item_function, item_name
     # ):

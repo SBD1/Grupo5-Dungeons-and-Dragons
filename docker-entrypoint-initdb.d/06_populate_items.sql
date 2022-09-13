@@ -1,3 +1,12 @@
+-- POPULAR ITENS INICIAIS
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Arco Sublime', 'Um Arco sem nada especial', 0, 0, 'W');
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Lança Oni', 'Lança Longa', 0, 0, 'W');
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Adaga', 'Uma pequena adaga que pode ser envenenada', 0, 0, 'W');
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Cajado Celestial', 'Um arco que dizem ser do céu', 0, 0, 'W');
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Adagas Duplas', 'Duas lâminas simples', 0, 0, 'W');
+INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Machado Sangrento', 'Machado Comum', 0, 0, 'W');
+
+
 -- POPULAR ITENS
 INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Poção', 'Recupera 10pts de vida', 20, 15, 'P');
 INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Mega Poção', 'Recupera 30pts de vida', 45, 35, 'P');
@@ -14,6 +23,7 @@ INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Clava
 
 INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Chapeu Mágico', 'Equipamento mágico de cabeça', 200, 140, 'A');
 INSERT INTO itens(nome, descricao, valor, valor_pos_compra, tipo) VALUES ('Manto da Invisibilidade', 'Equipamento mágico de tronco', 200, 140, 'A');
+
 
 
 -- POPULAR POÇÕES

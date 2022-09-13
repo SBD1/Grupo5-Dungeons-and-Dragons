@@ -43,11 +43,7 @@ class Game(CommandInterpreter):
 
         player_info = self.db_connection.get_player_basic_info(player_id)
         print('AVENTUREIRO CRIADO COM SUCESSO!')
-        return player_info
-
-   ## def get_weapon():
-        
-
+        return player_info        
 
     def get_initial_gear(self, player_id):
         # TODO change this accordingly with the player class
@@ -68,6 +64,14 @@ class Game(CommandInterpreter):
         #     'armour': [],
         #     'boost': [],
         # }
+        cursor = self.db_connection.connection.cursor()
+        try:
+            cursor.execute(
+                f"""call initialWeapon({player_id})""")
+        except:
+            pass
+        finally:
+            cursor.close()
         return {}
 
     @staticmethod

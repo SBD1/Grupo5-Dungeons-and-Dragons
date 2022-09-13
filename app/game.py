@@ -35,14 +35,17 @@ class Game(CommandInterpreter):
         )
 
         inventory = self.get_initial_gear(player_id)
+        player_info = self.db_connection.get_player_basic_info(player_id)
 
         self.player = Player(
-            player_id=player_id,
-            inventory=inventory
+            player_id=(player_id,),
+            inventory=inventory,
+            player_basic_info=player_info
         )
 
-        player_info = self.db_connection.get_player_basic_info(player_id)
+
         print('AVENTUREIRO CRIADO COM SUCESSO!')
+        print(f"ID DO AVENTUREIRO {player_id}")
         return player_info
 
     def get_initial_gear(self, player_id):
@@ -174,7 +177,9 @@ class Game(CommandInterpreter):
         while True:
             if self.player.dead:
                 break
+            self.display_basic_info()
             self.display_player_location()
+
             command = input('>>> ')
             try:
                 status = self.parse_command(command)
@@ -184,6 +189,13 @@ class Game(CommandInterpreter):
 
         if self.player.dead:
             print("Game Over!")
+
+    def display_basic_info(self):
+        print('-----------------AVENTUREIRO-----------------')
+        print(f"\tID: {self.player.player_id}")
+        print(f"\tNome: {self.player.name}")
+        print(f"\tVida: {self.player.life}")
+        print('---------------------------------------------\n')
 
     def display_player_location(self):
         result = self.db_connection.get_player_location(self.player.player_id)
